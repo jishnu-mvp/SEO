@@ -113,6 +113,19 @@ VIEWPORTS: dict[str, dict[str, int]] = {
     "mobile": {"width": 375, "height": 812, "device_scale": 2},
 }
 
+
+def _chromium_launch_kwargs() -> dict[str, str]:
+    """Point at a pre-installed Chromium binary when one is staged via
+    PLAYWRIGHT_BROWSERS_PATH (e.g. sandboxed environments that block
+    Playwright's own browser download). Falls back to Playwright's default
+    resolution when no such binary is present."""
+    browsers_path = os.environ.get("PLAYWRIGHT_BROWSERS_PATH")
+    if browsers_path:
+        candidate = os.path.join(browsers_path, "chromium")
+        if os.path.exists(candidate):
+            return {"executable_path": candidate}
+    return {}
+
 USER_AGENT = (
     "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
     "(KHTML, like Gecko) Chrome/150.0.7871.115 Safari/537.36 ClaudeSEO/2.0"
@@ -399,7 +412,7 @@ def render_page(
 
         try:
             with sync_playwright() as p:
-                browser = p.chromium.launch(headless=True)
+                browser = p.chromium.launch(headless=True, **_chromium_launch_kwargs())
                 context = browser.new_context(
                     viewport={"width": vp["width"], "height": vp["height"]},
                     device_scale_factor=vp["device_scale"],

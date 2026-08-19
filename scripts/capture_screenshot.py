@@ -50,6 +50,19 @@ VIEWPORTS = {
 }
 
 
+def _chromium_launch_kwargs() -> dict[str, str]:
+    """Point at a pre-installed Chromium binary when one is staged via
+    PLAYWRIGHT_BROWSERS_PATH (e.g. sandboxed environments that block
+    Playwright's own browser download). Falls back to Playwright's default
+    resolution when no such binary is present."""
+    browsers_path = os.environ.get("PLAYWRIGHT_BROWSERS_PATH")
+    if browsers_path:
+        candidate = os.path.join(browsers_path, "chromium")
+        if os.path.exists(candidate):
+            return {"executable_path": candidate}
+    return {}
+
+
 def normalize_url(url: str) -> tuple[str, ParseResult]:
     """Normalize URL and return (url, parsed_url).
 
@@ -123,7 +136,7 @@ def capture_screenshot(
 
     try:
         with sync_playwright() as p:
-            browser = p.chromium.launch(headless=True)
+            browser = p.chromium.launch(headless=True, **_chromium_launch_kwargs())
             context = browser.new_context(
                 viewport={"width": vp["width"], "height": vp["height"]},
                 device_scale_factor=2 if viewport == "mobile" else 1,
