@@ -1,0 +1,235 @@
+{
+  "summary": {
+    "health_score": 62,
+    "business_type": "B2B professional/tech services (software, AI agent, SaaS development agency) -- staging replatform of mvp1.com.au (WordPress) to a static/Next.js build on Vercel, pre-launch",
+    "top_findings": [
+      "CRITICAL MIGRATION RISK: the entire URL structure has changed (new .html-suffixed, shortened slugs for every blog post, case study, and page) with no evidence from outside the codebase that a complete 301 redirect map exists for all ~51 live URLs.",
+      "The live site's worst defect -- an intermittent JS-reload interstitial and a hard GPTBot 429 block -- is fully resolved on staging; all AI crawlers (GPTBot, ClaudeBot, CCBot, Googlebot, PerplexityBot) get full, fast, consistent responses.",
+      "llms.txt (present and good on the live site) returns 404 on staging -- a pure GEO regression if launched as-is.",
+      "Blog/case-study page templates carry zero JSON-LD structured data (live template had Article, Person, BreadcrumbList, WebPage) -- a schema regression on that page type even though the homepage schema improved.",
+      "Sampled blog post body is roughly 40% shorter in the new template than its live equivalent -- verify this is not systemic content loss across all 16 migrated posts."
+    ],
+    "quick_wins": [
+      "Port the live llms.txt to the new site with links updated to the new URL scheme.",
+      "Add Article + BreadcrumbList schema to the blog/case-study templates (currently zero).",
+      "Add X-Robots-Tag: noindex on the *.vercel.app staging domain only.",
+      "Confirm/deploy the full old-path to new-path 301 redirect map before cutover.",
+      "Verify the ~40% word-count drop on the sampled blog post isn't systemic."
+    ]
+  },
+  "categories": [
+    {
+      "name": "Migration / URL Risk",
+      "score": 20,
+      "what_works": [
+        "New sitemap.xml already publishes final production (mvp1.com.au) URLs rather than the vercel.app domain",
+        "robots.txt on staging already declares the production sitemap location"
+      ],
+      "findings": [
+        {
+          "title": "Complete URL scheme change with no verified redirect map",
+          "severity": "Critical",
+          "description": "Every one of the ~51 live sitemap URLs (blog posts, case studies, service pages) has moved to a different path on the new site -- shortened slugs with a new .html extension, and renamed top-level sections (e.g. /casestudies/security-marketplace -> /case-studies/guardbay-security-marketplace.html, /blog/ai-agents-vs-chatbots-what-business-leaders-need-to-understand-before-automating-workflows -> /blog/ai-agents-vs-chatbots.html). No evidence from outside the deployment that 301 redirects exist from every old path to its new equivalent.",
+          "recommendation": "Build and test a complete old-path to new-path 301 redirect map (vercel.json or middleware) covering all ~51 live URLs, including query-string resource variants and ebook/podcast URLs, before cutover. This is the single highest-risk item in the entire migration."
+        },
+        {
+          "title": "Case studies index path changed without an obvious redirect target",
+          "severity": "High",
+          "description": "Live /casestudies (listing page) has no obvious 1:1 equivalent path on staging; the closest match is /our-work.html, but this needs explicit confirmation and a redirect rule.",
+          "recommendation": "Confirm /casestudies -> /our-work.html (or equivalent) is included in the redirect map."
+        }
+      ]
+    },
+    {
+      "name": "Technical SEO",
+      "score": 78,
+      "what_works": [
+        "The intermittent JS-reload interstitial present on live (30-75% of requests) does not occur on staging: 10/10 test requests across 5 crawler UAs plus 3 timing runs returned full correct content every time",
+        "GPTBot, which was deterministically blocked (HTTP 429) on live, gets full 200 OK responses on staging",
+        "HSTS header present (strict-transport-security: max-age=63072000; includeSubDomains; preload) -- absent entirely on live",
+        "TTFB consistently 0.2-0.6s vs live's variable 0.7-1.4s",
+        "Single consistent en-AU language signal in both html lang and JSON-LD, vs 3 conflicting values on live",
+        "robots.txt simplified and already points its Sitemap directive at the production domain"
+      ],
+      "findings": [
+        {
+          "title": "Other security headers still missing",
+          "severity": "Medium",
+          "description": "Only HSTS was added; CSP, X-Content-Type-Options, X-Frame-Options/frame-ancestors, and Referrer-Policy are still absent, same gap as the live site.",
+          "recommendation": "Add these headers via Vercel edge config or middleware before launch."
+        },
+        {
+          "title": "Staging domain itself is publicly indexable",
+          "severity": "Medium",
+          "description": "mvp1-website.vercel.app has no deployment-protection wall, no noindex meta tag, and no X-Robots-Tag header on any sampled page; robots.txt explicitly allows crawling (Allow: /). Canonical tags do correctly point to mvp1.com.au, which should prevent duplicate indexing in well-behaved search engines, but does not protect against crawlers that ignore canonical hints.",
+          "recommendation": "Add X-Robots-Tag: noindex specifically on the vercel.app domain (distinct from production) so the staging URL can never be indexed or cited in place of the real site."
+        }
+      ]
+    },
+    {
+      "name": "On-Page SEO",
+      "score": 85,
+      "what_works": [
+        "H1 now carries real, visible, keyword-relevant copy ('Scale your software. Automate your business.') -- was empty/non-substantive on live",
+        "og:image present with correct 1200x630 dimensions -- missing entirely on live",
+        "Twitter Card is clean (summary_large_image, no personal-handle association) -- live pointed twitter:site/creator at a personal @Arun handle",
+        "Canonical tag present and correctly forward-pointing to the production domain",
+        "Title tag and meta description both present, specific, and benefit-led"
+      ],
+      "findings": []
+    },
+    {
+      "name": "Content Quality",
+      "score": 55,
+      "what_works": [
+        "New ISO/IEC 27001:2022 certification credential added to Organization schema -- a genuine new E-E-A-T/trust signal not present on live"
+      ],
+      "findings": [
+        {
+          "title": "Sampled blog post is roughly 40% shorter than its live equivalent",
+          "severity": "High",
+          "description": "The live version of 'AI Agents vs Chatbots' extracted to approximately 1,219 words (including nav/boilerplate); the staging equivalent extracted to approximately 739 words using the same method -- a substantial reduction for nominally the same article.",
+          "recommendation": "Verify whether this is a one-off editorial trim or systemic across all 16 migrated blog posts. If systemic and unintentional, restore full body content before launch to avoid a content-depth regression."
+        },
+        {
+          "title": "No visible author byline (unresolved, not a regression)",
+          "severity": "Medium",
+          "description": "Same gap as live -- no author name/role/photo visibly rendered on the sampled blog post, and no Person/author schema either.",
+          "recommendation": "Add a visible author byline to blog post templates."
+        },
+        {
+          "title": "No FAQ content (unresolved, not a regression)",
+          "severity": "Medium",
+          "description": "No FAQPage schema or explicit Q&A sections found on the sampled pages, same as live.",
+          "recommendation": "Add FAQ sections with FAQPage schema to top service/blog pages while templates are already being rebuilt for this migration."
+        }
+      ]
+    },
+    {
+      "name": "Schema / Structured Data",
+      "score": 40,
+      "what_works": [
+        "Homepage now carries a single, clean ProfessionalService JSON-LD block with one @id, one consistent name, and a real sameAs list -- resolves the live site's two-conflicting-graphs defect entirely",
+        "No stray Person entity tied to a personal Twitter handle, unlike live",
+        "New ISO 27001 hasCredential block added"
+      ],
+      "findings": [
+        {
+          "title": "Blog/case-study template has zero JSON-LD structured data",
+          "severity": "Critical",
+          "description": "The live blog post template carried 5 JSON-LD blocks (Article, Person, BreadcrumbList, WebPage, plus site-wide Organization/WebSite graphs). The staging equivalent template carries none. This removes eligibility for Article and Breadcrumb rich results, and removes a signal (datePublished/author) that AI answer engines use to assess freshness and authorship.",
+          "recommendation": "Add Article (datePublished, dateModified, author), BreadcrumbList, and ideally FAQPage schema to the blog/case-study page template -- a single template-level fix covers all migrated posts."
+        },
+        {
+          "title": "Same four-country address array on one Organization entity, carried over unchanged",
+          "severity": "Medium",
+          "description": "Brisbane, Sydney, Wilmington (DE), and Ahmedabad addresses are still listed inside one Organization's address array, same structure as live.",
+          "recommendation": "Split into per-location LocalBusiness entities linked to the parent Organization, as recommended in the live-site audit -- this migration is a natural point to fix it."
+        }
+      ]
+    },
+    {
+      "name": "Performance",
+      "score": 90,
+      "what_works": [
+        "TTFB consistently 0.2-0.6s across repeated tests, no variance",
+        "Vercel edge caching confirmed working (x-vercel-cache: HIT) with multi-hour cache age observed",
+        "No caching-layer instability of any kind observed, unlike live"
+      ],
+      "findings": []
+    },
+    {
+      "name": "Images",
+      "score": 95,
+      "what_works": [
+        "Homepage sample: both tested <img> elements carry alt attributes, versus 61 of 62 missing on live"
+      ],
+      "findings": [
+        {
+          "title": "Only a small homepage sample was verified",
+          "severity": "Low",
+          "description": "The homepage sample used for this audit contained only 2 <img> elements (the new build likely relies more on CSS background-images/SVG icons). A full-page, full-site image audit across all 44 staging URLs has not yet been performed.",
+          "recommendation": "Run a complete image alt-text audit across all staging pages before launch to confirm the pattern holds beyond the homepage sample."
+        }
+      ]
+    },
+    {
+      "name": "Local SEO",
+      "score": 50,
+      "what_works": [
+        "Complete NAP data for 4 offices carried over correctly in schema"
+      ],
+      "findings": [
+        {
+          "title": "NAP still schema-only, not visibly rendered",
+          "severity": "Medium",
+          "description": "Same gap as live -- address/phone information exists only in JSON-LD, not as visible page content.",
+          "recommendation": "Add a visible address/phone in the footer while templates are already being rebuilt for this migration."
+        }
+      ]
+    },
+    {
+      "name": "AI Search Readiness (GEO/AEO)",
+      "score": 55,
+      "what_works": [
+        "GPTBot: 200 OK, full content, on every test -- fully resolves the live site's 100% block rate",
+        "ClaudeBot, CCBot, Googlebot, PerplexityBot: full, fast, consistent responses on every test -- fully resolves the live site's intermittent interstitial defect",
+        "Single consistent Organization entity (no competing Person/brand identity) removes the entity-confusion problem that hurt AI answer-engine attribution on live"
+      ],
+      "findings": [
+        {
+          "title": "llms.txt missing on staging (404)",
+          "severity": "Critical",
+          "description": "The live site's llms.txt was a genuine, well-structured GEO asset (company summary, categorized links, founder/contact facts). It returns 404 on staging. If launched as-is, this is a regression of an asset that currently works, not just a missed opportunity.",
+          "recommendation": "Port the live llms.txt content to the new site before launch, updating all links to the new .html URL scheme, and fix the two issues flagged in the live audit (query-string resource links; founder attribution) while doing so -- now easier since the competing schema Person entity is gone."
+        },
+        {
+          "title": "No FAQ/direct-answer content structure (unresolved, not a regression)",
+          "severity": "Medium",
+          "description": "Same gap as live -- no FAQPage schema or explicit Q&A sections found.",
+          "recommendation": "Add FAQ sections with FAQPage schema during this migration since templates are already being touched."
+        }
+      ]
+    }
+  ],
+  "action_plan": {
+    "phases": [
+      {
+        "name": "Phase 1: Must-Fix Before Cutover",
+        "timeframe": "Before launch",
+        "items": [
+          "Confirm and test a complete 301 redirect map covering all ~51 live URLs to their new equivalents, including query-string resource variants and ebook/podcast URLs",
+          "Port llms.txt to the new site with links updated to the new URL scheme",
+          "Add Article, BreadcrumbList (and ideally FAQPage) schema to the blog/case-study templates",
+          "Verify the ~40% blog word-count drop isn't systemic across all 16 migrated posts",
+          "Add X-Robots-Tag: noindex to the vercel.app staging domain only"
+        ]
+      },
+      {
+        "name": "Phase 2: Should-Fix Before Cutover",
+        "timeframe": "Before launch",
+        "items": [
+          "Add CSP, X-Content-Type-Options, X-Frame-Options/frame-ancestors, and Referrer-Policy headers",
+          "Split the four-country address array into per-location LocalBusiness entities",
+          "Add visible author bylines to blog post templates",
+          "Add FAQ sections with FAQPage schema to top service/blog pages",
+          "Verify internal links point to final new-site paths directly, not through redirects"
+        ]
+      },
+      {
+        "name": "Phase 3: Post-Launch Monitoring",
+        "timeframe": "First 2-4 weeks after cutover",
+        "items": [
+          "Re-run the multi-user-agent crawl test (GPTBot/ClaudeBot/CCBot/Googlebot/PerplexityBot) against production within 24 hours of cutover to confirm no WAF/security layer reintroduces bot-blocking",
+          "Monitor Search Console for 404 spikes and crawl errors as the fastest signal of redirect-map gaps",
+          "Watch organic traffic/impressions in GSC/GA4 against the pre-launch baseline",
+          "Re-test brand-fact consistency in ChatGPT/Claude/Perplexity now that the schema conflict is resolved"
+        ]
+      }
+    ]
+  },
+  "artifacts": {
+    "findings_dir": "findings/",
+    "screenshots_dir": "screenshots/"
+  }
+}

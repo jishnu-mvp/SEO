@@ -1,0 +1,314 @@
+{
+  "summary": {
+    "health_score": 54,
+    "business_type": "B2B professional/tech services (software, AI agent, SaaS development agency) — multi-location AU/US/IN",
+    "top_findings": [
+      "Caching/security layer intermittently serves a JS-only 'One moment, please...' loading shell instead of real content, to browsers, Googlebot, AI crawlers, and even XML sitemap requests (30-75% of cold requests).",
+      "GPTBot is deterministically blocked with HTTP 429 (0 bytes) on 100% of requests tested — OpenAI's crawler cannot access the site at all.",
+      "61 of 62 images on the homepage have no alt attribute.",
+      "No H1 carrying real, visible, keyword-relevant copy on the homepage.",
+      "Two conflicting, non-cross-referenced JSON-LD entity graphs run on every page (Rank Math auto-schema naming the brand 'MVP' and linking it to a personal Twitter handle @Arun, vs. a hand-authored schema naming it 'MVP Ventures'), confusing entity resolution for search and AI answer engines."
+    ],
+    "quick_wins": [
+      "Add alt text to all 61 unlabelled homepage images.",
+      "Fix the real H1 to contain the primary value proposition and target keyword.",
+      "Diagnose and fix the WAF/cache rule returning 429 to GPTBot.",
+      "Merge the two competing JSON-LD graphs into one consistent Organization entity.",
+      "Add an og:image tag (currently missing) for social share previews."
+    ]
+  },
+  "categories": [
+    {
+      "name": "Technical SEO",
+      "score": 35,
+      "what_works": [
+        "robots.txt present, correctly disallows only WP internals, allows JS/CSS/uploads",
+        "Sitemap index correctly declared in robots.txt (sitemap_index.xml with 6 child sitemaps, ~51 URLs total)",
+        "HTTP to HTTPS redirect works (301)",
+        "www to apex redirect works (301)",
+        "Canonical tag present and self-referencing on homepage",
+        "meta robots allows full indexing with generous snippet/preview directives"
+      ],
+      "findings": [
+        {
+          "title": "Intermittent JS-reload 'One moment, please...' interstitial served instead of real content",
+          "severity": "Critical",
+          "description": "Repeated curl tests (3-6 attempts per user-agent, spaced 3-8s apart) on the homepage and on XML sitemap files show a client-side JS-reload loading shell (~11.8-12KB, title 'One moment, please...') served instead of the real 82,621-byte page on 30-75% of requests, across plain browser UA, Googlebot UA, ClaudeBot, and CCBot alike. The shell depends on a 5-second setTimeout(location.reload()) to ever show real content -- crawlers that do not execute JavaScript (CCBot, GPTBot) get stuck with zero usable content. Directly fetching page-sitemap.xml and blog-sitemap.xml also returned this HTML shell instead of valid XML on cache-miss.",
+          "recommendation": "Identify the plugin/service generating this page (a WP cache-warmer or bot-mitigation tool). Configure it to never intercept sitemap/XML requests or known-good crawler UAs; switch to server-side stale-while-revalidate instead of a client-side JS reload loop."
+        },
+        {
+          "title": "GPTBot deterministically blocked (HTTP 429, 0 bytes)",
+          "severity": "Critical",
+          "description": "6 of 6 test requests using the GPTBot user-agent across two separate test rounds (spaced minutes apart) returned HTTP/2 429 with Content-Length: 0, from the openresty backend layer. Every other tested crawler (Googlebot, PerplexityBot, ClaudeBot, CCBot, plain browser) received either the full page or the caching interstitial above -- never a 429. This indicates a deliberate, UA-targeted firewall/rate-limit rule specific to GPTBot.",
+          "recommendation": "Locate and remove or relax the WAF/security-plugin rule blocking the GPTBot user-agent string. ChatGPT's browsing/search features and GPT-based agents cannot read the site at all until this is fixed."
+        },
+        {
+          "title": "No standard security headers",
+          "severity": "High",
+          "description": "Homepage responses lack Strict-Transport-Security (HSTS), X-Content-Type-Options, X-Frame-Options/CSP, and Referrer-Policy. Cache-Control on some HTML responses is 'private, no-cache, no-store, must-revalidate, max-age=0', preventing edge caching of largely-static HTML.",
+          "recommendation": "Add HSTS, X-Content-Type-Options, X-Frame-Options or frame-ancestors CSP, and Referrer-Policy at the edge/CDN. Allow short-TTL edge caching of the homepage HTML instead of no-store."
+        },
+        {
+          "title": "Inconsistent language signals across one page",
+          "severity": "Medium",
+          "description": "The homepage <html> tag declares lang=\"en-US\", the custom WebSite JSON-LD declares inLanguage: en-AU, and the Rank Math auto-generated WebSite JSON-LD declares inLanguage: en-US -- three different language signals on a single page. No hreflang tags exist despite the Organization schema listing AU, US, and IN addresses and copy explicitly targeting multiple regions.",
+          "recommendation": "Standardize on one language/locale declaration across <html lang>, all JSON-LD inLanguage fields, and add hreflang if region-specific content variants are ever introduced."
+        }
+      ]
+    },
+    {
+      "name": "On-Page SEO",
+      "score": 65,
+      "what_works": [
+        "Title tag: keyword-relevant, appropriate length ('MVP Ventures: Building AI Agents, SaaS Platforms, Tech Future')",
+        "Meta description: present, ~150 characters, keyword-relevant",
+        "Reasonable primary navigation with descriptive anchor text (About, Services, Solutions, Work, Resources, News, Contact)"
+      ],
+      "findings": [
+        {
+          "title": "Homepage H1 carries no meaningful visible copy",
+          "severity": "Critical",
+          "description": "The true <h1> element renders via animation classes ('smallheading mb-25 wow fadeInLeft') with no substantive keyword-carrying text captured in source. The value-proposition line 'MVP Ventures Digital Solutions' exists only as an H2. The single strongest on-page relevance signal on the homepage is being wasted.",
+          "recommendation": "Set the real H1 to a clear, keyword-relevant statement of what the company does, e.g. 'AI Agent & SaaS Development Agency — MVP Ventures'."
+        },
+        {
+          "title": "Missing og:image",
+          "severity": "Medium",
+          "description": "No Open Graph image tag on the homepage. Social shares on LinkedIn (a primary B2B channel for this business) will show no preview thumbnail or an arbitrary fallback image.",
+          "recommendation": "Add an og:image meta tag pointing to a branded 1200x630 share image on the homepage and key landing pages."
+        },
+        {
+          "title": "Twitter Card metadata points to a personal handle",
+          "severity": "Medium",
+          "description": "twitter:site and twitter:creator are both set to @Arun, a personal-looking handle, not a corporate brand account.",
+          "recommendation": "Replace with the company's own Twitter/X account, or remove the tags if none exists."
+        },
+        {
+          "title": "Resource sub-pages use query-string filtering",
+          "severity": "Low",
+          "description": "Blog/podcast/ebook/AI-tool listings are served via /resources?type=blog style query parameters rather than clean paths, creating parameter-crawl-budget considerations and complicating canonicalization.",
+          "recommendation": "Consider clean static paths (e.g. /blog/) for these filtered views, or ensure explicit canonical tags and sitemap coverage for each filtered view."
+        }
+      ]
+    },
+    {
+      "name": "Content Quality",
+      "score": 60,
+      "what_works": [
+        "Active blog with 16 posts, each carrying Article schema with datePublished/dateModified",
+        "Strong testimonial set: 9 named quotes with real company affiliations (Flout Software, Kago Technologies, etc.)",
+        "Recognizable client logos (Virgin Australia, Queensland Government, Suncorp) as trust signals",
+        "Sampled blog post has a clear, specific title and meta description"
+      ],
+      "findings": [
+        {
+          "title": "No visible author byline despite Person/Article schema",
+          "severity": "Medium",
+          "description": "Person schema exists in JSON-LD on blog posts, but no author name, role, or photo is visibly rendered in the content itself.",
+          "recommendation": "Display a named author with role/credentials on every blog post to strengthen E-E-A-T signals visibly, not just in markup."
+        },
+        {
+          "title": "No FAQ sections or FAQPage schema found",
+          "severity": "High",
+          "description": "Neither the homepage nor the sampled blog post ('AI Agents vs Chatbots') contain explicit Q&A-formatted sections, despite the content being well suited to it.",
+          "recommendation": "Add FAQ sections with explicit question headers and direct-answer paragraphs, marked up with FAQPage schema, to the homepage and top service/blog pages."
+        },
+        {
+          "title": "Bare aggregateRating with no linked Review schema",
+          "severity": "High",
+          "description": "A single aggregateRating (5.0, 8 reviews) sits on the Organization/ProfessionalService schema with no supporting Review objects. Google's structured-data guidelines require actual Review items for aggregateRating eligibility; a bare aggregate figure risks a manual structured-data action.",
+          "recommendation": "Add real Review schema objects backing the aggregate rating, or remove the aggregateRating field until they exist."
+        },
+        {
+          "title": "No visible freshness signals",
+          "severity": "Low",
+          "description": "Homepage shows no visible 'last updated' date; the JSON-LD dateModified (2026-03-09) is over 5 months stale relative to the audit date and is not shown to readers.",
+          "recommendation": "Consider a visible last-updated indicator for key pages, and keep dateModified current when content actually changes."
+        }
+      ]
+    },
+    {
+      "name": "Schema / Structured Data",
+      "score": 45,
+      "what_works": [
+        "Rich Organization/ProfessionalService schema with knowsAbout, hasOfferCatalog, contactPoint, and real social sameAs links",
+        "Blog posts carry Article, BreadcrumbList, Person, and WebPage schema"
+      ],
+      "findings": [
+        {
+          "title": "Two conflicting, non-cross-referenced JSON-LD entity graphs on every page",
+          "severity": "Critical",
+          "description": "A Rank Math auto-generated graph defines @id #person (type Person/Organization, name 'MVP', sameAs twitter.com/Arun) as the WebSite publisher, while a separate hand-authored graph defines @id #organization (type Organization/ProfessionalService, name 'MVP Ventures') and its own separate WebSite node. The two are never linked via sameAs, use different names ('MVP' vs 'MVP Ventures'), and disagree on inLanguage (en-US vs en-AU). Confirmed present on both the homepage and the sampled blog post -- a site-wide template issue.",
+          "recommendation": "Consolidate to a single Organization entity with one @id and one name ('MVP Ventures'), re-scope or remove the Rank Math Person node (e.g. keep only as 'founder', not publisher), and align inLanguage site-wide."
+        },
+        {
+          "title": "Four-country address array on a single Organization node",
+          "severity": "Medium",
+          "description": "Brisbane, Sydney, Wilmington (DE), and Ahmedabad addresses are all listed inside one Organization/ProfessionalService's address array. Google's guidance favors one LocalBusiness/Organization entity per physical branch, individually linked to the parent, rather than one entity claiming four addresses at once.",
+          "recommendation": "Split each office into its own LocalBusiness entity (or use department) with its own @id, linked back to the parent Organization -- this also supports clean Google Business Profile matching per location."
+        },
+        {
+          "title": "Implausible 24/7 openingHoursSpecification",
+          "severity": "Medium",
+          "description": "openingHoursSpecification claims the business is open 00:00-23:59 every day of the week, which is very unlikely for a professional services agency.",
+          "recommendation": "Correct opening hours to reflect actual business hours per location."
+        }
+      ]
+    },
+    {
+      "name": "Performance",
+      "score": 55,
+      "what_works": [
+        "Non-interstitial page loads returned TTFB in the 0.7-1.4s range"
+      ],
+      "findings": [
+        {
+          "title": "Unstable cache behavior inflates TTFB variance",
+          "severity": "High",
+          "description": "Cache-Control: private, no-cache, no-store, must-revalidate on some HTML responses, combined with the interstitial-serving caching layer, produces highly inconsistent response times and content depending on cache-hit timing.",
+          "recommendation": "Resolve the caching-layer instability documented under Technical SEO before drawing conclusions from lab or field Core Web Vitals data -- results will be unreliable until fixed."
+        },
+        {
+          "title": "No Core Web Vitals field data available in this audit",
+          "severity": "Info",
+          "description": "CrUX/PageSpeed Insights API access was not available in this session.",
+          "recommendation": "Run PageSpeed Insights / Search Console CWV report directly once caching instability is resolved."
+        }
+      ]
+    },
+    {
+      "name": "Images",
+      "score": 15,
+      "what_works": [],
+      "findings": [
+        {
+          "title": "61 of 62 homepage images have no alt attribute",
+          "severity": "Critical",
+          "description": "Only 1 of 62 <img> elements on the homepage carries an alt attribute. This is both a WCAG accessibility failure and an image-SEO/GEO failure -- Google Images and multimodal AI crawlers rely on alt text to understand and cite visual content.",
+          "recommendation": "Bulk-add descriptive, keyword-relevant alt text via the WordPress media library or theme template loop, prioritizing case-study screenshots and the logo carousel."
+        }
+      ]
+    },
+    {
+      "name": "Local SEO",
+      "score": 50,
+      "what_works": [
+        "Complete NAP data for 4 offices encoded in Organization schema (Brisbane HQ, Sydney, Wilmington DE, Ahmedabad)"
+      ],
+      "findings": [
+        {
+          "title": "NAP exists only in schema, not in visible page content",
+          "severity": "Medium",
+          "description": "Address information for any office is not rendered as visible text on the homepage -- it exists only inside JSON-LD, which search engines and users weight less than visible NAP.",
+          "recommendation": "Display at least the HQ address and phone number visibly in the footer or a contact section."
+        },
+        {
+          "title": "No per-location LocalBusiness entity for GBP matching",
+          "severity": "Medium",
+          "description": "See Schema section -- a single multi-address Organization node makes clean 1:1 Google Business Profile matching per office difficult.",
+          "recommendation": "Split into per-location LocalBusiness entities as recommended in the Schema section."
+        }
+      ]
+    },
+    {
+      "name": "AI Search Readiness (GEO/AEO)",
+      "score": 40,
+      "what_works": [
+        "llms.txt present at /llms.txt (200 OK) with a well-structured company summary and categorized link sections",
+        "llms.txt names Founder & CEO (Jay Pandya), HQ address, phone, and email",
+        "robots.txt does not explicitly disallow any AI crawler by name"
+      ],
+      "findings": [
+        {
+          "title": "GPTBot fully blocked at the infrastructure layer despite good llms.txt content",
+          "severity": "Critical",
+          "description": "See Technical SEO -- GPTBot receives HTTP 429 on 100% of requests. All GEO investment in llms.txt and schema is invisible to ChatGPT's browsing/search features regardless of content quality.",
+          "recommendation": "Fix the GPTBot block as the top GEO priority -- no content improvement matters while the crawler cannot reach the site."
+        },
+        {
+          "title": "CCBot (Common Crawl) mostly served the loading interstitial, not real content",
+          "severity": "Critical",
+          "description": "2 of 3 CCBot test requests returned the JS-reload shell instead of real content. Common Crawl underpins many LLM pretraining datasets and third-party RAG/AI-search tools -- inconsistent access here risks the site being absent or badly represented in any model or tool built on that crawl.",
+          "recommendation": "Fix the interstitial-serving caching layer (see Technical SEO) with priority given to non-JS crawler user agents."
+        },
+        {
+          "title": "ClaudeBot access is intermittent (cache-timing dependent)",
+          "severity": "High",
+          "description": "ClaudeBot received the full page on some attempts and the loading shell on others, purely based on cache-hit timing rather than a deliberate block.",
+          "recommendation": "Same fix as above resolves this."
+        },
+        {
+          "title": "No FAQ/direct-answer content structure for AI extraction",
+          "severity": "High",
+          "description": "No FAQPage/QAPage schema or explicit Q&A-formatted sections were found; no visible 'key takeaway' or TL;DR summary blocks near the top of the sampled blog post.",
+          "recommendation": "Add FAQ sections with FAQPage schema and short extractable summary blocks to increase odds of being quoted verbatim in AI Overviews, ChatGPT, and Perplexity answers."
+        },
+        {
+          "title": "Inconsistent founder/brand-entity attribution across sources",
+          "severity": "High",
+          "description": "llms.txt names Jay Pandya as Founder & CEO, but the on-page JSON-LD instead surfaces a Person named 'MVP' (a brand alias, not a real person) as the organization's owning/publisher entity, with no founder named in schema at all. This is exactly the kind of ambiguity that causes AI systems to omit or mis-attribute facts about a brand.",
+          "recommendation": "Establish one consistent founder/leadership statement across the homepage, About page, and schema (Person entity for Jay Pandya as founder, linked via founder/employee relationship to the Organization) -- not just in llms.txt."
+        },
+        {
+          "title": "llms.txt links some resources via query-string paths not covered by the XML sitemaps",
+          "severity": "Medium",
+          "description": "llms.txt points AI crawlers at /resources?type=blog, ?type=podcast, ?type=ebook, ?type=ai-tool, and /rates -- none of which appear as distinct entries in the discovered sitemaps (/rates was not found among the 22 URLs in page-sitemap.xml).",
+          "recommendation": "Verify /rates is published and indexable; add clean-path equivalents or explicit sitemap coverage for the resource-type filter views referenced in llms.txt."
+        }
+      ]
+    }
+  ],
+  "action_plan": {
+    "phases": [
+      {
+        "name": "Phase 1: Critical Fixes",
+        "timeframe": "Week 1",
+        "items": [
+          "Diagnose and fix the caching/WAF layer serving the 'One moment, please...' JS-reload shell; never intercept sitemap/XML requests or known good crawler UAs",
+          "Remove/fix the firewall or rate-limit rule returning 429 to GPTBot on every request",
+          "Add alt text to all 61 unlabelled homepage images",
+          "Fix the homepage H1 to contain real, visible, keyword-relevant copy",
+          "Verify /rates is published and included in page-sitemap.xml; fix the implausible 24/7 openingHoursSpecification"
+        ]
+      },
+      {
+        "name": "Phase 2: High-Impact Improvements",
+        "timeframe": "Weeks 2-3",
+        "items": [
+          "Consolidate the two competing JSON-LD graphs into one canonical Organization entity (single @id, single name, consistent inLanguage, real sameAs)",
+          "Split the four office addresses into distinct location entities linked to the parent org",
+          "Back the aggregateRating with real Review schema objects, or remove it",
+          "Add og:image to the homepage and key landing pages",
+          "Replace the twitter:site/twitter:creator @Arun handle with the company's own account or remove the tags",
+          "Add HSTS, X-Content-Type-Options, X-Frame-Options/CSP, and Referrer-Policy headers at the edge",
+          "Convert or properly canonicalize query-string resource filters referenced in llms.txt"
+        ]
+      },
+      {
+        "name": "Phase 3: Content & Authority",
+        "timeframe": "Month 2",
+        "items": [
+          "Add visible author bylines (name, role, photo) to blog posts to match existing Person/Article schema",
+          "Add FAQ sections with FAQPage schema to the homepage and top service/blog pages",
+          "Add short 'key takeaway' summary blocks near the top of blog posts for AI-answer extractability",
+          "Convert testimonials into structured, per-case-study Review schema",
+          "Establish one consistent founder/leadership statement (Jay Pandya) across homepage, About page, and schema"
+        ]
+      },
+      {
+        "name": "Phase 4: Monitoring & Iteration",
+        "timeframe": "Ongoing",
+        "items": [
+          "Re-run the multi-user-agent crawl test weekly until the interstitial issue shows 0% loading-shell rate across 10+ consecutive requests per UA",
+          "Set up Search Console sitemap monitoring for XML-parsing failures caused by the caching layer",
+          "Periodically test brand-fact consistency in ChatGPT/Claude/Perplexity answers once entity/schema fixes ship",
+          "Track AI referral traffic in GA4 (chatgpt.com, perplexity.ai, claude.ai) as a leading indicator"
+        ]
+      }
+    ]
+  },
+  "artifacts": {
+    "findings_dir": "findings/",
+    "screenshots_dir": "screenshots/"
+  }
+}
