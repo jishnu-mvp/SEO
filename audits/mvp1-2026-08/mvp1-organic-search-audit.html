@@ -1,0 +1,691 @@
+<title>MVP1 Organic Search Audit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --brand:#0074BE; --navy:#003D66; --accent:#FFD90F;
+  --ink:#1A1A1A; --ink-2:#43505C; --ink-3:#6B7A88; --heading:#003D66;
+  --bg:#F2F5F8; --surface:#FFFFFF; --surface-2:#F5F7F9; --line:#DCE4EB; --line-2:#C3D0DA;
+  --ok:#2F6B4F; --ok-bg:#E8F2ED;
+  --warn:#8A6100; --warn-bg:#FBF3DF;
+  --bad:#A32017; --bad-bg:#FBEAE8;
+  --unk:#4E5F6D; --unk-bg:#EDF1F4;
+  --s1:#0074BE; --s2:#B8860B;
+  --grid:#E1E8EE; --tip-bg:#003D66; --tip-ink:#FFFFFF;
+  --fh:'Lato',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --fb:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --fm:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace;
+  --shadow:0 1px 2px rgba(0,61,102,.06),0 4px 16px rgba(0,61,102,.05);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ink:#E8EDF2; --ink-2:#AFBDC9; --ink-3:#8496A5; --heading:#E8EDF2;
+    --bg:#11171C; --surface:#1A222A; --surface-2:#212B34; --line:#2E3A45; --line-2:#3C4B58;
+    --ok:#7FC7A4; --ok-bg:#172A22;
+    --warn:#E0AC2B; --warn-bg:#2B2412;
+    --bad:#F09189; --bad-bg:#2E1A18;
+    --unk:#9DB0BE; --unk-bg:#1F272E;
+    --grid:#2A343D; --tip-bg:#0074BE; --tip-ink:#FFFFFF;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#E8EDF2; --ink-2:#AFBDC9; --ink-3:#8496A5; --heading:#E8EDF2;
+  --bg:#11171C; --surface:#1A222A; --surface-2:#212B34; --line:#2E3A45; --line-2:#3C4B58;
+  --ok:#7FC7A4; --ok-bg:#172A22;
+  --warn:#E0AC2B; --warn-bg:#2B2412;
+  --bad:#F09189; --bad-bg:#2E1A18;
+  --unk:#9DB0BE; --unk-bg:#1F272E;
+  --grid:#2A343D; --tip-bg:#0074BE; --tip-ink:#FFFFFF;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.3);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--fb);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+h1,h2,h3,h4,h5{font-family:var(--fh);color:var(--heading);margin:0;text-wrap:balance;line-height:1.18}
+p{margin:0 0 1em}
+a{color:var(--brand)}
+.mono{font-family:var(--fm);font-size:.88em}
+.tnum{font-variant-numeric:tabular-nums}
+
+/* ---------- cover ---------- */
+.cover{background:var(--navy);color:#fff;padding:56px 0 0;border-bottom:5px solid var(--accent)}
+.cover h1{color:#fff;font-size:clamp(34px,5.2vw,52px);font-weight:900;letter-spacing:-.02em}
+.eyebrow{font-family:var(--fh);font-weight:700;text-transform:uppercase;letter-spacing:.14em;font-size:12px;color:var(--accent)}
+.cover .sub{font-size:19px;color:#C5DCEC;max-width:66ch;margin-top:14px}
+.covmeta{display:flex;flex-wrap:wrap;gap:8px 28px;margin:26px 0 0;padding:18px 0 0;border-top:1px solid rgba(255,255,255,.18);font-size:13.5px;color:#A9C8DE;font-family:var(--fm)}
+.covmeta b{color:#fff;font-weight:500}
+
+/* headline stat strip */
+.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:1px;background:rgba(255,255,255,.16);margin-top:34px;border-radius:6px 6px 0 0;overflow:hidden}
+.stat{background:var(--navy);padding:18px 18px 20px}
+.stat .k{font-family:var(--fh);font-weight:700;text-transform:uppercase;letter-spacing:.09em;font-size:10.5px;color:#8FB4CE}
+.stat .v{font-family:var(--fh);font-weight:900;font-size:32px;color:#fff;line-height:1.05;margin-top:8px;font-variant-numeric:tabular-nums}
+.stat .d{font-size:12.5px;margin-top:5px;font-family:var(--fm)}
+.dn{color:#FF9E94}.up{color:#8FE0B4}.fl{color:#A9C8DE}
+
+/* ---------- nav ---------- */
+.nav{position:sticky;top:0;z-index:40;background:var(--surface);border-bottom:1px solid var(--line);box-shadow:var(--shadow)}
+.nav ul{display:flex;gap:2px;list-style:none;margin:0;padding:0;overflow-x:auto}
+.nav a{display:block;padding:13px 14px;font-family:var(--fh);font-weight:700;font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-2);text-decoration:none;white-space:nowrap;border-bottom:3px solid transparent}
+.nav a:hover{color:var(--brand);border-bottom-color:var(--line-2)}
+.nav a:focus-visible{outline:2px solid var(--brand);outline-offset:-2px}
+
+section{padding:52px 0 8px}
+.shead{display:flex;align-items:baseline;gap:14px;border-left:4px solid var(--brand);padding-left:14px;margin-bottom:8px}
+.shead h2{font-size:clamp(24px,3vw,32px);font-weight:700}
+.shead .n{font-family:var(--fm);font-size:13px;color:var(--ink-3)}
+.lead{color:var(--ink-2);max-width:74ch;margin:14px 0 26px;font-size:17.5px}
+
+/* ---------- cards ---------- */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow)}
+.pad{padding:22px 24px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+
+/* callout */
+.call{border-left:4px solid var(--accent);background:var(--warn-bg);border-radius:0 8px 8px 0;padding:20px 24px;margin:22px 0}
+.call.crit{border-left-color:var(--bad);background:var(--bad-bg)}
+.call h4{font-family:var(--fh);font-weight:700;font-size:17px;color:var(--heading);margin-bottom:8px}
+.call p:last-child{margin-bottom:0}
+
+/* ---------- tables ---------- */
+.tscroll{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface);box-shadow:var(--shadow)}
+table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:640px}
+thead th{background:var(--brand);color:#fff;font-family:var(--fh);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.05em;text-align:left;padding:11px 13px;white-space:nowrap}
+tbody td{padding:10px 13px;border-top:1px solid var(--line);vertical-align:top}
+tbody tr:nth-child(even){background:var(--surface-2)}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--fm);font-size:13.5px;white-space:nowrap}
+tr.hi{background:var(--warn-bg)!important}
+tr.hi td{font-weight:600}
+caption{caption-side:bottom;text-align:left;padding:10px 13px;font-size:13px;color:var(--ink-3);font-family:var(--fb)}
+
+/* verdict pills */
+.pill{display:inline-flex;align-items:center;gap:5px;font-family:var(--fh);font-weight:700;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;padding:4px 9px;border-radius:3px;white-space:nowrap}
+.p-ok{background:var(--ok-bg);color:var(--ok);box-shadow:inset 0 0 0 1px currentColor}
+.p-part{background:var(--warn-bg);color:var(--warn);box-shadow:inset 0 0 0 1px currentColor}
+.p-bad{background:var(--bad-bg);color:var(--bad);box-shadow:inset 0 0 0 1px currentColor}
+.p-unk{background:var(--unk-bg);color:var(--unk);box-shadow:inset 0 0 0 1px currentColor}
+
+/* charts */
+.chartbox{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:18px 20px 10px;box-shadow:var(--shadow)}
+.chartbox h4{font-size:15.5px;font-weight:700;margin-bottom:2px}
+.chartbox .cap{font-size:13px;color:var(--ink-3);margin-bottom:10px}
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin:2px 0 8px;font-size:12.5px;color:var(--ink-2);font-family:var(--fh);font-weight:700}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.gl{stroke:var(--grid);stroke-width:1}
+.ax{fill:var(--ink-3);font-size:11px;font-family:'IBM Plex Mono',monospace}
+.dlab{fill:var(--ink-2);font-size:11px;font-family:'IBM Plex Mono',monospace;font-weight:500}
+.tip{position:fixed;pointer-events:none;background:var(--tip-bg);color:var(--tip-ink);font-family:var(--fm);font-size:12px;padding:7px 10px;border-radius:5px;opacity:0;transition:opacity .12s;z-index:90;white-space:nowrap;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.tip b{font-family:var(--fh);display:block;margin-bottom:3px;font-size:11px;letter-spacing:.05em;text-transform:uppercase;opacity:.85}
+
+/* ledger */
+.claim{border:1px solid var(--line);border-radius:8px;background:var(--surface);box-shadow:var(--shadow);overflow:hidden;margin-bottom:14px}
+.claim>summary{list-style:none;cursor:pointer;padding:15px 18px;display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center}
+.claim>summary::-webkit-details-marker{display:none}
+.claim>summary:hover{background:var(--surface-2)}
+.claim>summary:focus-visible{outline:2px solid var(--brand);outline-offset:-2px}
+.claim .ttl{font-family:var(--fh);font-weight:700;font-size:15.5px;color:var(--heading)}
+.claim .src{font-family:var(--fm);font-size:11.5px;color:var(--ink-3);margin-top:3px}
+.claim .chev{color:var(--ink-3);font-size:13px;transition:transform .15s}
+.claim[open] .chev{transform:rotate(90deg)}
+.claim .body{padding:2px 18px 18px;border-top:1px solid var(--line)}
+.cmp{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:0;border:1px solid var(--line);border-radius:6px;overflow:hidden;margin:14px 0}
+.cmp>div{padding:13px 15px}
+.cmp .lbl{font-family:var(--fh);font-weight:700;font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-3);margin-bottom:5px}
+.cmp .claimed{background:var(--surface-2);border-right:1px solid var(--line)}
+.cmp .found{background:var(--surface)}
+.cmp .val{font-size:14.5px;line-height:1.45}
+ul.tight{margin:8px 0;padding-left:20px}
+ul.tight li{margin-bottom:5px}
+
+/* actions */
+.act{display:grid;grid-template-columns:auto 1fr;gap:0 18px;border-top:1px solid var(--line);padding:16px 0}
+.act:first-of-type{border-top:none}
+.act .rank{font-family:var(--fh);font-weight:900;font-size:26px;color:var(--brand);line-height:1;font-variant-numeric:tabular-nums}
+.act h4{font-size:16.5px;font-weight:700;margin-bottom:4px}
+.act .meta{font-family:var(--fh);font-weight:700;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);margin-top:6px}
+.act p{margin-bottom:0;color:var(--ink-2);font-size:15.5px}
+
+footer{background:var(--navy);color:#A9C8DE;margin-top:60px;padding:30px 0;font-size:13px}
+footer .fw{display:flex;flex-wrap:wrap;gap:12px 30px;justify-content:space-between;align-items:center}
+footer .tag{font-family:var(--fh);font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);font-size:13px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media(max-width:640px){
+  .claim>summary{grid-template-columns:1fr auto;gap:8px}
+  .claim>summary .pill{grid-column:1;justify-self:start}
+  body{font-size:16px}
+}
+</style>
+
+<div class="cover">
+  <div class="wrap">
+    <div class="eyebrow">Organic Performance &amp; Vendor Deliverable Verification</div>
+    <h1>mvp1.com.au Search Audit</h1>
+    <p class="sub">A full technical and content audit of the site, a month-by-month read of May through August 2026, and a claim-by-claim verification of the 34 deliverables in the agency's Drive folder — checked against live Search Console and GA4 data.</p>
+    <div class="covmeta">
+      <span>Prepared <b>31 August 2026</b></span>
+      <span>Property <b>https://mvp1.com.au/</b></span>
+      <span>GA4 <b>476568741</b></span>
+      <span>Pages crawled <b>53</b></span>
+      <span>Deliverables reviewed <b>34</b></span>
+    </div>
+    <div class="strip">
+      <div class="stat"><div class="k">Organic clicks</div><div class="v">103</div><div class="d dn">&#9660; 49% vs April</div></div>
+      <div class="stat"><div class="k">Impressions</div><div class="v">1,945</div><div class="d dn">&#9660; 60% vs April</div></div>
+      <div class="stat"><div class="k">Avg. position</div><div class="v">16.4</div><div class="d dn">&#9660; 8.0 places</div></div>
+      <div class="stat"><div class="k">Non-brand clicks</div><div class="v">1</div><div class="d fl">flat at ~0 all year</div></div>
+      <div class="stat"><div class="k">Targets ranking</div><div class="v">1<span style="font-size:19px;color:#8FB4CE">/17</span></div><div class="d dn">16 never seen</div></div>
+    </div>
+  </div>
+</div>
+
+<nav class="nav"><div class="wrap"><ul>
+  <li><a href="#verdict">Verdict</a></li>
+  <li><a href="#urgent">Urgent</a></li>
+  <li><a href="#trend">The trend</a></li>
+  <li><a href="#months">Month by month</a></li>
+  <li><a href="#ledger">Claim ledger</a></li>
+  <li><a href="#tech">Technical audit</a></li>
+  <li><a href="#actions">What to do</a></li>
+  <li><a href="#method">Method</a></li>
+</ul></div></nav>
+
+<div class="wrap">
+
+<section id="verdict">
+  <div class="shead"><h2>The verdict</h2><span class="n">summary</span></div>
+  <p class="lead">Four months of SEO work have coincided with organic search performance falling by roughly half. The site itself is technically sound — the problem is not the website. The problem is that almost none of the work billed against it was aimed at, or capable of, moving commercial rankings.</p>
+
+  <div class="grid3" style="margin-bottom:22px">
+    <div class="card pad">
+      <div class="eyebrow" style="color:var(--bad)">Contradicted</div>
+      <div style="font-family:var(--fh);font-weight:900;font-size:38px;color:var(--bad);line-height:1;margin:6px 0">6</div>
+      <p style="margin:0;font-size:14.5px;color:var(--ink-2)">Claims the live site or the raw data disproves as written.</p>
+    </div>
+    <div class="card pad">
+      <div class="eyebrow" style="color:var(--unk)">Hollow</div>
+      <div style="font-family:var(--fh);font-weight:900;font-size:38px;color:var(--unk);line-height:1;margin:6px 0">3</div>
+      <p style="margin:0;font-size:14.5px;color:var(--ink-2)">Deliverables that are empty, byte-identical duplicates, or another client's work.</p>
+    </div>
+    <div class="card pad">
+      <div class="eyebrow" style="color:var(--warn)">Partly verified</div>
+      <div style="font-family:var(--fh);font-weight:900;font-size:38px;color:var(--warn);line-height:1;margin:6px 0">2</div>
+      <p style="margin:0;font-size:14.5px;color:var(--ink-2)">Consistent with the data, but not provable from the sources reachable here.</p>
+    </div>
+    <div class="card pad">
+      <div class="eyebrow" style="color:var(--ok)">Verified</div>
+      <div style="font-family:var(--fh);font-weight:900;font-size:38px;color:var(--ok);line-height:1;margin:6px 0">4</div>
+      <p style="margin:0;font-size:14.5px;color:var(--ink-2)">Work genuinely done, live and confirmed today.</p>
+    </div>
+  </div>
+
+  <div class="card pad">
+    <h3 style="font-size:19px;margin-bottom:10px">The one number that settles it</h3>
+    <p style="color:var(--ink-2)">Strip out people searching for <span class="mono">mvp1</span>, <span class="mono">mvp1 ventures</span> and <span class="mono">mvp ventures</span> — the people who already know the company — and what remains is the traffic SEO is actually paid to create. That number is <strong>0 to 1 clicks per month</strong>, and it has not moved since March. Of the 17 commercial keywords the agency mapped across four months, <strong>one</strong> has ever registered a single impression: <span class="mono">private ai infrastructure</span>, which drew 9 impressions and no clicks in May, then disappeared.</p>
+    <p style="margin-bottom:0;color:var(--ink-2)">Everything else in this report explains why.</p>
+  </div>
+</section>
+
+<section id="urgent">
+  <div class="shead"><h2>Fix today</h2><span class="n">security</span></div>
+  <div class="call crit">
+    <h4>Live account credentials are sitting in a publicly-readable Drive folder</h4>
+    <p>The folder shared for this review is set to <strong>"anyone with the link can view"</strong>. At least four files inside it contain the plaintext password for <span class="mono">mvpausqld@gmail.com</span> — the Google account that controls the Google Business Profile — along with the recovery email and recovery phone number.</p>
+    <p><strong>Affected files:</strong> <span class="mono">Month 1 / …_CUSTOM_Final_Report.xls</span>, <span class="mono">Month 3 / …GEO_SEO_Month_2_CUSTOM_Final_Report.xls</span> (both in a "Package Reports" tab), <span class="mono">Month 3 / …Australia_Claim_and_Verification_Report.pdf</span>, and the "CP" content-posting tabs, which additionally expose the same password reused for Medium and Tumblr accounts. A second, different password for the same Gmail address appears in the Australia claim report.</p>
+    <p style="margin-bottom:0"><strong>Do this now:</strong> change the Google account password and revoke active sessions; rotate the Medium and Tumblr passwords; change the recovery phone and email; turn the Drive folder's link sharing off; then review Business Profile edit history for changes you did not authorise. Password reuse across the Google account and third-party publishing accounts means one leak compromises all of them.</p>
+  </div>
+</section>
+
+<section id="trend">
+  <div class="shead"><h2>What actually happened</h2><span class="n">Mar–Aug 2026</span></div>
+  <p class="lead">The engagement's own benchmark report covers 16 March – 14 April, so March and April are the honest "before". Every organic metric has fallen since, and the decline is steepest in the months with the most billed activity.</p>
+
+  <div class="grid2">
+    <div class="chartbox">
+      <h4>Organic clicks</h4>
+      <div class="cap">Search Console, all queries. Peak was March, before the engagement.</div>
+      <div id="c-clicks"></div>
+    </div>
+    <div class="chartbox">
+      <h4>Impressions</h4>
+      <div class="cap">How often the site appeared at all — down 60% since April.</div>
+      <div id="c-impr"></div>
+    </div>
+  </div>
+
+  <div class="grid2" style="margin-top:18px">
+    <div class="chartbox">
+      <h4>Average position</h4>
+      <div class="cap">Lower is better. The axis is inverted so down still means worse.</div>
+      <div id="c-pos"></div>
+    </div>
+    <div class="chartbox">
+      <h4>Branded vs non-branded impressions</h4>
+      <div class="cap">Non-branded is the half SEO is paid to grow. It is the smaller bar every month.</div>
+      <div class="legend"><span><i style="background:var(--s1)"></i>Branded</span><span><i style="background:var(--s2)"></i>Non-branded</span></div>
+      <div id="c-brand"></div>
+    </div>
+  </div>
+
+  <div class="call">
+    <h4>Read this before drawing conclusions about cause</h4>
+    <p style="margin-bottom:0">Branded impressions fell as hard as non-branded ones — from 2,927 in April to 1,134 in August. Rankings for those brand terms held steady around position 5–6 throughout. That pattern means fewer people searched for MVP1, not that the site lost brand rankings. Part of this decline is falling brand demand, which is a marketing problem rather than an SEO execution failure, and it would be unfair to lay all of it at the agency's door. What the agency <em>is</em> accountable for is the non-branded line — and that line never left zero.</p>
+  </div>
+</section>
+
+<section id="months">
+  <div class="shead"><h2>Month by month</h2><span class="n">the comparison</span></div>
+  <p class="lead">Search Console and GA4 side by side. The engagement's four delivery folders map onto May through August; April is the last clean month before work began.</p>
+  <div class="tscroll">
+    <table>
+      <caption>Sources: Search Console API (URL-prefix property, <span class="mono">dataState: all</span>) and GA4 Data API, pulled 31 Aug 2026. August runs to the 30th — the 31st was not yet available. "Non-brand clicks" is computed on the query-level rows Search Console exposes, which cover 62–79% of total clicks; the rest are withheld under Google's privacy threshold.</caption>
+      <thead><tr>
+        <th>Month</th><th>Phase</th><th class="num">Clicks</th><th class="num">Impressions</th>
+        <th class="num">CTR</th><th class="num">Avg pos</th><th class="num">Non-brand clicks</th>
+        <th class="num">GA4 organic sessions</th><th class="num">Key events</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>March</td><td>before</td><td class="num">233</td><td class="num">5,423</td><td class="num">4.30%</td><td class="num">7.7</td><td class="num">1</td><td class="num">682 *</td><td class="num">0</td></tr>
+        <tr class="hi"><td>April</td><td>benchmark</td><td class="num">202</td><td class="num">4,832</td><td class="num">4.18%</td><td class="num">8.4</td><td class="num">0</td><td class="num">195</td><td class="num">0</td></tr>
+        <tr><td>May</td><td>Month 1</td><td class="num">168</td><td class="num">5,034</td><td class="num">3.34%</td><td class="num">8.5</td><td class="num">1</td><td class="num">191</td><td class="num">0</td></tr>
+        <tr><td>June</td><td>Month 2</td><td class="num">113</td><td class="num">2,808</td><td class="num">4.02%</td><td class="num">10.7</td><td class="num">0</td><td class="num">119</td><td class="num">10</td></tr>
+        <tr><td>July</td><td>Month 3</td><td class="num">117</td><td class="num">2,055</td><td class="num">5.69%</td><td class="num">14.7</td><td class="num">0</td><td class="num">137</td><td class="num">30</td></tr>
+        <tr><td>August</td><td>Month 4</td><td class="num">103</td><td class="num">1,945</td><td class="num">5.30%</td><td class="num">16.4</td><td class="num">1</td><td class="num">126</td><td class="num">22</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:14px;color:var(--ink-3);margin-top:12px">* March GA4 organic (682 sessions) is inconsistent with the 233 Search Console clicks recorded that month — a 3&times; gap that does not appear in any other month. Treat March GA4 as unreliable and use April as the baseline. April onward, the two sources track each other closely.</p>
+
+  <div class="call">
+    <h4>The rising CTR is not good news</h4>
+    <p style="margin-bottom:0">Click-through rate climbed from 4.18% to 5.30% between April and August, and a report could fairly present that as an improvement. It is not. CTR rose because impressions fell faster than clicks — the site stopped appearing for the wide, low-intent queries that generate impressions without clicks. A shrinking denominator lifted the ratio. Judge this engagement on clicks and non-branded reach, not CTR.</p>
+  </div>
+</section>
+
+<section id="ledger">
+  <div class="shead"><h2>Claim ledger</h2><span class="n">15 claims checked</span></div>
+  <p class="lead">Every substantive claim in the Drive folder, checked against the live site, Search Console, GA4, or the linked pages themselves. Open any row for the evidence. Verdicts are mine; the data beside them is reproducible.</p>
+
+  <details class="claim" open>
+    <summary><span class="pill p-bad">Contradicted</span><span><span class="ttl">"557 live links" from press release distribution</span><span class="src">Month 1 · PR_Distribution_Channel_Report.pdf + CUSTOM_Final_Report.xls "PR" tab</span></span><span class="chev">&#9656;</span></summary>
+    <div class="body">
+      <div class="cmp">
+        <div class="claimed"><div class="lbl">Claimed</div><div class="val">557 live links from a premium paid press release, syndicated to "premium outlets", completed 13 June 2026.</div></div>
+        <div class="found"><div class="lbl">Found</div><div class="val">Of a random sample of 70 of the 353 URLs listed in the deliverable: <strong>30% are dead</strong> (7 return 404, 14 return 500). Of the 49 that load, every one links to mvp1.com.au — and <strong>all 49 are <span class="mono">rel="nofollow"</span></strong>.</div></div>
+      </div>
+      <p><strong>Dofollow links delivered: zero.</strong> A nofollow link passes no ranking signal. The "outlets" are near-identical syndication subdomains of local US radio stations — <span class="mono">lifestyle.kotaradio.com</span>, <span class="mono">lifestyle.q923radio.com</span>, <span class="mono">jacksonville.newsnetmedia.com</span> — carrying the same article. 35 of the live ones are subdomains of a single host, <span class="mono">newsnetmedia.com</span>.</p>
+      <p style="margin-bottom:0">This is the single largest line item in Month 1 and it produced no SEO value. Worth noting: the agency's own benchmark report flagged "32 potentially spammy referring domains" as a risk in April, then added hundreds more of the same kind in June.</p>
+    </div>
+  </details>
+
+  <details class="claim">
+    <summary><span class="pill p-bad">Contradicted</span><span><span class="ttl">Schema markup implemented across 11 pages</span><span class="src">Month 1 · Schema_Implementation_Report.pdf, dated 17 June 2026</span></span><span class="chev">&#9656;</span></summary>
+    <div class="body">
+      <div class="cmp">
+        <div class="claimed"><div class="lbl">Claimed</div><div class="val">Eight schema types — ProfessionalService, Organization, WebPage, WebSite, Service, VideoObject, AboutPage, ContactPage — implemented via JSON-LD on 11 named pages.</div></div>
+        <div class="found"><div class="lbl">Found on the live site</div><div class="val"><strong>Six of the ten checkable pages carry no structured data at all</strong>: /about-us, /contact, /overview, /solution-overview, /funded-tech-startups-scale-ups-smbs, /enterprise. Four of the eight claimed types — <span class="mono">WebPage</span>, <span class="mono">WebSite</span>, <span class="mono">AboutPage</span>, <span class="mono">ContactPage</span> — appear nowhere on the site.</div></div>
+      </div>
+      <p>What does exist is good: the homepage carries ProfessionalService, Organization, LocalBusiness and FAQPage; /ai-agents, /what-we-build and /platform-stabilisation carry FAQPage. Blog and podcast pages carry Article, BreadcrumbList and PodcastEpisode. But that markup is consistent with the site's own build, not with the report's page list.</p>
+      <p style="margin-bottom:0">The eleventh claimed page, <span class="mono">/blackvault-private-ai-infrastructure</span>, now permanently redirects off-domain to <span class="mono">blackvault.au</span>, so nothing on mvp1.com.au can carry the markup claimed for it.</p>
+    </div>
+  </details>
+
+  <details class="claim">
+    <summary><span class="pill p-bad">Contradicted</span><span><span class="ttl">Benchmark: "6,826 impressions, 278 clicks, 7.6 average position"</span><span class="src">Month 1 · Initial_Benchmark_Report_April_MVP1.pdf, period 16 Mar – 14 Apr 2026</span></span><span class="chev">&#9656;</span></summary>
+    <div class="body">
+      <div class="cmp">
+        <div class="claimed"><div class="lbl">Claimed for 16 Mar – 14 Apr</div><div class="val">6,826 impressions · 278 clicks · 4.07% CTR · position 7.6</div></div>
+        <div class="found"><div class="lbl">Search Console, same window</div><div class="val">5,661 impressions · 269 clicks · 4.75% CTR · position 7.18</div></div>
+      </div>
+      <p>Impressions are overstated by <strong>20.6%</strong>. Clicks are close (+3.3%) and the reported average position is actually slightly worse than reality, which argues against simple flattery. I tested every 20-to-45-day window in 2026 to see whether the figures belong to a mislabelled date range: no window matching the stated ~30-day period produces 6,826 impressions, and the closest matches are 43–44 day windows.</p>
+      <p style="margin-bottom:0">The most likely benign explanation is that the agency read a <em>domain</em> property while this audit reads the <em>URL-prefix</em> property <span class="mono">https://mvp1.com.au/</span>, which is the only one this account can see. That would inflate impressions. It would not normally leave clicks almost unchanged, so the discrepancy remains unexplained. Ask them for the export. The GA4 half of the same report is exact — see below.</p>
+    </div>
+  </details>
+
+  <details class="claim">
+    <summary><span class="pill p-bad">Contradicted</span><span><span class="ttl">"New XML sitemap created and submitted — 44 URLs"</span><span class="src">Month 1 · Onpage_Optimization_Report.pdf, dated 13 June 2026</span></span><span class="chev">&#9656;</span></summary>
+    <div class="body">
+      <div class="cmp">
+        <div class="claimed"><div class="lbl">Claimed</div><div class="val">Sitemap created with priority and crawl-frequency values, 44 URLs submitted, located at <span class="mono">https://mvp1.com.au/sitemap_index.xml</span>.</div></div>
+        <div class="found"><div class="lbl">Found</div><div class="val"><span class="mono">/sitemap_index.xml</span> returns <strong>404</strong>. The real sitemap is at <span class="mono">/sitemap.xml</span>, contains <strong>53</strong> URLs, and carries <span class="mono">lastmod</span> only — no priority or changefreq.</div></div>
+      </div>
+      <p style="margin-bottom:0">The same report claims credit for creating <span class="mono">robots.txt</span> "to block unwanted folders". The live robots.txt blocks nothing — it is two lines of <span class="mono">Allow: /</span> plus a sitemap reference, which is correct for this site but is not what was described.</p>
+    </div>
+  </details>
+
+  <details class="claim">
+    <summary><span class="pill p-bad">Contradicted</span><span><span class="ttl">Image ALT optimisation</span><span class="src">Month 1 · Image_ALT_Optimization.xlsx — 35 image/alt pairs</span></span><span class="chev">&#9656;</span></summary>
+    <div class="body">
+      <div class="cmp">
+        <div class="claimed"><div class="lbl">Claimed</div><div class="val">35 images given descriptive, keyword-aware alt text.</div></div>
+        <div class="found"><div class="lbl">Found</div><div class="val">Every image URL in the sheet points at <span class="mono">/wp-content/uploads/…</span> — <strong>WordPress paths that do not exist on the live site</strong>, which is a Vercel-hosted build serving <span class="mono">/assets/…</span>. The listed URLs return 403; one points at <span class="mono">dev.mvp1.com.au</span>, a legacy staging host.</div></div>
+      </div>
+      <p style="margin-bottom:0">The alt text itself is well written, but it was authored against a previous version of the website and could never have been applied. The live homepage still has <strong>20 of its 42 images missing alt text</strong> — the exact problem the deliverable was meant to solve.</p>
+    </div>
+  </details>
+
+  <details class="claim">
+    <summary><span class="pill p-unk">Not delivered</span><span><span class="ttl">Local Business Listing Report</span><span class="src">Month 4 · 200017_Local_Business_Listing_Report.pdf</span></span><span class="chev">&#9656;</span></summary>
+    <div class="body">
+      <p style="margin-bottom:0">A one-page PDF containing <strong>no extractable content whatsoever</strong> — no text, no data, no listing URLs. It is one of only three files delivered in Month 4. There is nothing here to verify.</p>
+    </div>
+  </details>
+
+  <details class="claim">
+    <summary><span class="pill p-unk">Duplicate</span><span><span class="ttl">"Recommended Case Study Structure" — billed across three months</span><span class="src">Months 1, 2 and 3</span></span><span class="chev">&#9656;</span></summary>
+    <div class="body">
+      <p style="margin-bottom:0">The same file appears in three consecutive delivery folders. It is <strong>byte-for-byte identical</strong> in all three — 418,129 bytes, MD5 <span class="mono">d0078fb2f6f3dffa4eb488f86f1bcd49</span>. One document, delivered three times.</p>
+    </div>
+  </details>
+
+  <details class="claim">
+    <summary><span class="pill p-unk">Quality failure</span><span><span class="ttl">Another client's article inside an MVP1 deliverable</span><span class="src">Month 3 · GEO_SEO_Month_2_CUSTOM_Final_Report.xls, "CP 2" tab</span></span><span class="chev">&#9656;</span></summary>
+    <div class="body">
+      <p>The content-posting tab contains a complete, unrelated article about <strong>fire extinguisher installation in Sydney</strong>, with live hyperlinks to <span class="mono">majesticfire.com.au</span>, left in the sheet below MVP1's own content.</p>
+      <p style="margin-bottom:0">This is a working template carried between clients without being cleared. It is not an SEO failure in itself, but it tells you how much individual attention these reports receive — and it means MVP1's own credentials, in the same workbook, have plausibly travelled the same way.</p>
+    </div>
+  </details>
+
+  <details class="claim">
+    <summary><span class="pill p-bad">Contradicted</span><span><span class="ttl">Keyword mapping — 17 commercial targets across four months</span><span class="src">Months 1–4 · Keyword_Mapping_*.xlsx</span></span><span class="chev">&#9656;</span></summary>
+    <div class="body">
+      <p>The four mapping sheets name targets including <span class="mono">AI agent development company Australia</span>, <span class="mono">enterprise software development Australia</span>, <span class="mono">AI automation agency</span>, <span class="mono">SaaS product development Australia</span> and <span class="mono">MVP app development Australia</span>.</p>
+      <div class="cmp">
+        <div class="claimed"><div class="lbl">Targeted</div><div class="val">17 commercial keywords, mapped to landing pages, with internal-linking instructions.</div></div>
+        <div class="found"><div class="lbl">Search Console, May–Aug</div><div class="val"><strong>1 of 17</strong> has ever recorded an impression. <span class="mono">private ai infrastructure</span> — 9 impressions, 0 clicks, May only. The other 16 have never appeared.</div></div>
+      </div>
+      <p style="margin-bottom:0">Two of the mapped landing pages cannot rank for anything: <span class="mono">/blackvault-private-ai-infrastructure</span> redirects off-domain, and Month 1's list includes <span class="mono">/blog</span>, which returns 404. Month 1's meta/H1 sheet lists 18 pages for optimisation, four of which — <span class="mono">/blog</span>, <span class="mono">/accelerate-program</span>, <span class="mono">/blackvault-private-ai-infrastructure</span>, <span class="mono">/rates</span> — no longer exist at those URLs.</p>
+    </div>
+  </details>
+
+  <details class="claim">
+    <summary><span class="pill p-ok">Verified</span><span><span class="ttl">Conversion goal tracking configured</span><span class="src">Month 1 · Goal_Setup_Report.pdf, dated 16 June 2026</span></span><span class="chev">&#9656;</span></summary>
+    <div class="body">
+      <div class="cmp">
+        <div class="claimed"><div class="lbl">Claimed</div><div class="val">10 goals tracking: Phone Click, Email Click, Contact CTA, Book Consultation, Get Workbook, thank-you pageview, and four social clicks.</div></div>
+        <div class="found"><div class="lbl">GA4, verified</div><div class="val">Key events go from <strong>0 before June to 10 in June, 30 in July, 22 in August</strong>. Named events fire exactly as described — Contact CTA Click, Phone Click, Email Click, Book Consultation CTA Click, Get Workbook CTA Click, and the four social events.</div></div>
+      </div>
+      <p style="margin-bottom:0">This was done properly and it works. It is the most useful thing in the four months — MVP1 now has conversion measurement it did not have in April. One caveat: two goals point at <span class="mono">/thank-you</span> and <span class="mono">/ebook/why-platform-business</span>, and neither URL resolves on the live site, so those definitions need repointing.</p>
+    </div>
+  </details>
+
+  <details class="claim">
+    <summary><span class="pill p-ok">Verified</span><span><span class="ttl">Benchmark GA4 figures</span><span class="src">Month 1 · Initial_Benchmark_Report_April_MVP1.pdf</span></span><span class="chev">&#9656;</span></summary>
+    <div class="body">
+      <p>Checked against the GA4 Data API for the same 16 Mar – 14 Apr window:</p>
+      <div class="tscroll" style="margin:10px 0"><table style="min-width:420px">
+        <thead><tr><th>Metric</th><th class="num">Claimed</th><th class="num">Actual</th><th>Verdict</th></tr></thead>
+        <tbody>
+          <tr><td>Total users</td><td class="num">420</td><td class="num">420</td><td><span class="pill p-ok">Exact</span></td></tr>
+          <tr><td>Total page views</td><td class="num">967</td><td class="num">967</td><td><span class="pill p-ok">Exact</span></td></tr>
+          <tr><td>Desktop users</td><td class="num">295 (70%)</td><td class="num">295 (70%)</td><td><span class="pill p-ok">Exact</span></td></tr>
+          <tr><td>Mobile users</td><td class="num">127 (30%)</td><td class="num">127 (30%)</td><td><span class="pill p-ok">Exact</span></td></tr>
+          <tr><td>Tablet users</td><td class="num">1</td><td class="num">1</td><td><span class="pill p-ok">Exact</span></td></tr>
+          <tr><td>Organic users</td><td class="num">153</td><td class="num">144</td><td><span class="pill p-part">+6%</span></td></tr>
+        </tbody>
+      </table></div>
+      <p style="margin-bottom:0">Credit where it is due — the GA4 reporting is accurate. That makes the 20.6% impressions gap in the same document harder to explain away as sloppiness.</p>
+    </div>
+  </details>
+
+  <details class="claim">
+    <summary><span class="pill p-ok">Verified</span><span><span class="ttl">Niche guest blog post published</span><span class="src">Month 3 · "NGBP" tab, completed June 2026</span></span><span class="chev">&#9656;</span></summary>
+    <div class="body">
+      <p style="margin-bottom:0">The post at <span class="mono">altervision.org</span> is live and carries <strong>three dofollow links</strong> to mvp1.com.au. This is a real, functioning backlink — and it is the only one found across all four months. The accompanying Tumblr post is also live with dofollow links, though Tumblr carries little weight. The Medium post returns 403 to automated checks, which is Medium blocking bots rather than evidence the post is gone.</p>
+    </div>
+  </details>
+
+  <details class="claim">
+    <summary><span class="pill p-ok">Verified</span><span><span class="ttl">Search Console "noindex" issues resolved</span><span class="src">Month 2 · GSC_Issue_Fixing_Report.pdf (1 Jul) and Month 4 (7 Aug, "No Issues Found")</span></span><span class="chev">&#9656;</span></summary>
+    <div class="body">
+      <p style="margin-bottom:0">Confirmed. A crawl of all 53 sitemap URLs found <strong>no <span class="mono">noindex</span> directives</strong>, every page returning HTTP 200, and every page carrying a correct self-referencing canonical. Whatever the noindex problem was, it is gone. Both reports are screenshots with no underlying data, so the "before" state cannot be independently confirmed — but the "after" state checks out.</p>
+    </div>
+  </details>
+
+  <details class="claim">
+    <summary><span class="pill p-part">Partly verified</span><span><span class="ttl">Google Business Profile performance, May 2026</span><span class="src">Month 3 · GBP_Campaign_Performance_Report__May_2026.pdf</span></span><span class="chev">&#9656;</span></summary>
+    <div class="body">
+      <div class="cmp">
+        <div class="claimed"><div class="lbl">Claimed for May</div><div class="val">241 profile views · 359 profile searches · 43 total interactions · 31 direction requests · 12 website clicks.</div></div>
+        <div class="found"><div class="lbl">GA4 cross-check</div><div class="val">GBP-tagged sessions in May: 21 from <span class="mono">GBP-Profile</span> plus <strong>12 from <span class="mono">GBP-Booking</span></strong>. The 12 matches the claimed website clicks exactly.</div></div>
+      </div>
+      <p style="margin-bottom:0">Consistent, so I have no reason to doubt it — but the profile-side numbers come from the Business Profile console, which this audit cannot read, so they are corroborated rather than proven. The trend since is not good: GBP-tagged sessions ran 33 in May, 11 in June, 17 in July, and <strong>5 in August</strong>.</p>
+    </div>
+  </details>
+
+  <details class="claim">
+    <summary><span class="pill p-part">Partly verified</span><span><span class="ttl">NAP consistency and citation fixing</span><span class="src">Months 1–4 · NAP_*.xls, Local Business Listing reports</span></span><span class="chev">&#9656;</span></summary>
+    <div class="body">
+      <p>The NAP audit itself is genuine and useful work — 14 directories were identified with wrong business names, addresses or phone numbers, including PitchBook, ZoomInfo, Crunchbase, CB Insights and ContactOut. The finalised NAP is correct and matches the live site.</p>
+      <p style="margin-bottom:0">The <strong>fixing</strong> is where it stalls. Across Months 2 and 3, every one of the five prioritised sites shows status "Contacted Site Admin — Waiting For Response", with the username and password columns empty. Four months in, the directory data is still wrong. The audit was delivered; the remediation was not. The reports also record MVP1's own website as showing "MVP Ventures Pty Ltd" against a finalised name of "MVP1 Ventures" — a legitimate finding worth fixing.</p>
+    </div>
+  </details>
+</section>
+
+<section id="tech">
+  <div class="shead"><h2>Technical audit</h2><span class="n">53 pages crawled</span></div>
+  <p class="lead">Independent of anything the agency claimed. The headline is genuinely positive: this is a well-built, fast, clean site. The issues below are real but mostly modest — none of them explains the traffic decline on its own.</p>
+
+  <div class="grid2" style="margin-bottom:22px">
+    <div class="card pad">
+      <h4 style="font-size:16px;color:var(--ok);font-family:var(--fh);margin-bottom:10px">Healthy</h4>
+      <ul class="tight" style="font-size:15px;color:var(--ink-2);margin:0">
+        <li>All 53 sitemap URLs return HTTP 200 — no broken pages, no redirect chains</li>
+        <li>Every page has a correct self-referencing canonical</li>
+        <li>No stray <span class="mono">noindex</span>; every page has exactly one H1</li>
+        <li>Fast: 0.40s average server response, 19KB average HTML</li>
+        <li>Strong security headers — HSTS with preload, a real CSP, <span class="mono">nosniff</span>, <span class="mono">X-Frame-Options</span></li>
+        <li>No thin content — every page clears 300 words</li>
+        <li>Viewport and <span class="mono">lang</span> set site-wide; all meta descriptions present</li>
+        <li>Legacy URLs from the site's rebuild redirect correctly with 308s</li>
+      </ul>
+    </div>
+    <div class="card pad">
+      <h4 style="font-size:16px;color:var(--bad);font-family:var(--fh);margin-bottom:10px">Needs work</h4>
+      <ul class="tight" style="font-size:15px;color:var(--ink-2);margin:0">
+        <li><strong>/blog returns 404</strong> — the blog index is missing, and it drew 101 impressions</li>
+        <li><strong>Four /news/ URLs are hard 404s</strong>, costing about 254 impressions</li>
+        <li><strong>17 of 53 pages carry no structured data</strong>, including /about-us, /contact and /overview</li>
+        <li><strong>20 of 42 homepage images have no alt text</strong>; 40 images site-wide lack width/height</li>
+        <li><strong>18 meta descriptions exceed 160 characters</strong> and will be truncated</li>
+        <li><strong>15 title tags exceed 60 characters</strong>; /faq and /careers are under-written at 19 and 23</li>
+        <li><strong>/rates is orphaned</strong> — live, drew 236 impressions, absent from the sitemap</li>
+        <li><strong>/blackvault-private-ai-infrastructure exports equity off-domain</strong> — 284 impressions redirect to blackvault.au</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tscroll">
+    <table>
+      <caption>Legacy URLs still drawing impressions, and what they do now. Most redirect correctly — the 404s are the losses worth recovering.</caption>
+      <thead><tr><th>Legacy URL</th><th class="num">Impressions</th><th>Status</th><th>Destination</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">/blog/inbound-ai-voice-agent-solution-guide</td><td class="num">1,004</td><td><span class="pill p-ok">308</span></td><td class="mono">/blog/inbound-ai-voice-agents</td></tr>
+        <tr><td class="mono">/blog/7-core-principles-of-…-platform-business</td><td class="num">814</td><td><span class="pill p-ok">308</span></td><td class="mono">/blog/platform-business-principles</td></tr>
+        <tr><td class="mono">/casestudies/security-marketplace</td><td class="num">331</td><td><span class="pill p-ok">308</span></td><td class="mono">/case-studies/guardbay-security-marketplace</td></tr>
+        <tr><td class="mono">/blackvault-private-ai-infrastructure</td><td class="num">284</td><td><span class="pill p-part">308 off-site</span></td><td class="mono">blackvault.au</td></tr>
+        <tr><td class="mono">/accelerate-program</td><td class="num">238</td><td><span class="pill p-ok">308</span></td><td class="mono">/idea-stage</td></tr>
+        <tr class="hi"><td class="mono">/rates</td><td class="num">236</td><td><span class="pill p-part">200 orphan</span></td><td>live, not in sitemap</td></tr>
+        <tr class="hi"><td class="mono">/news/mvp-ventures-redefining-innovation…</td><td class="num">227</td><td><span class="pill p-bad">404</span></td><td>lost</td></tr>
+        <tr class="hi"><td class="mono">/blog</td><td class="num">101</td><td><span class="pill p-bad">404</span></td><td>lost</td></tr>
+        <tr class="hi"><td class="mono">/news/news-2</td><td class="num">22</td><td><span class="pill p-bad">404</span></td><td>lost</td></tr>
+        <tr class="hi"><td class="mono">/ai-tool/ai-maturity-assessment</td><td class="num">19</td><td><span class="pill p-bad">404</span></td><td>lost</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="call" style="margin-top:22px">
+    <h4>Two things worth knowing</h4>
+    <p><strong>47 of 53 pages earned zero organic clicks in August.</strong> Traffic is concentrated almost entirely on the homepage (92 clicks), with /overview and the GBP-tagged homepage URL taking most of the rest. The blog, the case studies, the service pages and the podcast episodes are collectively invisible in search — which is precisely what the keyword mapping was supposed to change.</p>
+    <p style="margin-bottom:0"><strong>The legacy WordPress host is still reachable.</strong> <span class="mono">dev.mvp1.com.au</span> blocks HTML requests via ModSecurity but still serves image files. Low risk, but it should be taken down or firewalled — and it is the source of the stale image paths in the ALT deliverable.</p>
+  </div>
+</section>
+
+<section id="actions">
+  <div class="shead"><h2>What to do</h2><span class="n">priority order</span></div>
+  <p class="lead">Ordered by consequence, not effort.</p>
+  <div class="card pad">
+    <div class="act"><div class="rank">1</div><div>
+      <h4>Rotate every exposed credential and close the folder</h4>
+      <p>The Google account password, its recovery email and phone, and the reused Medium and Tumblr passwords. Then turn off link sharing on the Drive folder and audit Business Profile edit history.</p>
+      <div class="meta">Today · MVP1 · 30 minutes</div></div></div>
+
+    <div class="act"><div class="rank">2</div><div>
+      <h4>Put the retainer on hold and demand the underlying data</h4>
+      <p>Ask for the Search Console export behind the 6,826 impressions figure, the dofollow status of the 557 PR links, and an explanation for the empty Month 4 listing report and the triple-billed case study document. Their answers tell you whether this is fixable or terminal.</p>
+      <div class="meta">This week · MVP1 · commercial decision</div></div></div>
+
+    <div class="act"><div class="rank">3</div><div>
+      <h4>Restore /blog and redirect the dead /news/ URLs</h4>
+      <p>A 404 on the blog index is the clearest recoverable loss on the site. Point /blog at /resources or build a real index, and 301 the four /news/ URLs to /news-media. Add /rates to the sitemap or link it from navigation.</p>
+      <div class="meta">This week · web team · ~2 hours</div></div></div>
+
+    <div class="act"><div class="rank">4</div><div>
+      <h4>Repoint the two broken conversion goals</h4>
+      <p>Book Consultation and Get Workbook fire against <span class="mono">/thank-you</span> and <span class="mono">/ebook/why-platform-business</span>, neither of which exists. The tracking works — the destinations are stale, so you are under-counting conversions.</p>
+      <div class="meta">This week · web team · 30 minutes</div></div></div>
+
+    <div class="act"><div class="rank">5</div><div>
+      <h4>Rebuild keyword strategy around what the site can actually win</h4>
+      <p>"AI agent development company Australia" is a national head term against entrenched competitors, and four months produced no impressions for it. Target the specific, lower-competition language the site already brushes against — <span class="mono">app development agency in brisbane</span>, <span class="mono">ai maturity assessment tool</span>, <span class="mono">ai agent project failure case study</span> all appear in Search Console at rankable positions with real intent behind them.</p>
+      <div class="meta">Next 30 days · whoever holds SEO next</div></div></div>
+
+    <div class="act"><div class="rank">6</div><div>
+      <h4>Add schema to the 17 bare pages and fix the homepage alt text</h4>
+      <p>Organization and Service markup on the commercial pages, BreadcrumbList site-wide. Alt text on the 20 homepage images. Trim the 18 over-length meta descriptions and 15 over-length titles.</p>
+      <div class="meta">Next 30 days · web team · ~1 day</div></div></div>
+
+    <div class="act"><div class="rank">7</div><div>
+      <h4>Decide what BlackVault's redirect is worth</h4>
+      <p><span class="mono">/blackvault-private-ai-infrastructure</span> sends 284 impressions of accumulated authority to a separate domain. If BlackVault is a distinct business, that is correct. If it is an MVP1 service line, keep a real page on mvp1.com.au and link out instead.</p>
+      <div class="meta">Next 30 days · MVP1 · commercial decision</div></div></div>
+  </div>
+</section>
+
+<section id="method">
+  <div class="shead"><h2>Method &amp; limits</h2><span class="n">reproducibility</span></div>
+  <div class="grid2">
+    <div class="card pad">
+      <h4 style="font-size:16px;margin-bottom:10px">What was done</h4>
+      <ul class="tight" style="font-size:15px;color:var(--ink-2);margin:0">
+        <li>Search Console API, URL-prefix property, March–August 2026, <span class="mono">dataState: all</span>, by query, page, device and country</li>
+        <li>GA4 Data API, property 476568741, same window, by channel, device, source/medium, landing page and event</li>
+        <li>Full crawl of all 53 sitemap URLs — titles, meta, headings, canonicals, JSON-LD, images, links, response times</li>
+        <li>All 34 Drive deliverables downloaded and parsed — PDF, XLS, XLSX and DOCX</li>
+        <li>Live HTTP verification of 70 sampled PR links, 25 legacy URLs, and every agency-referenced URL</li>
+      </ul>
+    </div>
+    <div class="card pad">
+      <h4 style="font-size:16px;margin-bottom:10px">Known limits — read these</h4>
+      <ul class="tight" style="font-size:15px;color:var(--ink-2);margin:0">
+        <li><strong>August is 30 days, not 31.</strong> Search Console had not published 31 August at the time of the pull.</li>
+        <li><strong>Branded/non-branded is computed on visible queries only</strong> — 62–79% of clicks. Google withholds the rest. The direction is unambiguous; the exact split is approximate.</li>
+        <li><strong>Only the URL-prefix property was readable.</strong> If a domain property exists, its numbers will be higher, and that may partly explain the benchmark gap.</li>
+        <li><strong>Business Profile console was not accessible</strong>, so GBP figures are corroborated through GA4 rather than proven.</li>
+        <li><strong>No Core Web Vitals field data.</strong> The configured API key is invalid and the PageSpeed quota was exhausted, so CrUX could not be read. Server response times here are measured, not field-sourced.</li>
+        <li><strong>Backlink totals were not independently audited</strong> — no Ahrefs or Moz access. PR links were verified by direct HTTP fetch instead.</li>
+      </ul>
+    </div>
+  </div>
+  <p style="font-size:14px;color:var(--ink-3);margin-top:18px">Verdict definitions — <strong>Verified</strong>: the claim is independently confirmed by live data. <strong>Partly verified</strong>: consistent with available data but not fully provable from the sources accessible here. <strong>Contradicted</strong>: the live site or raw data disproves the claim as written. <strong>Not delivered / Duplicate / Quality failure</strong>: the artefact exists but has no verifiable substance.</p>
+</section>
+
+</div>
+
+<footer><div class="wrap fw">
+  <span>MVP1 Ventures | mvp1.com.au</span>
+  <span>Organic Search Audit · 31 August 2026</span>
+  <span class="tag">Your future emerges.</span>
+</div></footer>
+
+<div class="tip" id="tip"></div>
+
+<script>
+const D=[
+ {m:'Mar',clicks:233,impr:5423,pos:7.72,bi:2789,nbi:177,ph:'before'},
+ {m:'Apr',clicks:202,impr:4832,pos:8.42,bi:2927,nbi:266,ph:'benchmark'},
+ {m:'May',clicks:168,impr:5034,pos:8.45,bi:3152,nbi:338,ph:'Month 1'},
+ {m:'Jun',clicks:113,impr:2808,pos:10.75,bi:1441,nbi:281,ph:'Month 2'},
+ {m:'Jul',clicks:117,impr:2055,pos:14.74,bi:1125,nbi:139,ph:'Month 3'},
+ {m:'Aug',clicks:103,impr:1945,pos:16.39,bi:1134,nbi:97,ph:'Month 4'}
+];
+const tip=document.getElementById('tip');
+const SV='http://www.w3.org/2000/svg';
+function el(n,a){const e=document.createElementNS(SV,n);for(const k in a)e.setAttribute(k,a[k]);return e;}
+function show(evt,html){tip.innerHTML=html;tip.style.opacity='1';
+  const r=tip.getBoundingClientRect();let x=evt.clientX+14,y=evt.clientY-r.height-10;
+  if(x+r.width>innerWidth-8)x=evt.clientX-r.width-14; if(y<8)y=evt.clientY+18;
+  tip.style.left=x+'px';tip.style.top=y+'px';}
+function hide(){tip.style.opacity='0';}
+
+function lineChart(id,key,fmt,invert,label){
+  const W=520,H=210,P={t:18,r:16,b:30,l:48};
+  const iw=W-P.l-P.r, ih=H-P.t-P.b;
+  const vals=D.map(d=>d[key]);
+  let lo=Math.min(...vals), hi=Math.max(...vals);
+  const padv=(hi-lo)*0.18||1; hi+=padv; lo=Math.max(0,lo-padv);
+  const X=i=>P.l+(iw*i)/(D.length-1);
+  const Y=v=>{const t=(v-lo)/(hi-lo);return invert?P.t+t*ih:P.t+ih-t*ih;};
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':label});
+  for(let g=0;g<=4;g++){
+    const v=lo+(hi-lo)*g/4, y=Y(v);
+    svg.appendChild(el('line',{x1:P.l,x2:W-P.r,y1:y,y2:y,class:'gl'}));
+    const t=el('text',{x:P.l-8,y:y+4,class:'ax','text-anchor':'end'});
+    t.textContent=fmt(v,true); svg.appendChild(t);
+  }
+  const pts=D.map((d,i)=>[X(i),Y(d[key])]);
+  const area=el('path',{d:`M${pts[0][0]},${P.t+ih} `+pts.map(p=>`L${p[0]},${p[1]}`).join(' ')+` L${pts[pts.length-1][0]},${P.t+ih} Z`,
+    fill:'var(--s1)','fill-opacity':'.10'});
+  if(!invert) svg.appendChild(area);
+  svg.appendChild(el('path',{d:'M'+pts.map(p=>`${p[0]},${p[1]}`).join(' L'),fill:'none',stroke:'var(--s1)','stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round'}));
+  D.forEach((d,i)=>{
+    const [x,y]=pts[i], last=i===D.length-1;
+    svg.appendChild(el('circle',{cx:x,cy:y,r:last?5.5:4,fill:last?'var(--s1)':'var(--surface)',stroke:'var(--s1)','stroke-width':2}));
+    const lb=el('text',{x:X(i),y:H-10,class:'ax','text-anchor':'middle'}); lb.textContent=d.m; svg.appendChild(lb);
+    if(i===0||last){const v=el('text',{x:last?x:x+9,y:y+(invert?17:-12),class:'dlab','text-anchor':last?'end':'start'});v.textContent=fmt(d[key]);svg.appendChild(v);}
+    const hit=el('rect',{x:X(i)-iw/(D.length*2),y:P.t,width:iw/(D.length-1),height:ih,fill:'transparent',style:'cursor:crosshair'});
+    hit.addEventListener('mousemove',e=>show(e,`<b>${d.m} 2026 · ${d.ph}</b>${label}: ${fmt(d[key])}`));
+    hit.addEventListener('mouseleave',hide);
+    svg.appendChild(hit);
+  });
+  document.getElementById(id).appendChild(svg);
+}
+
+function groupedBars(id){
+  const W=520,H=230,P={t:18,r:16,b:34,l:52};
+  const iw=W-P.l-P.r, ih=H-P.t-P.b;
+  const hi=Math.max(...D.map(d=>d.bi))*1.12;
+  const Y=v=>P.t+ih-(v/hi)*ih;
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':'Branded versus non-branded impressions by month'});
+  for(let g=0;g<=4;g++){
+    const v=hi*g/4,y=Y(v);
+    svg.appendChild(el('line',{x1:P.l,x2:W-P.r,y1:y,y2:y,class:'gl'}));
+    const t=el('text',{x:P.l-8,y:y+4,class:'ax','text-anchor':'end'});t.textContent=Math.round(v).toLocaleString();svg.appendChild(t);
+  }
+  const band=iw/D.length, bw=(band-14)/2;
+  D.forEach((d,i)=>{
+    const x0=P.l+band*i+7;
+    [['bi','var(--s1)','Branded'],['nbi','var(--s2)','Non-branded']].forEach(([k,c,nm],j)=>{
+      const h=Math.max(1,P.t+ih-Y(d[k])), x=x0+j*(bw+2);
+      const r=el('rect',{x:x,y:Y(d[k]),width:bw,height:h,fill:c,rx:3});
+      r.addEventListener('mousemove',e=>show(e,`<b>${d.m} 2026 · ${d.ph}</b>${nm}: ${d[k].toLocaleString()} impressions`));
+      r.addEventListener('mouseleave',hide);
+      svg.appendChild(r);
+    });
+    const lb=el('text',{x:x0+band/2-7,y:H-12,class:'ax','text-anchor':'middle'});lb.textContent=d.m;svg.appendChild(lb);
+  });
+  document.getElementById(id).appendChild(svg);
+}
+
+lineChart('c-clicks','clicks',(v,ax)=>Math.round(v).toLocaleString(),false,'Clicks');
+lineChart('c-impr','impr',(v,ax)=>ax?(v>=1000?(v/1000).toFixed(1)+'k':Math.round(v)):Math.round(v).toLocaleString(),false,'Impressions');
+lineChart('c-pos','pos',(v)=>v.toFixed(1),true,'Average position');
+groupedBars('c-brand');
+document.querySelectorAll('.nav a').forEach(a=>a.addEventListener('click',e=>{
+  const t=document.querySelector(a.getAttribute('href'));
+  if(t){e.preventDefault();window.scrollTo({top:t.offsetTop-58,behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'});}
+}));
+</script>

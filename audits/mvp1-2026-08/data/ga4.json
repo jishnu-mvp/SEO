@@ -1,0 +1,2856 @@
+{
+ "property": "properties/476568741",
+ "months": {
+  "2026-03": {
+   "totals": [
+    {
+     "dims": [],
+     "mets": [
+      "1185",
+      "1047",
+      "1021",
+      "3160",
+      "741",
+      "239.82372516793251",
+      "0.37468354430379747",
+      "0"
+     ]
+    }
+   ],
+   "channels": [
+    {
+     "dims": [
+      "Organic Search"
+     ],
+     "mets": [
+      "682",
+      "638",
+      "628",
+      "1600",
+      "555",
+      "221.21925630938418",
+      "0.18621700879765396",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "Direct"
+     ],
+     "mets": [
+      "475",
+      "392",
+      "379",
+      "1522",
+      "172",
+      "269.04305190736841",
+      "0.63789473684210529",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "Organic Social"
+     ],
+     "mets": [
+      "17",
+      "9",
+      "8",
+      "20",
+      "8",
+      "274.51920535294119",
+      "0.52941176470588236",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "Referral"
+     ],
+     "mets": [
+      "8",
+      "6",
+      "5",
+      "13",
+      "6",
+      "82.475951",
+      "0.25",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "Unassigned"
+     ],
+     "mets": [
+      "3",
+      "3",
+      "1",
+      "5",
+      "0",
+      "65.832588666666666",
+      "1",
+      "0"
+     ]
+    }
+   ],
+   "landing": [
+    {
+     "dims": [
+      "/"
+     ],
+     "mets": [
+      "887",
+      "685"
+     ]
+    },
+    {
+     "dims": [
+      "/blog"
+     ],
+     "mets": [
+      "36",
+      "5"
+     ]
+    },
+    {
+     "dims": [
+      "/contact"
+     ],
+     "mets": [
+      "33",
+      "5"
+     ]
+    },
+    {
+     "dims": [
+      "(not set)"
+     ],
+     "mets": [
+      "25",
+      "6"
+     ]
+    },
+    {
+     "dims": [
+      "/privacy-policy"
+     ],
+     "mets": [
+      "22",
+      "2"
+     ]
+    },
+    {
+     "dims": [
+      "/what-we-build"
+     ],
+     "mets": [
+      "13",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/overview"
+     ],
+     "mets": [
+      "12",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/solution-overview"
+     ],
+     "mets": [
+      "12",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/about-us"
+     ],
+     "mets": [
+      "11",
+      "2"
+     ]
+    },
+    {
+     "dims": [
+      "/ai-agents"
+     ],
+     "mets": [
+      "10",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/ai-tool/ai-maturity-assessment"
+     ],
+     "mets": [
+      "9",
+      "6"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/software-development-agency-selection-guide"
+     ],
+     "mets": [
+      "7",
+      "3"
+     ]
+    },
+    {
+     "dims": [
+      "/news-media"
+     ],
+     "mets": [
+      "7",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/resources"
+     ],
+     "mets": [
+      "7",
+      "4"
+     ]
+    },
+    {
+     "dims": [
+      "/ebook/why-platform-business"
+     ],
+     "mets": [
+      "6",
+      "2"
+     ]
+    },
+    {
+     "dims": [
+      "/enterprise"
+     ],
+     "mets": [
+      "6",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/our-work"
+     ],
+     "mets": [
+      "6",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/platform-stabilisation"
+     ],
+     "mets": [
+      "6",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/casestudies/security-marketplace"
+     ],
+     "mets": [
+      "5",
+      "2"
+     ]
+    },
+    {
+     "dims": [
+      "/accelerate-program"
+     ],
+     "mets": [
+      "4",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/inbound-ai-voice-agent-solution-guide"
+     ],
+     "mets": [
+      "4",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/podcasts"
+     ],
+     "mets": [
+      "4",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/aimaturity"
+     ],
+     "mets": [
+      "3",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/casestudies/uber-for-kids"
+     ],
+     "mets": [
+      "3",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/funded-tech-startups-scale-ups-smbs"
+     ],
+     "mets": [
+      "3",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/resources?type=ai-tool"
+     ],
+     "mets": [
+      "3",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/terms-conditions"
+     ],
+     "mets": [
+      "3",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/thank-you"
+     ],
+     "mets": [
+      "3",
+      "2"
+     ]
+    },
+    {
+     "dims": [
+      "/ai-tool/ai-maturity-assessment-tool"
+     ],
+     "mets": [
+      "2",
+      "2"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/agentic-ai-30x-productivity-guide"
+     ],
+     "mets": [
+      "2",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/ai-agent-development-replace-traditional-hiring"
+     ],
+     "mets": [
+      "2",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/why-traditional-business-models-are-at-risk-of-disruption-by-ai-platforms"
+     ],
+     "mets": [
+      "2",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/casestudies/tiny-home-marketplace"
+     ],
+     "mets": [
+      "2",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/resources/ai-tool/"
+     ],
+     "mets": [
+      "2",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/resources?type=blog"
+     ],
+     "mets": [
+      "2",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/?fbclid=IwY2xjawQ3-aVleHRuA2FlbQIxMABicmlkETFFMGpDRlBrR0N3bVVpZEhGc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHunoqr28Nyw2blVnikTMHPyEgcgppfzYHVPkTlzNp4hlHumEymjVQZpJqCHL_aem_VGclbBQeNDtdEJKQRGIOhA"
+     ],
+     "mets": [
+      "1",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/?fbclid=IwZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAEe0O7ypiYOSjD1xJMtEKu0adA9UegHZJN6keNCIW2-gfgP-QA81wpGpVzO1PA_aem_xPykKb75bpVHsaiUn0wp7w"
+     ],
+     "mets": [
+      "1",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/?fbclid=IwZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAEeH9HMdcRSbKrc9mHWSS55FaGamFGKmGdsVyqPVoONp3Ao8O-SdM5purxCJ3I_aem_WPWAFRDP43XJg2rAqwNEJA"
+     ],
+     "mets": [
+      "1",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/?fbclid=IwZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAEeKUOzuxuCJp3Q9NVPgTXWBrOuz00b5hD7pAeb1WbjAs4iPcgKBmINDnikRJg_aem_IBzLt1DgSSnKZmPj8cjd0g"
+     ],
+     "mets": [
+      "1",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/?fbclid=IwZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAEebm6pP235dfjwzpyycsspDkT5653eqBTV4p2Uu8QILc3s5gUg1olhAGdsaXc_aem_CDYLDXM7Yjl8Gqay2YCzPQ"
+     ],
+     "mets": [
+      "1",
+      "0"
+     ]
+    }
+   ]
+  },
+  "2026-04": {
+   "totals": [
+    {
+     "dims": [],
+     "mets": [
+      "610",
+      "463",
+      "438",
+      "1009",
+      "195",
+      "146.30613192459015",
+      "0.680327868852459",
+      "0"
+     ]
+    }
+   ],
+   "channels": [
+    {
+     "dims": [
+      "Direct"
+     ],
+     "mets": [
+      "346",
+      "292",
+      "288",
+      "580",
+      "97",
+      "136.23890263005782",
+      "0.71965317919075145",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "Organic Search"
+     ],
+     "mets": [
+      "195",
+      "138",
+      "120",
+      "284",
+      "66",
+      "99.182074210256417",
+      "0.66153846153846152",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "Referral"
+     ],
+     "mets": [
+      "38",
+      "11",
+      "6",
+      "97",
+      "21",
+      "529.10241442105269",
+      "0.44736842105263158",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "Organic Social"
+     ],
+     "mets": [
+      "29",
+      "25",
+      "24",
+      "47",
+      "11",
+      "91.782205",
+      "0.62068965517241381",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "Unassigned"
+     ],
+     "mets": [
+      "1",
+      "1",
+      "0",
+      "1",
+      "0",
+      "0",
+      "1",
+      "0"
+     ]
+    }
+   ],
+   "landing": [
+    {
+     "dims": [
+      "/"
+     ],
+     "mets": [
+      "342",
+      "144"
+     ]
+    },
+    {
+     "dims": [
+      "(not set)"
+     ],
+     "mets": [
+      "43",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/ai-agents"
+     ],
+     "mets": [
+      "19",
+      "8"
+     ]
+    },
+    {
+     "dims": [
+      "/contact"
+     ],
+     "mets": [
+      "14",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/about-us"
+     ],
+     "mets": [
+      "11",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/terms-conditions"
+     ],
+     "mets": [
+      "11",
+      "4"
+     ]
+    },
+    {
+     "dims": [
+      "/overview"
+     ],
+     "mets": [
+      "10",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/solution-overview"
+     ],
+     "mets": [
+      "10",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/what-we-build"
+     ],
+     "mets": [
+      "10",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/sovereign-ai-infrastructure-offshore-ai-legal-risks"
+     ],
+     "mets": [
+      "9",
+      "2"
+     ]
+    },
+    {
+     "dims": [
+      "/our-work"
+     ],
+     "mets": [
+      "9",
+      "2"
+     ]
+    },
+    {
+     "dims": [
+      "/blackvault-private-ai-infrastructure"
+     ],
+     "mets": [
+      "6",
+      "2"
+     ]
+    },
+    {
+     "dims": [
+      "/funded-tech-startups-scale-ups-smbs"
+     ],
+     "mets": [
+      "5",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/news-media"
+     ],
+     "mets": [
+      "5",
+      "2"
+     ]
+    },
+    {
+     "dims": [
+      "/platform-stabilisation"
+     ],
+     "mets": [
+      "5",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/7-core-principles-of-building-a-successful-platform-business"
+     ],
+     "mets": [
+      "4",
+      "2"
+     ]
+    },
+    {
+     "dims": [
+      "/casestudies/security-marketplace"
+     ],
+     "mets": [
+      "4",
+      "2"
+     ]
+    },
+    {
+     "dims": [
+      "/privacy-policy"
+     ],
+     "mets": [
+      "4",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/resources"
+     ],
+     "mets": [
+      "4",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/accelerate-program"
+     ],
+     "mets": [
+      "3",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/blog"
+     ],
+     "mets": [
+      "3",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/casestudies/uber-for-kids"
+     ],
+     "mets": [
+      "3",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/demo"
+     ],
+     "mets": [
+      "3",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/ebook/why-platform-business"
+     ],
+     "mets": [
+      "3",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/enterprise"
+     ],
+     "mets": [
+      "3",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/help"
+     ],
+     "mets": [
+      "3",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/pricing"
+     ],
+     "mets": [
+      "3",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/rates"
+     ],
+     "mets": [
+      "3",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/sales"
+     ],
+     "mets": [
+      "3",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/support"
+     ],
+     "mets": [
+      "3",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/?post_type=blog&p=2154&preview=true"
+     ],
+     "mets": [
+      "2",
+      "2"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/your-ai-tool-is-sending-client-data-offshore-and-you-are-legally-responsible-for-it"
+     ],
+     "mets": [
+      "2",
+      "2"
+     ]
+    },
+    {
+     "dims": [
+      "/news/mvp-ventures-redefining-innovation-in-the-digital-space"
+     ],
+     "mets": [
+      "2",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/resources?type=ai-tool"
+     ],
+     "mets": [
+      "2",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/resources?type=blog"
+     ],
+     "mets": [
+      "2",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/resources?type=ebook"
+     ],
+     "mets": [
+      "2",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/404"
+     ],
+     "mets": [
+      "1",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/?fbclid=IwZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAEe3yndffsqriLua42fjK36eoHqxbWx5M1psQZo77Qm9gyDxkXsWvBdZLeY0Xo_aem_DKK54IeukOaUNnfnVhEiUA"
+     ],
+     "mets": [
+      "1",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/?fbclid=IwZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAEe6DDZlBmTSYaheaAQToG4bB0C6kl7l0AwN7vVm8aoGnUTNxYXycJXrW-3Sag_aem_dpT4QqLtofMX80II8lU63A"
+     ],
+     "mets": [
+      "1",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/?fbclid=IwZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAEeZr5NBLpgPTzWvWx-xgBuDAPwAlQb-8q5oL21N2G7vSlM3m-qX4lUGR21TxQ_aem_0sJxcoS4msrWIwN_25DzQQ"
+     ],
+     "mets": [
+      "1",
+      "0"
+     ]
+    }
+   ]
+  },
+  "2026-05": {
+   "totals": [
+    {
+     "dims": [],
+     "mets": [
+      "789",
+      "619",
+      "598",
+      "1398",
+      "258",
+      "138.55235215209123",
+      "0.6730038022813688",
+      "0"
+     ]
+    }
+   ],
+   "channels": [
+    {
+     "dims": [
+      "Direct"
+     ],
+     "mets": [
+      "501",
+      "414",
+      "408",
+      "842",
+      "128",
+      "136.99100836327347",
+      "0.7445109780439122",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "Organic Search"
+     ],
+     "mets": [
+      "191",
+      "148",
+      "138",
+      "291",
+      "82",
+      "131.20817985863874",
+      "0.5706806282722513",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "Unassigned"
+     ],
+     "mets": [
+      "36",
+      "32",
+      "30",
+      "161",
+      "19",
+      "111.7537305",
+      "0.47222222222222221",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "Referral"
+     ],
+     "mets": [
+      "35",
+      "15",
+      "8",
+      "57",
+      "17",
+      "233.6708496857143",
+      "0.51428571428571423",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "Organic Social"
+     ],
+     "mets": [
+      "13",
+      "9",
+      "7",
+      "13",
+      "6",
+      "16.569492384615383",
+      "0.53846153846153844",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "Email"
+     ],
+     "mets": [
+      "12",
+      "9",
+      "7",
+      "34",
+      "6",
+      "267.29423891666664",
+      "0.5",
+      "0"
+     ]
+    }
+   ],
+   "landing": [
+    {
+     "dims": [
+      "/"
+     ],
+     "mets": [
+      "465",
+      "194"
+     ]
+    },
+    {
+     "dims": [
+      "(not set)"
+     ],
+     "mets": [
+      "54",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/contact"
+     ],
+     "mets": [
+      "29",
+      "5"
+     ]
+    },
+    {
+     "dims": [
+      "/about-us"
+     ],
+     "mets": [
+      "18",
+      "6"
+     ]
+    },
+    {
+     "dims": [
+      "/ai-agents"
+     ],
+     "mets": [
+      "18",
+      "11"
+     ]
+    },
+    {
+     "dims": [
+      "/blackvault-private-ai-infrastructure"
+     ],
+     "mets": [
+      "18",
+      "6"
+     ]
+    },
+    {
+     "dims": [
+      "/overview"
+     ],
+     "mets": [
+      "12",
+      "2"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/sovereign-ai-infrastructure-offshore-ai-legal-risks"
+     ],
+     "mets": [
+      "11",
+      "6"
+     ]
+    },
+    {
+     "dims": [
+      "/blog"
+     ],
+     "mets": [
+      "10",
+      "2"
+     ]
+    },
+    {
+     "dims": [
+      "/solution-overview"
+     ],
+     "mets": [
+      "10",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/terms-conditions"
+     ],
+     "mets": [
+      "10",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/what-we-build"
+     ],
+     "mets": [
+      "10",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/rates"
+     ],
+     "mets": [
+      "9",
+      "2"
+     ]
+    },
+    {
+     "dims": [
+      "/accelerate-program"
+     ],
+     "mets": [
+      "8",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/casestudies/tiny-home-marketplace"
+     ],
+     "mets": [
+      "8",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/aimaturity"
+     ],
+     "mets": [
+      "7",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/mvp1/aimaturity"
+     ],
+     "mets": [
+      "7",
+      "7"
+     ]
+    },
+    {
+     "dims": [
+      "/platform-stabilisation"
+     ],
+     "mets": [
+      "7",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/casestudies/security-marketplace"
+     ],
+     "mets": [
+      "6",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/casestudies/uber-for-kids"
+     ],
+     "mets": [
+      "6",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/funded-tech-startups-scale-ups-smbs"
+     ],
+     "mets": [
+      "6",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/our-work"
+     ],
+     "mets": [
+      "6",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/private-ai-infrastructure-control-data-sovereignty"
+     ],
+     "mets": [
+      "5",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/news-media"
+     ],
+     "mets": [
+      "5",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/7-core-principles-of-building-a-successful-platform-business"
+     ],
+     "mets": [
+      "4",
+      "3"
+     ]
+    },
+    {
+     "dims": [
+      "/enterprise"
+     ],
+     "mets": [
+      "4",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/agentic-ai-30x-productivity-guide"
+     ],
+     "mets": [
+      "3",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/privacy-policy"
+     ],
+     "mets": [
+      "3",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/resources"
+     ],
+     "mets": [
+      "3",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/ai-tool/ai-maturity-assessment"
+     ],
+     "mets": [
+      "2",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/ai-agent-development-replace-traditional-hiring"
+     ],
+     "mets": [
+      "2",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/software-development-agency-selection-guide"
+     ],
+     "mets": [
+      "2",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/ebook/why-platform-business"
+     ],
+     "mets": [
+      "2",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/news/mvp-ventures-redefining-innovation-in-the-digital-space"
+     ],
+     "mets": [
+      "2",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/podcast/ai-avatars-transforming-sales-and-customer-engagement"
+     ],
+     "mets": [
+      "2",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/podcast/scaling-human-expertise-with-ai-jay-pandya-on-the-future-of-digital-solutions"
+     ],
+     "mets": [
+      "2",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/podcast/using-ai-to-share-knowledge-with-the-world-jay-pandya"
+     ],
+     "mets": [
+      "2",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/podcasts"
+     ],
+     "mets": [
+      "2",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/?fbclid=IwZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAEe4Kajy1bB-ZkNGh-wnOgQfvRngBuYQMU5xYMtQc4GSImRge_eRA0Van4OHkM_aem_R0z0UUYkzx2opVLNeER_AQ"
+     ],
+     "mets": [
+      "1",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/?fbclid=IwZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAEeMy_whEwTN2c6G2_EPrCiKTmxrDXkqJoLN-Q3q-NsJk_njR7WCok8se8oCRI_aem_obwApb_WKICg3I4sCq_Ywg"
+     ],
+     "mets": [
+      "1",
+      "1"
+     ]
+    }
+   ]
+  },
+  "2026-06": {
+   "totals": [
+    {
+     "dims": [],
+     "mets": [
+      "498",
+      "384",
+      "358",
+      "1063",
+      "193",
+      "217.93656725502009",
+      "0.6124497991967871",
+      "10"
+     ]
+    }
+   ],
+   "channels": [
+    {
+     "dims": [
+      "Direct"
+     ],
+     "mets": [
+      "329",
+      "269",
+      "256",
+      "738",
+      "106",
+      "235.66319752583587",
+      "0.67781155015197569",
+      "2"
+     ]
+    },
+    {
+     "dims": [
+      "Organic Search"
+     ],
+     "mets": [
+      "119",
+      "88",
+      "82",
+      "175",
+      "58",
+      "117.88615857983193",
+      "0.51260504201680668",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "Referral"
+     ],
+     "mets": [
+      "23",
+      "13",
+      "6",
+      "76",
+      "12",
+      "484.46622986956527",
+      "0.47826086956521741",
+      "2"
+     ]
+    },
+    {
+     "dims": [
+      "Unassigned"
+     ],
+     "mets": [
+      "13",
+      "12",
+      "10",
+      "44",
+      "9",
+      "201.68305307692304",
+      "0.30769230769230771",
+      "5"
+     ]
+    },
+    {
+     "dims": [
+      "Organic Social"
+     ],
+     "mets": [
+      "11",
+      "5",
+      "4",
+      "21",
+      "5",
+      "80.599564727272721",
+      "0.54545454545454541",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "Email"
+     ],
+     "mets": [
+      "2",
+      "1",
+      "0",
+      "7",
+      "2",
+      "844.4667175",
+      "0",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "AI Assistant"
+     ],
+     "mets": [
+      "1",
+      "1",
+      "0",
+      "2",
+      "1",
+      "630.634012",
+      "0",
+      "0"
+     ]
+    }
+   ],
+   "landing": [
+    {
+     "dims": [
+      "/"
+     ],
+     "mets": [
+      "306",
+      "145"
+     ]
+    },
+    {
+     "dims": [
+      "(not set)"
+     ],
+     "mets": [
+      "27",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/ai-agents"
+     ],
+     "mets": [
+      "19",
+      "10"
+     ]
+    },
+    {
+     "dims": [
+      "/about-us"
+     ],
+     "mets": [
+      "16",
+      "4"
+     ]
+    },
+    {
+     "dims": [
+      "/contact"
+     ],
+     "mets": [
+      "10",
+      "3"
+     ]
+    },
+    {
+     "dims": [
+      "/funded-tech-startups-scale-ups-smbs"
+     ],
+     "mets": [
+      "9",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/overview"
+     ],
+     "mets": [
+      "9",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/terms-conditions"
+     ],
+     "mets": [
+      "7",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/aimaturity"
+     ],
+     "mets": [
+      "6",
+      "4"
+     ]
+    },
+    {
+     "dims": [
+      "/blackvault-private-ai-infrastructure"
+     ],
+     "mets": [
+      "6",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/the-rise-of-agentic-workflows-why-businesses-are-replacing-traditional-automation-in-2026"
+     ],
+     "mets": [
+      "6",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/casestudies/tiny-home-marketplace"
+     ],
+     "mets": [
+      "6",
+      "2"
+     ]
+    },
+    {
+     "dims": [
+      "/404"
+     ],
+     "mets": [
+      "4",
+      "2"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/inbound-ai-voice-agent-solution-guide"
+     ],
+     "mets": [
+      "4",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/sovereign-ai-infrastructure-offshore-ai-legal-risks"
+     ],
+     "mets": [
+      "4",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/why-most-ai-agent-projects-fail-in-production-and-how-enterprise-teams-are-fixing-it"
+     ],
+     "mets": [
+      "4",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/enterprise"
+     ],
+     "mets": [
+      "4",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/resources?type=podcast"
+     ],
+     "mets": [
+      "4",
+      "2"
+     ]
+    },
+    {
+     "dims": [
+      "/solution-overview"
+     ],
+     "mets": [
+      "4",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/what-we-build"
+     ],
+     "mets": [
+      "4",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/7-core-principles-of-building-a-successful-platform-business"
+     ],
+     "mets": [
+      "3",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/ai-agent-development-replace-traditional-hiring"
+     ],
+     "mets": [
+      "3",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/enterprise-ai-strategy-business-growth"
+     ],
+     "mets": [
+      "3",
+      "2"
+     ]
+    },
+    {
+     "dims": [
+      "/accelerate-program"
+     ],
+     "mets": [
+      "2",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/blog"
+     ],
+     "mets": [
+      "2",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/agentic-ai-30x-productivity-guide"
+     ],
+     "mets": [
+      "2",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/our-work"
+     ],
+     "mets": [
+      "2",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/platform-stabilisation"
+     ],
+     "mets": [
+      "2",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/privacy-policy"
+     ],
+     "mets": [
+      "2",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/resources"
+     ],
+     "mets": [
+      "2",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/thank-you"
+     ],
+     "mets": [
+      "2",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/?fbclid=IwZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAEe2IuLjV4Kk1lWj8eHndapxust3MCIiRUgzwUEpYau7PkQiJLqZbLlMCEopaQ_aem_3f9B2Gcq3LjD42gAdEXdag"
+     ],
+     "mets": [
+      "1",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/?fbclid=IwZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAEe6DAdJ3hhz_uPABD9maCbOgxowgs_9saNR06_lDFZmjqRKTY5pour1VoEqvo_aem_wl3jQfdM8XOm107__ragbw"
+     ],
+     "mets": [
+      "1",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/?fbclid=IwZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAEeqVeRl7DqhxsAY0BEHKowzdG-cULjiHAGkwZn8p7HtCntVUQ0W9EVGcNXpW8_aem_Lmsz3BPy52_pUH-ldmOd_Q"
+     ],
+     "mets": [
+      "1",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/ai-tool/ai-maturity-assessment"
+     ],
+     "mets": [
+      "1",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/careers"
+     ],
+     "mets": [
+      "1",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/casestudies/security-marketplace"
+     ],
+     "mets": [
+      "1",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/geositemap.xml"
+     ],
+     "mets": [
+      "1",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/mvp1-ventures"
+     ],
+     "mets": [
+      "1",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/news-media"
+     ],
+     "mets": [
+      "1",
+      "1"
+     ]
+    }
+   ]
+  },
+  "2026-07": {
+   "totals": [
+    {
+     "dims": [],
+     "mets": [
+      "847",
+      "747",
+      "743",
+      "1192",
+      "410",
+      "76.439656602125154",
+      "0.51593860684769777",
+      "30"
+     ]
+    }
+   ],
+   "channels": [
+    {
+     "dims": [
+      "Direct"
+     ],
+     "mets": [
+      "640",
+      "593",
+      "608",
+      "797",
+      "308",
+      "46.498036746875",
+      "0.51875",
+      "17"
+     ]
+    },
+    {
+     "dims": [
+      "Organic Search"
+     ],
+     "mets": [
+      "137",
+      "109",
+      "100",
+      "223",
+      "62",
+      "126.80334481751824",
+      "0.54744525547445255",
+      "5"
+     ]
+    },
+    {
+     "dims": [
+      "Unassigned"
+     ],
+     "mets": [
+      "23",
+      "20",
+      "14",
+      "47",
+      "13",
+      "172.26348247826087",
+      "0.43478260869565216",
+      "3"
+     ]
+    },
+    {
+     "dims": [
+      "Referral"
+     ],
+     "mets": [
+      "21",
+      "11",
+      "6",
+      "85",
+      "11",
+      "501.11174761904761",
+      "0.47619047619047616",
+      "3"
+     ]
+    },
+    {
+     "dims": [
+      "Organic Social"
+     ],
+     "mets": [
+      "16",
+      "15",
+      "14",
+      "22",
+      "7",
+      "24.219221375",
+      "0.5625",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "AI Assistant"
+     ],
+     "mets": [
+      "5",
+      "2",
+      "1",
+      "11",
+      "5",
+      "485.44982259999995",
+      "0",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "Email"
+     ],
+     "mets": [
+      "4",
+      "1",
+      "0",
+      "7",
+      "3",
+      "78.355983",
+      "0.25",
+      "0"
+     ]
+    }
+   ],
+   "landing": [
+    {
+     "dims": [
+      "/"
+     ],
+     "mets": [
+      "626",
+      "342"
+     ]
+    },
+    {
+     "dims": [
+      "(not set)"
+     ],
+     "mets": [
+      "33",
+      "3"
+     ]
+    },
+    {
+     "dims": [
+      "/overview"
+     ],
+     "mets": [
+      "17",
+      "3"
+     ]
+    },
+    {
+     "dims": [
+      "/contact"
+     ],
+     "mets": [
+      "16",
+      "9"
+     ]
+    },
+    {
+     "dims": [
+      "/ai-agents"
+     ],
+     "mets": [
+      "12",
+      "8"
+     ]
+    },
+    {
+     "dims": [
+      "/about-us"
+     ],
+     "mets": [
+      "10",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/platform-stabilisation"
+     ],
+     "mets": [
+      "10",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/casestudies/security-marketplace"
+     ],
+     "mets": [
+      "7",
+      "3"
+     ]
+    },
+    {
+     "dims": [
+      "/rates"
+     ],
+     "mets": [
+      "7",
+      "3"
+     ]
+    },
+    {
+     "dims": [
+      "/solution-overview"
+     ],
+     "mets": [
+      "7",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/terms-conditions"
+     ],
+     "mets": [
+      "7",
+      "3"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/stalled-product-roadmap-rescue-guide"
+     ],
+     "mets": [
+      "6",
+      "5"
+     ]
+    },
+    {
+     "dims": [
+      "/what-we-build"
+     ],
+     "mets": [
+      "6",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/accelerate-program"
+     ],
+     "mets": [
+      "5",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/blog"
+     ],
+     "mets": [
+      "5",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/ai-agents-vs-chatbots-what-business-leaders-need-to-understand-before-automating-workflows"
+     ],
+     "mets": [
+      "4",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/why-most-ai-agent-projects-fail-in-production-and-how-enterprise-teams-are-fixing-it"
+     ],
+     "mets": [
+      "4",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/custom-software-development-for-growing-businesses-when-to-build-buy-or-stabilise"
+     ],
+     "mets": [
+      "3",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/careers"
+     ],
+     "mets": [
+      "3",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/enterprise"
+     ],
+     "mets": [
+      "3",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/funded-tech-startups-scale-ups-smbs"
+     ],
+     "mets": [
+      "3",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/our-work"
+     ],
+     "mets": [
+      "3",
+      "2"
+     ]
+    },
+    {
+     "dims": [
+      "/resources?type=podcast"
+     ],
+     "mets": [
+      "3",
+      "2"
+     ]
+    },
+    {
+     "dims": [
+      "/ai-tool/ai-maturity-assessment"
+     ],
+     "mets": [
+      "2",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/blackvault-private-ai-infrastructure"
+     ],
+     "mets": [
+      "2",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/7-core-principles-of-building-a-successful-platform-business"
+     ],
+     "mets": [
+      "2",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/the-untapped-valuation-potential-of-ai-driven-businesses"
+     ],
+     "mets": [
+      "2",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/casestudies"
+     ],
+     "mets": [
+      "2",
+      "2"
+     ]
+    },
+    {
+     "dims": [
+      "/casestudies/tiny-home-marketplace"
+     ],
+     "mets": [
+      "2",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/ebook/why-platform-business"
+     ],
+     "mets": [
+      "2",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/podcast/business-model-ai-platform-valuation-jay-pandya"
+     ],
+     "mets": [
+      "2",
+      "2"
+     ]
+    },
+    {
+     "dims": [
+      "/podcast/human-first-technology-tech-strategy-jay-pandya"
+     ],
+     "mets": [
+      "2",
+      "2"
+     ]
+    },
+    {
+     "dims": [
+      "/?fbclid=IwZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAEe77XBvCK6pIjhi9ZTitXAUUaO5TY0rN0_aLVRbedANgPE-6Ko0FJzP2pKueE_aem_k5-RcnafKlz9F2TtI3I2cA"
+     ],
+     "mets": [
+      "1",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/?fbclid=IwZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAEefmkPFQ94qwz-66j9I8YOC0GB5H-5G3pip8ox6N0_U6GFZrLv2JX8XoS09JQ_aem_4IAiv1j_bZIsTMxiwcYLkw"
+     ],
+     "mets": [
+      "1",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/?fbclid=IwZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAEewdYVYlWxTjcAq9CtmziKPTD2Ka39Z_QPGv45Dt0I0dJwYKgmogxAkH-LMpU_aem_Bqm1YqtUN4M51aOFvRT_Jg"
+     ],
+     "mets": [
+      "1",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/?fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQPOTM2NjE5NzQzMzkyNDU5AAGnDqH9phm_gFoZ7GapcNSsafG8MMQ6YyODN9dnIXFWFeC7eOcdru2hU7YyfCI_aem_nYjS_7_4v_0qWJHn3QHtBQ"
+     ],
+     "mets": [
+      "1",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/?fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQPOTM2NjE5NzQzMzkyNDU5AAGnj2TlBvoLU0_g7VC6F9aCYAk222M3zT5SeQ0g_wxSZ3dN8WoW01B93EEa3po_aem_Xe-zPRuXJaMHCTKayLzUvQ"
+     ],
+     "mets": [
+      "1",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/?fbclid=PAcGRvZgJleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA8xMjQwMjQ1NzQyODc0MTQAAacaYHiEpKqvSUBivb46x6AHMdDDeHgKGUFqlEYNJrVWTQ70h9FC2OqU_t4I6A_aem_N2tb9CIPlxTQTCMYIo6etQ"
+     ],
+     "mets": [
+      "1",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/?fbclid=PAcGRvZgJleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA8xMjQwMjQ1NzQyODc0MTQAAaeTXMVBMXVXaWSGwpRaRkACZQI1ypVlh1F95L3Jzec7CMp4bqvg6MABVBDLtg_aem_jShVjQT1quInGJ5jVixycQ"
+     ],
+     "mets": [
+      "1",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/?fbclid=PAcGRvZgJleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA8xMjQwMjQ1NzQyODc0MTQAAafKqfjLf1INBaM5Fa4113d1h6dqDygYoYE2wPwPITNfmjfrtN6rlSg9dEUzBQ_aem_9gsjxBMVW7pJHFA8vH1uMw"
+     ],
+     "mets": [
+      "1",
+      "0"
+     ]
+    }
+   ]
+  },
+  "2026-08": {
+   "totals": [
+    {
+     "dims": [],
+     "mets": [
+      "910",
+      "711",
+      "710",
+      "1660",
+      "437",
+      "142.85562347362637",
+      "0.51978021978021982",
+      "22"
+     ]
+    }
+   ],
+   "channels": [
+    {
+     "dims": [
+      "Direct"
+     ],
+     "mets": [
+      "681",
+      "564",
+      "581",
+      "1212",
+      "340",
+      "125.06807996622614",
+      "0.50073421439060206",
+      "15"
+     ]
+    },
+    {
+     "dims": [
+      "Organic Search"
+     ],
+     "mets": [
+      "126",
+      "82",
+      "69",
+      "202",
+      "51",
+      "128.03587096031745",
+      "0.59523809523809523",
+      "3"
+     ]
+    },
+    {
+     "dims": [
+      "Referral"
+     ],
+     "mets": [
+      "74",
+      "48",
+      "44",
+      "181",
+      "32",
+      "244.86072071621621",
+      "0.56756756756756754",
+      "3"
+     ]
+    },
+    {
+     "dims": [
+      "Unassigned"
+     ],
+     "mets": [
+      "10",
+      "10",
+      "5",
+      "15",
+      "4",
+      "308.6416432",
+      "0.6",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "AI Assistant"
+     ],
+     "mets": [
+      "8",
+      "2",
+      "0",
+      "24",
+      "6",
+      "638.8302715",
+      "0.25",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "Organic Social"
+     ],
+     "mets": [
+      "7",
+      "7",
+      "7",
+      "8",
+      "2",
+      "18.304486571428573",
+      "0.7142857142857143",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "Email"
+     ],
+     "mets": [
+      "5",
+      "5",
+      "4",
+      "18",
+      "2",
+      "449.97036399999996",
+      "0.6",
+      "0"
+     ]
+    }
+   ],
+   "landing": [
+    {
+     "dims": [
+      "/"
+     ],
+     "mets": [
+      "701",
+      "385"
+     ]
+    },
+    {
+     "dims": [
+      "(not set)"
+     ],
+     "mets": [
+      "56",
+      "2"
+     ]
+    },
+    {
+     "dims": [
+      "/contact"
+     ],
+     "mets": [
+      "18",
+      "5"
+     ]
+    },
+    {
+     "dims": [
+      "/about-us"
+     ],
+     "mets": [
+      "12",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/ai-agents"
+     ],
+     "mets": [
+      "11",
+      "6"
+     ]
+    },
+    {
+     "dims": [
+      "/overview"
+     ],
+     "mets": [
+      "7",
+      "2"
+     ]
+    },
+    {
+     "dims": [
+      "/what-we-build"
+     ],
+     "mets": [
+      "7",
+      "2"
+     ]
+    },
+    {
+     "dims": [
+      "/rates"
+     ],
+     "mets": [
+      "5",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/terms-conditions"
+     ],
+     "mets": [
+      "5",
+      "2"
+     ]
+    },
+    {
+     "dims": [
+      ""
+     ],
+     "mets": [
+      "3",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/the-rise-of-agentic-workflows-why-businesses-are-replacing-traditional-automation-in-2026"
+     ],
+     "mets": [
+      "3",
+      "2"
+     ]
+    },
+    {
+     "dims": [
+      "/enterprise"
+     ],
+     "mets": [
+      "3",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/our-work"
+     ],
+     "mets": [
+      "3",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/privacy-policy"
+     ],
+     "mets": [
+      "3",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/solution-overview"
+     ],
+     "mets": [
+      "3",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/?gtm_latency=1"
+     ],
+     "mets": [
+      "2",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/blog"
+     ],
+     "mets": [
+      "2",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/custom-software-development-for-growing-businesses-when-to-build-buy-or-stabilise"
+     ],
+     "mets": [
+      "2",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/why-most-ai-agent-projects-fail-in-production-and-how-enterprise-teams-are-fixing-it"
+     ],
+     "mets": [
+      "2",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/careers"
+     ],
+     "mets": [
+      "2",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/casestudies"
+     ],
+     "mets": [
+      "2",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/casestudies/security-marketplace"
+     ],
+     "mets": [
+      "2",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/commercial-opportunity-assessment/"
+     ],
+     "mets": [
+      "2",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/funded-tech-startups-scale-ups-smbs"
+     ],
+     "mets": [
+      "2",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/how"
+     ],
+     "mets": [
+      "2",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/news-media"
+     ],
+     "mets": [
+      "2",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/overview/"
+     ],
+     "mets": [
+      "2",
+      "2"
+     ]
+    },
+    {
+     "dims": [
+      "/podcast/human-first-technology"
+     ],
+     "mets": [
+      "2",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/?fbclid=IwcGRvZgRleHRuA2FlbQIxMQBzcnRjBmFwcF9pZAwyNTYyODEwNDA1NTgAAR6V2-jJ15JTvkEWMmN-skzULEfipDznweUuzOjRnee_Y44aTWTxNSkXGnjV8Q_aem_C3Qhvgc3pvvj2c-JUmulHA"
+     ],
+     "mets": [
+      "1",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/?fbclid=IwcGRvZgRleHRuA2FlbQIxMQBzcnRjBmFwcF9pZAwyNTYyODEwNDA1NTgAAR7cuJjXVicglKpnrJE6Ub2OaDsWLzJxSz9ip42J2yl9oeECX--Rs8L_UqbmDg_aem_K4FNpleOcWoWlnFHFU97Jw"
+     ],
+     "mets": [
+      "1",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/?fbclid=IwcGRvZgRleHRuA2FlbQIxMQBzcnRjBmFwcF9pZAwyNTYyODEwNDA1NTgAAR7f29XOCSSn5SzQ4uoSfvj6_5jx1c25U8dvrCi7lfRLO5cQZDqB5NcaKWMYqA_aem_MhqYYPWQ61pu0n06jKlHyA"
+     ],
+     "mets": [
+      "1",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/?fbclid=PAcGRvZgJleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA85MzY2MTk3NDMzOTI0NTkAAac7BfzyOUvCkuL93LcR0PCT5qTvep0wjUWMx2FbDZZPFFuwO8ai9rRz2qOM0Q_aem_MbSQwbYZzlp1c5o6euo4wg"
+     ],
+     "mets": [
+      "1",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/accelerate-program"
+     ],
+     "mets": [
+      "1",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/ai-tool/ai-maturity-assessment"
+     ],
+     "mets": [
+      "1",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/blackvault-private-ai-infrastructure"
+     ],
+     "mets": [
+      "1",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/7-core-principles-of-building-a-successful-platform-business"
+     ],
+     "mets": [
+      "1",
+      "1"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/ai-agents-and-hiring"
+     ],
+     "mets": [
+      "1",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/ai-agents-vs-chatbots-what-business-leaders-need-to-understand-before-automating-workflows"
+     ],
+     "mets": [
+      "1",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/delivery-signals"
+     ],
+     "mets": [
+      "1",
+      "0"
+     ]
+    },
+    {
+     "dims": [
+      "/blog/enterprise-ai-strategy-business-growth"
+     ],
+     "mets": [
+      "1",
+      "0"
+     ]
+    }
+   ]
+  }
+ },
+ "metric_names": [
+  "sessions",
+  "totalUsers",
+  "newUsers",
+  "screenPageViews",
+  "engagedSessions",
+  "averageSessionDuration",
+  "bounceRate",
+  "keyEvents"
+ ]
+}

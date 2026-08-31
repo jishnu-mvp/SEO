@@ -179,3 +179,7 @@ id_rsa
 id_rsa.*
 id_ed25519
 id_ed25519.*
+
+# Local audit working files (may contain third-party credentials)
+audits/**/reports/
+audits/**/text/
