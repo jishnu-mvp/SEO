@@ -5,6 +5,8 @@ claim-by-claim verification of 34 external agency deliverables against live
 Search Console and GA4 data.
 
 **Report:** `mvp1-organic-search-audit.html` (published as a Claude Artifact)
+**PDF:** `MVP1-Organic-Search-Audit-Aug2026.pdf` (A4, 11pp, brand fonts embedded)
+**Vendor email:** `agency-email-draft.md` (draft, not sent)
 
 ## Headline findings
 
@@ -31,6 +33,7 @@ python3 scripts/ga4_pull.py    # GA4 monthly, by channel/device/landing page
 python3 scripts/crawl.py       # crawl all sitemap URLs, extract on-page SEO
 python3 scripts/pr_check.py    # sample PR backlinks for liveness + dofollow
 python3 scripts/extract.py     # parse vendor PDF/XLS/XLSX/DOCX deliverables
+python3 scripts/makepdf.py     # render the HTML report to A4 PDF via headless Chromium
 ```
 
 `data/` holds the raw pulls behind every figure in the report.
