@@ -183,3 +183,6 @@ id_ed25519.*
 # Local audit working files (may contain third-party credentials)
 audits/**/reports/
 audits/**/text/
+
+# Audit deliverables are committed despite the global *.pdf rule
+!audits/**/*.pdf
