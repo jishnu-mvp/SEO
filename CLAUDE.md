@@ -221,6 +221,34 @@ claude-seo/
 - **Cross-skill enforcement**: After completing ANY analysis command (audit, page, technical, content, schema, geo, local, maps), offer: "Generate a PDF report? Use `/seo google report`"
 - **Google logo** appears on title page when using Google API data ("Powered by Google APIs")
 
+## Audit Reliability Rules
+
+These are hard rules, not suggestions — both came from real failures in a live
+audit that required user correction before the report could be trusted.
+
+- **Never declare an external credential or API "broken," "invalid," or
+  "unavailable" without first inspecting the raw value.** Before reporting a
+  key/token failure to the user: print its length, check for stray wrapping
+  characters (`<...>`, quotes, whitespace, newlines) introduced by how it was
+  pasted or stored in an env var, and retry with the cleaned value. Google API
+  keys are pure alphanumeric strings (e.g. `AIzaSy...`) — anything else
+  wrapped around one is a formatting bug, not a Google-side rejection. A key
+  that fails on inspection with a *specific* Google error (`API_KEY_INVALID`,
+  quota exceeded, API not enabled) has been genuinely diagnosed; a key that
+  fails and is reported as broken without this check has not.
+- **A full SEO/AEO/GEO audit or performance report must attempt real coverage
+  of every standard category** — Technical SEO, On-Page SEO, Schema/Structured
+  Data, Images, Performance/Core Web Vitals, Content Quality, AI Search
+  Readiness (GEO/AEO), and Local SEO/GBP — not just the categories that happen
+  to already have working credentials. If a category's data source is
+  unavailable (missing credentials, disabled API, blocked connector), the
+  default action is to diagnose and attempt to unblock it (enable the API,
+  check for a malformed credential per the rule above, find an alternate path
+  such as a different connector or a manager-access grant) *before* reporting
+  it as out of scope. Only mark a category as a carried-forward baseline /
+  unavailable after unblocking attempts have genuinely been tried and
+  exhausted, and say what was tried.
+
 ## Ecosystem
 
 Part of the Claude Code skill family:
