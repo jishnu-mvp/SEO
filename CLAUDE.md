@@ -248,6 +248,15 @@ audit that required user correction before the report could be trusted.
   it as out of scope. Only mark a category as a carried-forward baseline /
   unavailable after unblocking attempts have genuinely been tried and
   exhausted, and say what was tried.
+- **Recurring/scheduled audit snapshots belong in the target site's own repo,
+  not this one.** This repo is shared tooling used across multiple sites; a
+  `reports/<domain>/` folder here would mix every site's history in one place
+  and conflict as more sites are onboarded. Save each run's data (e.g.
+  `data.json`) to a non-public path in the site's own repo instead — such as
+  `.audit-history/<domain>/YYYY-MM-DD.json` at the repo root, excluded from
+  the live deploy via that host's redirect/rewrite config (see
+  `mvp1-website`'s `_redirects` / `vercel.json` for the pattern) — and diff
+  against the most recent prior snapshot there for week-over-week reporting.
 
 ## Ecosystem
 
