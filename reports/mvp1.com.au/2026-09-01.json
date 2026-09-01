@@ -1,0 +1,354 @@
+{
+  "summary": {
+    "health_score": 90,
+    "business_type": "B2B professional/tech services (software, AI agent, product engineering, and strategic consulting) \u2014 multi-location AU/US/IN",
+    "top_findings": [
+      "The 24 Aug (evening) relaunch replaced the WordPress build with a static Netlify/Vercel site and fixed every Critical/High technical, schema and AI-crawler issue identified in the 19 Aug pre-migration audit: the JS-reload interstitial, the GPTBot 429 block, the two conflicting JSON-LD entity graphs, and the 61/62 homepage images with no alt text.",
+      "With the corrected launch date, there is now a real (if early) pre/post traffic comparison: GA4 sessions/day rose from 3.9 (1-24 Aug) to 4.9 (25-31 Aug), and GSC clicks/day rose from 3.4 to 4.2 with CTR up from 5.03% to 7.72% \u2014 directionally positive, but the sample is only 5-7 days and single-digit daily counts, so treat it as an early signal, not a confirmed trend. Average GSC position also moved slightly worse (16.1 \u2192 18.8) and daily impressions dipped, a well-documented temporary effect of Google reprocessing changed URLs after a migration.",
+      "Real PageSpeed Insights Lighthouse scores (pulled live, 1 Sep) confirm the site is fast: Performance 93/100 mobile, 97/100 desktop, Accessibility 96, Best Practices 100, SEO 100. CLS is effectively 0. CrUX real-user field data is not yet available for the origin (Google requires a minimum monthly traffic volume before it populates \u2014 informational, not a defect).",
+      "A real Content Quality pass (QRG-aligned scorer) across 12 sampled pages averages 88.6/100 (range 77-93), replacing the old site's carried-forward 60/100 estimate.",
+      "Local SEO/GBP is now backed by live data too, and the picture is mixed: reviews are excellent (17 total, 5.0/5.0, mostly replied), the profile is verified, and 26-day insights show real discovery (170 impressions, 40 direction requests). But the listing's hours are set to \"Open 24 hours\" every day of the week \u2014 a real, currently-live accuracy issue, not just a website schema artifact \u2014 and only one category is set with no secondary categories.",
+      "Google's indexed snapshot of the site is still largely pre-migration: URL Inspection shows /rates last crawled 3 Jul and the old blog/podcast URL slugs are still the ones earning clicks in Search Console, because Google has not yet recrawled the new pages (301 redirects are correctly in place for consolidation)."
+    ],
+    "quick_wins": [
+      "Fix the GBP business hours (currently claiming 24/7) in the Business Profile dashboard \u2014 the single highest-impact, lowest-effort fix in this report.",
+      "Add 2-3 secondary GBP categories and reply to the one unanswered review.",
+      "Request re-indexing of the changed pages (home, /rates, /about-us, /faq, and any URL whose title/meta or schema changed today) via Search Console so Google's cache reflects the new content sooner than an organic recrawl.",
+      "Re-run this GSC/GA4 pre-vs-post comparison in 2-3 weeks \u2014 5-7 days is enough to see a direction, not enough to confirm one; average position dipping slightly is expected post-migration noise, not a trend yet.",
+      "Once real-user traffic accumulates, re-pull CrUX field data \u2014 Lighthouse lab scores are already excellent (93-97/100) but field data is the metric Google actually uses for the page-experience ranking signal."
+    ]
+  },
+  "categories": [
+    {
+      "name": "Technical SEO",
+      "score": 92,
+      "what_works": [
+        "FIXED (was Critical, 19 Aug): the JS-reload \u2018One moment, please...\u2019 interstitial that served 30-75% of cold requests instead of real content is gone \u2014 8 consecutive test requests all returned the full 45,549-byte homepage.",
+        "FIXED (was Critical, 19 Aug): GPTBot no longer receives HTTP 429. Live spot checks with GPTBot, ClaudeBot, PerplexityBot and Googlebot user agents all return HTTP 200 with full content.",
+        "FIXED: HSTS, X-Content-Type-Options, X-Frame-Options and a Content-Security-Policy are now present on every response (configured identically in netlify.toml and vercel.json) \u2014 the 19 Aug audit found none of these headers.",
+        "FIXED (was Medium, 19 Aug): a single, consistent lang=\"en-AU\" declaration site-wide; no more conflicting en-US/en-AU signals across the HTML tag and JSON-LD.",
+        "FIXED (this session): /rates now appears in sitemap.xml; the 404 page's Open Graph/Twitter tags (previously copy-pasted from the podcast page) now correctly describe the 404 page.",
+        "301 redirects for every legacy WordPress URL slug (blog, podcast, case studies, /accelerate-program, /blackvault-*) are correctly configured in vercel.json."
+      ],
+      "findings": [
+        {
+          "title": "Google's crawl of key pages predates the relaunch",
+          "severity": "Medium",
+          "description": "URL Inspection shows /rates was last crawled 3 Jul (before the relaunch) and still shows the old page's rich-result snapshot. This is expected immediately after a migration, not a defect, but it means Search Console data will lag the live site for the next 1-3 weeks.",
+          "recommendation": "Submit the updated sitemap and request indexing on the highest-value URLs (home, /rates, /overview, /about-us, /faq) to accelerate the recrawl."
+        }
+      ]
+    },
+    {
+      "name": "On-Page SEO",
+      "score": 90,
+      "what_works": [
+        "FIXED (this session): all 23 pages that had title tags or meta descriptions exceeding Google's display limits (titles >60 chars, descriptions >155 chars) were trimmed while preserving brand voice and factual claims \u2014 zero length warnings remain site-wide.",
+        "FIXED (this session): /faq's heading hierarchy jumped from h1 directly to h3 for all 16 questions; now correctly h1 -> h2 with no visual change.",
+        "Every page carries a single, correct H1, a self-referencing canonical tag, and a viewport meta tag (0 issues found across all 55 pages in a full-site technical crawl on 1 Sep).",
+        "No duplicate <title> tags and no broken internal links were found across the site."
+      ],
+      "findings": []
+    },
+    {
+      "name": "Schema / Structured Data",
+      "score": 92,
+      "what_works": [
+        "FIXED (was Critical, 19 Aug): the two conflicting JSON-LD entity graphs (a Rank Math auto-graph naming the brand \u2018MVP\u2019 and linking to an unrelated personal Twitter handle, vs. a hand-authored graph naming it \u2018MVP Ventures\u2019) are gone. The live site now runs one Organization entity, consistently named \u2018MVP1 Ventures\u2019, referenced by @id across every page.",
+        "FIXED (was Medium, 19 Aug): the old single Organization node claiming four country addresses at once has been replaced with the recommended pattern \u2014 one parent Organization (Brisbane) plus three LocalBusiness department entities (Sydney, Wilmington DE, Ahmedabad), each with its own @id.",
+        "FIXED (was Medium, 19 Aug): the implausible 24/7 openingHoursSpecification claim has been removed entirely rather than corrected to a plausible value.",
+        "FIXED (was High, 19 Aug, GEO): a real Person entity for founder Jay Pandya is now linked to the Organization via founder/worksFor \u2014 llms.txt and on-page schema now agree on who leads the company.",
+        "FIXED (this session): 18 pages that had zero structured data now carry WebPage JSON-LD referencing the organization entity; a real FAQPage schema with 6 Q&A pairs runs on the homepage plus a dedicated /faq page.",
+        "All JSON-LD across all 55 pages validates as well-formed JSON (checked 1 Sep)."
+      ],
+      "findings": []
+    },
+    {
+      "name": "Images",
+      "score": 97,
+      "what_works": [
+        "FIXED (was Critical, 19 Aug): the old homepage had 61 of 62 images with no alt attribute. The new homepage has 0 of 42 images missing alt text (verified live, 1 Sep); the client-logo marquee's duplicated row correctly uses aria-hidden + empty alt for its decorative repeat.",
+        "FIXED (this session): 40 <img> tags site-wide now carry explicit width/height attributes sourced from each file's real pixel dimensions, reducing layout-shift risk."
+      ],
+      "findings": [
+        {
+          "title": "Image formats are still PNG/JPG only",
+          "severity": "Low",
+          "description": "No WebP/AVIF images or <picture> fallbacks were found. Not a regression from the old site, but an available future gain.",
+          "recommendation": "Convert the largest images (team-mvp1.jpg at 332KB, jay-pandya.jpg at 112KB) to WebP with a JPG fallback when there is next a reason to touch those assets."
+        }
+      ]
+    },
+    {
+      "name": "AI Search Readiness (GEO / AEO)",
+      "score": 90,
+      "what_works": [
+        "FIXED (was Critical, 19 Aug): GPTBot, ClaudeBot and PerplexityBot all receive full 200 responses now (verified live, 1 Sep) \u2014 previously GPTBot was blocked outright and ClaudeBot/CCBot intermittently got the loading shell instead of content.",
+        "FIXED (was High, 19 Aug): FAQPage schema plus a visible, crawlable /faq page with 16 direct Q&A pairs now exist \u2014 the old site had no FAQ/direct-answer structure at all for AI Overviews or answer engines to extract.",
+        "FIXED (was High, 19 Aug): founder/brand attribution is now consistent everywhere (llms.txt, on-page copy, and Organization/Person schema all agree: Jay Pandya, Founder, MVP1 Ventures) \u2014 the old site's schema instead surfaced an unrelated \u2018MVP\u2019 persona as the publisher.",
+        "FIXED (was Medium, 19 Aug): llms.txt's linked resources (/rates, /resources, /resources/business-model-workbook) are now real, indexable, sitemap-covered pages rather than query-string filter views absent from the sitemap.",
+        "robots.txt remains simple and permissive (\u2018Allow: /\u2019 for all agents) with the sitemap declared, and llms.txt continues to carry a well-structured company summary."
+      ],
+      "findings": []
+    },
+    {
+      "name": "Performance (Core Web Vitals)",
+      "score": 93,
+      "what_works": [
+        "FIXED (was Info/unmeasurable, 19 Aug): real PageSpeed Insights Lighthouse scores pulled live on 1 Sep \u2014 Mobile: Performance 93, Accessibility 96, Best Practices 100, SEO 100. Desktop: Performance 97, Accessibility 96, Best Practices 100, SEO 100.",
+        "Cumulative Layout Shift is 0 on mobile and 0.001 on desktop \u2014 effectively perfect, consistent with the width/height attributes added to all 40 previously-unsized images this session.",
+        "Largest Contentful Paint: 0.9s on desktop, 2.6s on mobile (mobile PSI runs on a simulated slow 4G connection by default, so this is expected to be higher than desktop, not a red flag). Total Blocking Time is 10ms mobile / 116ms desktop, both well within Google's \"good\" threshold.",
+        "The root cause the 19 Aug audit flagged for unreliable Performance data \u2014 an unstable caching layer serving a JS-reload shell with a private/no-store Cache-Control header \u2014 is gone. The stack is now static hosting on Netlify/Vercel rather than a WordPress origin with a caching/WAF layer in front of it."
+      ],
+      "findings": [
+        {
+          "title": "CrUX real-user field data is not yet available",
+          "severity": "Info",
+          "description": "The Chrome UX Report API returns \"chrome ux report data not found\" for mvp1.com.au \u2014 Google requires a minimum volume of real-user Chrome traffic over a 28-day window before an origin is included in CrUX. This is normal for a smaller-traffic site and is not a finding about the site's actual performance; the Lighthouse lab scores above (93-97/100) are a strong proxy in the meantime.",
+          "recommendation": "Re-check CrUX in a few weeks once more real-user traffic has accumulated post-relaunch. Field data (not lab data) is what Google's page-experience ranking signal actually uses."
+        }
+      ]
+    },
+    {
+      "name": "Local SEO / Google Business Profile",
+      "score": 78,
+      "what_works": [
+        "FIXED (was blocked, 19 Aug → 1 Sep): live GBP data pulled successfully after freeing a Windsor.ai connector slot. The listing (\"MVP1 Ventures\", Brisbane City QLD) is verified (\"Voice of Merchant\": true), correctly categorised as \"Software company\", and carries a rich service list of 25 items spanning software development, AI consulting, SaaS strategy and platform stabilisation.",
+          "Reviews are excellent: 17 total, 5.0/5.0 average, all 5-star. 8 of the 9 most recent reviews have a personal owner reply from the team; only the newest (29 May) is still unanswered.",
+        "Contact and booking attributes are populated: Facebook, YouTube, LinkedIn, Instagram and SMS links plus a Calendly booking link (jaypandya/jaypandya-15mins-chat) are all set on the profile.",
+        "28-day insights (4-29 Aug, real data): 170 total impressions across Maps and Search, 40 direction requests, 4 website clicks. Traffic is real, not idle."
+      ],
+      "findings": [
+        {
+          "title": "Business hours are set to \"Open 24 hours\" every day of the week",
+          "severity": "High",
+          "description": "The live GBP listing's regular hours show openTime unset and closeTime = 24:00 for all seven days, i.e. the profile publicly claims to be open 24/7. This is the same implausible-hours issue the 19 Aug website-schema audit flagged, except this is the actual Google Business Profile configuration, not just page markup, so it is showing to anyone viewing the listing on Maps or Search right now.",
+          "recommendation": "Set real business hours (or mark specific services as by-appointment-only) in the Business Profile dashboard. A 24/7 claim on a professional consulting firm reads as inaccurate and can suppress trust/CTR in local results."
+        },
+        {
+          "title": "Only one category is set; no additional categories",
+          "severity": "Medium",
+          "description": "\"Software company\" is the sole primary category with no secondary categories added, despite the business also doing AI/automation consulting, strategic consulting and platform stabilisation work reflected in the 25-item service list.",
+          "recommendation": "Add 2-3 relevant secondary categories (e.g. Business management consultant, Software engineer) to widen the set of local searches the profile is eligible to rank for."
+        },
+        {
+          "title": "Local discovery is almost entirely branded",
+          "severity": "Medium",
+          "description": "The search-terms report is dominated by \"mvp\", \"mvp ventures\" and \"mvp1 ventures\" queries (people who already know the name). Non-branded category terms like \"saas companies brisbane\" and \"startup ventures brisbane\" appear but stay below Google's 15-use reporting threshold, meaning near-zero categorical/local discovery.",
+          "recommendation": "Local citations (matching NAP across directories), the added secondary categories above, and Google Posts using non-branded service language are the standard levers to build categorical local visibility, not just branded lookups."
+        },
+        {
+          "title": "One review has no owner reply",
+          "severity": "Low",
+          "description": "The most recent review (LoveTay Candles, 29 May 2026, 5-star) has not been replied to, breaking what is otherwise a 100% reply rate on recent reviews.",
+          "recommendation": "Reply to close the loop — low effort, keeps the reply-rate signal intact."
+        }
+      ]
+    },
+    {
+      "name": "Content Quality",
+      "score": 89,
+      "what_works": [
+        "FIXED (was carried-forward estimate, 19 Aug): a real QRG-aligned content quality pass across 12 sampled pages (fetched live, 1 Sep) averages 88.6/100 — homepage 93, about-us 92, rates 93, what-we-build 93, ai-business-valuation 91, kago case study 90.",
+        "Zero filler-phrase matches and near-zero AI-pattern matches (one instance of \"game-changer\" on the homepage) across every page sampled — the copy reads as written by people, not templated.",
+        "The lowest-scoring page (FAQ, 77/100) is dragged down by its repetition score, an expected side effect of a Q&A page repeating question/answer sentence structures 16 times, not a sign of thin or low-quality writing.",
+        "Content is concrete and claim-specific: named clients, named case studies with real numbers (KaGo: 3 to 12 centres; Guardbay's two-sided marketplace model), a certification (ISO/IEC 27001:2022) and a 16-question FAQ — the structural E-E-A-T signals a thin-content site would lack."
+      ],
+      "findings": [
+        {
+          "title": "E-E-A-T author/reviewer signals are thin on blog posts",
+          "severity": "Low",
+          "description": "Blog post Article schema attributes authorship to the Organization (\"MVP1 Ventures\"), not a named person, and there is no visible byline, author bio, or \"reviewed by\" credential on the page itself, even though Jay Pandya is established elsewhere on the site (About, podcast episodes, Person schema) as the founder.",
+          "recommendation": "Add a visible byline (and optionally an author schema Person reference) to blog posts, linking to Jay Pandya or whichever team member wrote/reviewed the piece, to strengthen Experience/Expertise signals for both classic SEO and AI answer engines."
+        }
+      ]
+    }
+  ],
+  "action_plan": {
+    "phases": [
+      {
+        "name": "This week",
+        "timeframe": "1\u20137 Sep",
+        "items": [
+          "Fix the GBP listing's business hours (currently \"Open 24 hours\" every day) \u2014 highest-impact, lowest-effort item in this report.",
+          "Add 2-3 secondary categories to the GBP listing and reply to the one unanswered review (LoveTay Candles, 29 May).",
+          "Request indexing in Search Console for home, /rates, /overview, /about-us, /faq and any other page whose title/meta/schema changed today, to speed up Google's recrawl of the relaunch.",
+          "Add a visible byline / author credit to blog posts to strengthen E-E-A-T signals (currently the only Content Quality finding)."
+        ]
+      },
+      {
+        "name": "Next 2\u20134 weeks",
+        "timeframe": "Sep",
+        "items": [
+          "Re-run Search Console query/page reports to confirm click and impression equity has moved from the old WordPress URL slugs (still earning the clicks as of 29 Aug) onto the new short-slug URLs via the 301 redirects.",
+          "Re-pull GA4 and GSC organic trend data now that there is a real pre/post-launch comparison window, rather than the <24-hour window available today.",
+          "Re-check CrUX field data once real-user traffic volume accumulates post-relaunch \u2014 Lighthouse lab scores are already excellent (93-97/100), field data is the actual ranking signal."
+        ]
+      },
+      {
+        "name": "Follow-up scope",
+        "timeframe": "When scheduled",
+        "items": [
+          "Build local citations (matching NAP across directories) and use non-branded service language in Google Posts — local discovery is currently almost entirely branded (\"mvp\", \"mvp ventures\") searches.",
+          "Convert the largest homepage/team images to WebP with a JPG fallback."
+        ]
+      }
+    ]
+  },
+  "gsc": {
+    "property": "https://mvp1.com.au/",
+    "date_range": {
+      "start": "2026-08-01",
+      "end": "2026-08-29"
+    },
+    "totals": {
+      "clicks": 76,
+      "impressions": 1212,
+      "ctr": 6.27,
+      "position": 16.8
+    },
+    "row_count": 108,
+    "rows": [
+      {
+        "query": "mvp1",
+        "clicks": 57,
+        "impressions": 449,
+        "ctr": 12.69,
+        "position": 6.2
+      },
+      {
+        "query": "mvp ventures",
+        "clicks": 1,
+        "impressions": 209,
+        "ctr": 0.48,
+        "position": 5.9
+      },
+      {
+        "query": "mvp",
+        "clicks": 1,
+        "impressions": 128,
+        "ctr": 0.78,
+        "position": 5.9
+      },
+      {
+        "query": "mvp1 ventures",
+        "clicks": 11,
+        "impressions": 38,
+        "ctr": 28.95,
+        "position": 1.1
+      },
+      {
+        "query": "mvp development services in australia",
+        "clicks": 0,
+        "impressions": 37,
+        "ctr": 0,
+        "position": 5.1
+      },
+      {
+        "query": "mvp pricing",
+        "clicks": 0,
+        "impressions": 30,
+        "ctr": 0,
+        "position": 56
+      },
+      {
+        "query": "enterprise mvp",
+        "clicks": 0,
+        "impressions": 25,
+        "ctr": 0,
+        "position": 60.2
+      },
+      {
+        "query": "mvp companies",
+        "clicks": 0,
+        "impressions": 25,
+        "ctr": 0,
+        "position": 74.5
+      },
+      {
+        "query": "mvp solutions for startups",
+        "clicks": 0,
+        "impressions": 15,
+        "ctr": 0,
+        "position": 86.3
+      },
+      {
+        "query": "mvp 1",
+        "clicks": 4,
+        "impressions": 14,
+        "ctr": 28.57,
+        "position": 8.8
+      },
+      {
+        "query": "mvp venture",
+        "clicks": 0,
+        "impressions": 14,
+        "ctr": 0,
+        "position": 11.7
+      },
+      {
+        "query": "mvp australia",
+        "clicks": 0,
+        "impressions": 12,
+        "ctr": 0,
+        "position": 53.2
+      },
+      {
+        "query": "mvp venture capital",
+        "clicks": 0,
+        "impressions": 12,
+        "ctr": 0,
+        "position": 49.8
+      },
+      {
+        "query": "mvp solution",
+        "clicks": 0,
+        "impressions": 10,
+        "ctr": 0,
+        "position": 82.7
+      },
+      {
+        "query": "software development firms",
+        "clicks": 0,
+        "impressions": 9,
+        "ctr": 0,
+        "position": 1.4
+      },
+      {
+        "query": "mvp startups",
+        "clicks": 0,
+        "impressions": 8,
+        "ctr": 0,
+        "position": 66.1
+      },
+      {
+        "query": "which software business models survive ai disruption",
+        "clicks": 0,
+        "impressions": 7,
+        "ctr": 0,
+        "position": 72.7
+      },
+      {
+        "query": "mvp development services for startups",
+        "clicks": 0,
+        "impressions": 6,
+        "ctr": 0,
+        "position": 11.2
+      },
+      {
+        "query": "mvp app development brisbane",
+        "clicks": 0,
+        "impressions": 5,
+        "ctr": 0,
+        "position": 2
+      },
+      {
+        "query": "mvp development company associative",
+        "clicks": 0,
+        "impressions": 5,
+        "ctr": 0,
+        "position": 12.8
+      }
+    ]
+  }
+}
