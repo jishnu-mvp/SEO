@@ -170,6 +170,10 @@ docs/BACKLOG-COMPLETION-REPORT-v2.md
 docs/*COMPLETION-REPORT*.md
 docs/VERIFICATION-AUDIT*.md
 
+# Managed runtime artifacts, written by `claude-seo setup` when it runs from the repo root
+ms-playwright/
+runtime-state.json
+
 # Additional credential/key formats (defense in depth)
 **/*credentials*.json
 *.pem

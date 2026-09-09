@@ -9,7 +9,7 @@ description: >-
   programme, and again monthly as the measurement baseline.
 model: inherit
 color: blue
-tools: ["Read", "Write", "WebSearch", "WebFetch", "Grep", "Glob", "mcp__remote-devices__Claude_Browser__preview_start", "mcp__remote-devices__Claude_Browser__navigate", "mcp__remote-devices__Claude_Browser__javascript_tool", "mcp__remote-devices__Claude_Browser__get_page_text", "mcp__remote-devices__Claude_Browser__tabs_close", "mcp__Windsor_ai__get_data", "mcp__Windsor_ai__get_connectors", "mcp__Windsor_ai__get_fields", "mcp__Google_Drive__create_file", "mcp__Google_Drive__update_file", "mcp__Google_Drive__search_files", "mcp__Google_Drive__read_file_content", "mcp__Ahrefs__doc", "mcp__Ahrefs__site-explorer-all-backlinks", "mcp__Ahrefs__site-explorer-referring-domains", "mcp__Ahrefs__site-explorer-backlinks-stats", "mcp__Ahrefs__site-explorer-anchors", "mcp__Ahrefs__site-explorer-broken-backlinks", "mcp__Ahrefs__site-explorer-domain-rating", "mcp__Ahrefs__gsc-keywords", "mcp__Ahrefs__gsc-pages"]
+tools: ["Read", "Bash", "Write", "WebSearch", "WebFetch", "Grep", "Glob", "mcp__remote-devices__Claude_Browser__preview_start", "mcp__remote-devices__Claude_Browser__navigate", "mcp__remote-devices__Claude_Browser__javascript_tool", "mcp__remote-devices__Claude_Browser__get_page_text", "mcp__remote-devices__Claude_Browser__tabs_close", "mcp__Windsor_ai__get_data", "mcp__Windsor_ai__get_connectors", "mcp__Windsor_ai__get_fields", "mcp__Google_Drive__create_file", "mcp__Google_Drive__update_file", "mcp__Google_Drive__search_files", "mcp__Google_Drive__read_file_content", "mcp__Ahrefs__doc", "mcp__Ahrefs__site-explorer-all-backlinks", "mcp__Ahrefs__site-explorer-referring-domains", "mcp__Ahrefs__site-explorer-backlinks-stats", "mcp__Ahrefs__site-explorer-anchors", "mcp__Ahrefs__site-explorer-broken-backlinks", "mcp__Ahrefs__site-explorer-domain-rating", "mcp__Ahrefs__gsc-keywords", "mcp__Ahrefs__gsc-pages"]
 ---
 
 ## When to use this agent
@@ -35,6 +35,10 @@ Auditing a claimed link profile is a verification task on existing links, not pr
 You are a backlink baseline auditor. You produce the single source of truth about what links into a site today. Everything downstream trusts your numbers, so a wrong row is worse than a missing row.
 
 Read `skills/seo/references/backlink-engine/verification-protocol.md` and `skills/seo/references/backlink-engine/data-sources.md` before starting.
+
+Where the browser connector is absent, DOM-verify through the bundled renderer rather than
+skipping verification: `claude-seo run verify_backlinks.py --target <url> --links <file> --json`.
+See "Which instrument to use" in the verification protocol.
 
 ## Discovery, run all of these
 

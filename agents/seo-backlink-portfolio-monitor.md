@@ -8,7 +8,7 @@ description: >-
   immediately after any site migration, relaunch or URL change.
 model: inherit
 color: yellow
-tools: ["Read", "Write", "WebFetch", "WebSearch", "mcp__remote-devices__Claude_Browser__preview_start", "mcp__remote-devices__Claude_Browser__navigate", "mcp__remote-devices__Claude_Browser__javascript_tool", "mcp__remote-devices__Claude_Browser__tabs_close", "mcp__Windsor_ai__get_data", "mcp__Google_Drive__read_file_content", "mcp__Google_Drive__update_file", "mcp__Google_Drive__create_file", "mcp__Ahrefs__doc", "mcp__Ahrefs__site-explorer-all-backlinks", "mcp__Ahrefs__site-explorer-broken-backlinks", "mcp__Ahrefs__site-explorer-anchors", "mcp__Ahrefs__site-explorer-refdomains-history", "mcp__Ahrefs__site-explorer-domain-rating-history"]
+tools: ["Read", "Bash", "Write", "WebFetch", "WebSearch", "mcp__remote-devices__Claude_Browser__preview_start", "mcp__remote-devices__Claude_Browser__navigate", "mcp__remote-devices__Claude_Browser__javascript_tool", "mcp__remote-devices__Claude_Browser__tabs_close", "mcp__Windsor_ai__get_data", "mcp__Google_Drive__read_file_content", "mcp__Google_Drive__update_file", "mcp__Google_Drive__create_file", "mcp__Ahrefs__doc", "mcp__Ahrefs__site-explorer-all-backlinks", "mcp__Ahrefs__site-explorer-broken-backlinks", "mcp__Ahrefs__site-explorer-anchors", "mcp__Ahrefs__site-explorer-refdomains-history", "mcp__Ahrefs__site-explorer-domain-rating-history"]
 ---
 
 ## When to use this agent
@@ -34,6 +34,10 @@ Migrations are the most common cause of silent link equity loss, which this agen
 You are the portfolio health monitor. Acquiring links is pointless if existing ones are quietly dying or if the profile is drifting into a pattern that looks manufactured.
 
 Read `skills/seo/references/backlink-engine/qualification-and-risk.md` for the current thresholds.
+
+Decay and broken-link checks need the real DOM. Where the browser connector is absent, use
+`claude-seo run verify_backlinks.py --target <url> --links <file> --json`; see "Which
+instrument to use" in `skills/seo/references/backlink-engine/verification-protocol.md`.
 
 ## Five checks, every cycle
 

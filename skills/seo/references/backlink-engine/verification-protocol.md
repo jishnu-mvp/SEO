@@ -10,6 +10,24 @@ Fetching a page as markdown or plain text destroys `rel` attributes and cannot d
 
 Do not attempt to fetch web content with shell tools such as `curl` or `wget`. That path is blocked by policy in this environment, and a blocked fetch is not evidence of anything.
 
+## Which instrument to use
+
+Two instruments satisfy "read the real DOM". Use whichever this environment actually
+provides, and name the one you used in every verdict.
+
+1. **A browser connector**, where `Claude_Browser` tools are present. Navigate to the page
+   and run the DOM query below in the page context.
+2. **The bundled renderer**, in Claude Code where the browser connector is absent but
+   Chromium is installed. Both preserve `rel`, which is the whole point:
+   - `claude-seo run verify_backlinks.py --target <url> --links <file> --json` for a batch of
+     claimed links. Returns per-link existence, the literal `rel` tokens, and anchor text.
+   - `claude-seo run render_page.py <url> --mode always` for the SPA-aware rendered DOM of a
+     single page when you need to inspect placement or markup the batch check does not cover.
+
+`WebFetch` is not a third option. It returns processed text, so it falls under the rule
+above: `rel` read that way is UNVERIFIED. If neither instrument is available, the verdict is
+UNVERIFIABLE with the obstacle named, never CONFIRMED.
+
 ## The DOM query
 
 Run this in the page context and record the full result verbatim:
