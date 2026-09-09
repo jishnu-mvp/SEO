@@ -54,9 +54,12 @@ in case a recipe needs a specific call.
 
 ## Overview
 
-Claude SEO is a Tier 4 SEO analysis skill with 25 sub-skills (21 core + 1 orchestrator +
-1 framework integration + 2 extension mirrors), 18 sub-agents (15 core + 1 framework
-integration + 2 extension mirrors), and 53 Python execution scripts.
+Claude SEO is a Tier 4 SEO analysis skill with 31 sub-skills (27 core + 1 orchestrator +
+1 framework integration + 2 extension mirrors), 30 sub-agents (27 core + 1 framework
+integration + 2 extension mirrors), and 53 Python execution scripts. The `seo-backlink-*`
+skills and their 12 agents form a managed backlink acquisition engine that runs on
+connectors (mail, browser, and optionally Search Console, Bing, Ahrefs, Apollo) rather
+than on the bundled Python scripts.
 
 ## Quick Reference
 
@@ -88,6 +91,12 @@ integration + 2 extension mirrors), and 53 Python execution scripts.
 | `/seo backlinks <url>` | Backlink profile analysis |
 | `/seo backlinks setup` | Setup free backlink APIs |
 | `/seo backlinks verify <url>` | Verify known backlinks still exist |
+| `/seo backlink-onboard <domain>` | Set up the managed backlink acquisition engine for a new site |
+| `/seo backlink-sprint [url]` | Run a full monthly backlink acquisition cycle end to end |
+| `/seo backlink-audit <url>` | Verified current backlink position, DOM-confirmed |
+| `/seo backlink-outreach [prospects]` | Qualify, resolve contacts, draft outreach as unsent mail drafts |
+| `/seo backlink-verify <url> [links]` | Independently confirm claimed backlinks: claimed vs. confirmed |
+| `/seo backlink-report [cycle]` | Monthly backlink/AEO cycle report, verified numbers only |
 | `/seo dataforseo [cmd]` | Live SEO data via DataForSEO (extension) |
 | `/seo image-gen [use-case]` | AI image generation for SEO assets (extension) |
 | `/seo firecrawl [cmd] <url>` | Full-site crawling and site mapping (extension) |
@@ -138,7 +147,7 @@ bash install.sh
 ## Architecture
 
 ```
-skills/                    # 25 sub-skills (auto-discovered)
+skills/                    # 31 sub-skills (auto-discovered)
   seo/SKILL.md            # Main orchestrator + routing
   seo-cluster/            # Semantic clustering (v1.9.0)
   seo-sxo/                # Search Experience Optimization (v1.9.0)
@@ -159,12 +168,18 @@ skills/                    # 25 sub-skills (auto-discovered)
   seo-hreflang/           # International SEO
   seo-google/             # Google APIs
   seo-backlinks/          # Backlink analysis
+  seo-backlink-onboard/   # Backlink engine: onboard a new site
+  seo-backlink-sprint/    # Backlink engine: full monthly cycle
+  seo-backlink-audit/     # Backlink engine: verified position
+  seo-backlink-outreach/  # Backlink engine: draft outreach
+  seo-backlink-verify/    # Backlink engine: verify claimed links
+  seo-backlink-report/    # Backlink engine: cycle report
   seo-programmatic/       # Programmatic SEO
   seo-competitor-pages/   # Competitor pages
   seo-flow/               # FLOW framework integration
   seo-dataforseo/         # DataForSEO (extension)
   seo-image-gen/          # AI images (extension)
-agents/                    # 18 subagents
+agents/                    # 30 subagents (18 audit + 12 backlink engine)
 scripts/                   # 53 Python scripts, including the managed runtime
 schema/                    # JSON-LD templates
 extensions/                # 8 MCP extensions: DataForSEO, Firecrawl, Banana, Ahrefs, SE Ranking, Profound, Bing Webmaster, Unlighthouse

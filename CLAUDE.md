@@ -4,14 +4,16 @@
 
 This repository contains **Claude SEO**, a Tier 4 Claude Code skill for comprehensive
 SEO analysis across all industries. It follows the Agent Skills open standard and the
-3-layer architecture (directive, orchestration, execution). 25 sub-skills (21 core +
-1 orchestrator + 1 framework integration + 2 extension mirrors), 18 sub-agents (15 core +
+3-layer architecture (directive, orchestration, execution). 31 sub-skills (27 core +
+1 orchestrator + 1 framework integration + 2 extension mirrors), 30 sub-agents (27 core +
 1 framework integration + 2 extension mirrors), and an extensible reference
 system cover technical SEO, content quality,
 schema markup, image optimization, sitemap architecture, AI search optimization,
 local SEO (GBP, citations, reviews, map pack), maps intelligence, semantic topic
 clustering, search experience optimization (SXO), SEO drift monitoring, e-commerce
-SEO, and international SEO with cultural adaptation profiles.
+SEO, international SEO with cultural adaptation profiles, and a managed multi-agent
+backlink acquisition system (baseline audit, competitor gap, prospecting, outreach
+drafting, independent link verification, and AEO/GEO citation work).
 
 ## Architecture
 
@@ -27,6 +29,7 @@ claude-seo/
     seo/                           # Main orchestrator skill
       SKILL.md                     # Entry point, routing table, core rules
       references/                  # On-demand knowledge files (13 files)
+      references/backlink-engine/  # Backlink engine playbooks, shared across seo-backlink-* skills/agents (8 files)
     seo-audit/SKILL.md            # Full site audit with parallel agents
     seo-page/SKILL.md            # Deep single-page analysis
     seo-technical/SKILL.md       # Technical SEO (9 categories)
@@ -47,6 +50,12 @@ claude-seo/
       SKILL.md
       references/                # API reference files (11 files)
     seo-backlinks/SKILL.md      # Backlink profile analysis
+    seo-backlink-onboard/SKILL.md   # Backlink engine: onboard a new site
+    seo-backlink-sprint/SKILL.md    # Backlink engine: full monthly cycle (main entry point)
+    seo-backlink-audit/SKILL.md     # Backlink engine: verified current position, DOM-confirmed
+    seo-backlink-outreach/SKILL.md  # Backlink engine: qualify, resolve contacts, draft outreach
+    seo-backlink-verify/SKILL.md    # Backlink engine: independent link verification
+    seo-backlink-report/SKILL.md    # Backlink engine: monthly cycle report
     seo-cluster/                 # Semantic topic clustering (v1.9.0, by Lutfiya Miller)
       SKILL.md
       references/                # Clustering methodology, architecture, workflow
@@ -64,7 +73,7 @@ claude-seo/
     seo-image-gen/              # AI image generation for SEO assets (extension mirror)
       SKILL.md
       references/                # Image gen reference files (7 files)
-  agents/                          # 18 subagents (auto-discovered)
+  agents/                          # 30 subagents (auto-discovered)
     seo-technical.md             # Crawlability, indexability, security
     seo-content.md               # E-E-A-T, readability, thin content
     seo-schema.md                # Structured data validation
@@ -83,6 +92,18 @@ claude-seo/
     seo-drift.md                 # SEO drift monitoring
     seo-ecommerce.md             # E-commerce SEO analysis
     seo-flow.md                  # FLOW framework integration
+    seo-backlink-director.md         # Backlink engine: manager, sets target, gates every specialist output
+    seo-backlink-baseline-auditor.md # Backlink engine: verified current state (GSC, Bing, DOM-verified)
+    seo-backlink-gap-analyst.md      # Backlink engine: competitor referring-domain gap, tactic winnability
+    seo-backlink-entity-authority-analyst.md # Backlink engine: entity/schema consistency, AEO/GEO citation testing
+    seo-backlink-prospector.md       # Backlink engine: opportunity pipeline across every legitimate tactic
+    seo-backlink-prospect-qualifier.md # Backlink engine: spam/penalty screening, relevance, tiering
+    seo-backlink-contact-resolver.md # Backlink engine: finds the right human and a usable address
+    seo-backlink-outreach-writer.md  # Backlink engine: personalised outreach as unsent Gmail drafts
+    seo-backlink-verifier.md         # Backlink engine: adversarial DOM verification of every claimed link
+    seo-backlink-portfolio-monitor.md # Backlink engine: decay, broken links, anchor over-optimisation, toxic links
+    seo-backlink-asset-strategist.md # Backlink engine: linkable assets that remove the pipeline ceiling
+    seo-backlink-reporting-analyst.md # Backlink engine: monthly report, verified numbers, real funnel drop-off
   hooks/                           # Quality gate hooks
     hooks.json                   # PostToolUse schema validation
   scripts/                         # 53 Python execution scripts
@@ -168,6 +189,12 @@ claude-seo/
 | `/seo local <url>` | Local SEO (GBP, citations, reviews) |
 | `/seo maps [command]` | Maps intelligence (geo-grid, GBP audit, competitors) |
 | `/seo backlinks <url>` | Backlink profile analysis |
+| `/seo backlink-onboard <domain>` | Set up a managed backlink/AEO programme for a new site |
+| `/seo backlink-sprint [url]` | Run a full monthly backlink acquisition cycle end to end |
+| `/seo backlink-audit <url>` | Verified current backlink position, DOM-confirmed |
+| `/seo backlink-outreach [prospects]` | Qualify, resolve contacts, draft outreach as unsent mail drafts |
+| `/seo backlink-verify <url> [links]` | Independently confirm claimed backlinks: claimed vs. confirmed |
+| `/seo backlink-report [cycle]` | Monthly backlink/AEO cycle report, verified numbers only |
 | `/seo cluster <seed>` | SERP-based semantic clustering |
 | `/seo sxo <url>` | Search Experience Optimization |
 | `/seo drift baseline\|compare\|history <url>` | SEO drift monitoring |

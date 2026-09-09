@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **Backlink acquisition engine**: a managed multi-agent system for running backlink
+  acquisition end to end, alongside the existing `seo-backlinks` profile-analysis skill.
+  Six new skills (`seo-backlink-onboard`, `seo-backlink-sprint`, `seo-backlink-audit`,
+  `seo-backlink-outreach`, `seo-backlink-verify`, `seo-backlink-report`) and twelve new
+  agents led by a director agent (`seo-backlink-director`) that verifies and gates every
+  specialist output before it advances. A separate adversarial agent
+  (`seo-backlink-verifier`) independently confirms every claimed link by reading the live
+  page markup, so reports carry confirmed links rather than claimed ones. Outreach is
+  drafted per prospect as an unsent Gmail draft; nothing sends itself. Also covers the
+  AEO/GEO half: entity consistency, schema and answer structure, and live citation testing
+  across AI engines. Eight new reference playbooks live under
+  `skills/seo/references/backlink-engine/` (tactics, qualification and risk thresholds,
+  the verification protocol, the AEO/GEO evidence base, outreach templates, data sources,
+  the state schema, and known process gaps).
+
 ## [2.2.4] - 2026-07-20
 
 Community maintenance release following a full review of every open issue and pull request.

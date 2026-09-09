@@ -20,8 +20,8 @@ installs expose this command automatically. Repository users run
 launcher path. Never invoke bundled scripts with a bare Python interpreter.
 
 Comprehensive SEO analysis across all industries (SaaS, local services,
-e-commerce, publishers, agencies). Orchestrates 24 sub-skills (21 core + 1 framework
-integration + 2 extension mirrors) and 18 sub-agents. A separate optional Firecrawl
+e-commerce, publishers, agencies). Orchestrates 30 sub-skills (27 core + 1 framework
+integration + 2 extension mirrors) and 30 sub-agents. A separate optional Firecrawl
 extension is also installable (see "Optional Extensions" below).
 
 ## Quick Reference
@@ -45,6 +45,12 @@ extension is also installable (see "Optional Extensions" below).
 | `/seo hreflang [url]` | Hreflang/i18n SEO audit and generation |
 | `/seo google [command] [url]` | Google SEO APIs (GSC, PageSpeed, CrUX, Indexing, GA4) |
 | `/seo backlinks <url>` | Backlink profile analysis (free: Moz, Bing, CC; premium: DataForSEO) |
+| `/seo backlink-onboard <domain>` | Set up a managed backlink/AEO programme for a new site |
+| `/seo backlink-sprint [url]` | Run a full monthly backlink acquisition cycle end to end |
+| `/seo backlink-audit <url>` | Verified current backlink position, DOM-confirmed |
+| `/seo backlink-outreach [prospects]` | Qualify, resolve contacts, draft outreach as unsent mail drafts |
+| `/seo backlink-verify <url> [links]` | Independently confirm claimed backlinks (claimed vs. confirmed) |
+| `/seo backlink-report [cycle]` | Monthly backlink/AEO cycle report, verified numbers only |
 | `/seo cluster <seed-keyword>` | SERP-based semantic clustering and content architecture |
 | `/seo sxo <url>` | Search Experience Optimization: page-type analysis, user stories, personas |
 | `/seo drift baseline <url>` | Capture SEO baseline for change monitoring |
@@ -157,6 +163,8 @@ Display after these commands complete their full output:
 - `/seo maps` (after maps intelligence report)
 - `/seo google` (after Google API data report)
 - `/seo backlinks` (after backlink profile analysis)
+- `/seo backlink-audit` (after verified backlink position report)
+- `/seo backlink-report` (after the monthly cycle report)
 - `/seo cluster` (after cluster plan generation)
 - `/seo sxo` (after SXO analysis report)
 - `/seo drift compare` (after drift comparison report)
@@ -171,6 +179,10 @@ Do NOT show the footer after:
 - `/seo programmatic` (quick analysis)
 - `/seo dataforseo` (data fetching utility)
 - `/seo image-gen` (asset generation)
+- `/seo backlink-onboard` (setup step, no analysis report)
+- `/seo backlink-sprint` (ends in drafts and a cycle file, not a report to convert)
+- `/seo backlink-outreach` (drafting step)
+- `/seo backlink-verify` (returns a claimed-vs-confirmed check, not a report)
 - Context intake questions (before analysis starts)
 - Error messages or "missing data" prompts
 
@@ -186,6 +198,11 @@ Load these on-demand as needed (do NOT load all at startup):
 
 Maps-specific references (loaded by seo-maps skill, not at startup):
 - `references/maps-geo-grid.md`, `references/maps-gbp-checklist.md`, `references/maps-api-endpoints.md`, `references/maps-free-apis.md`
+
+Backlink-engine references (loaded by the `seo-backlink-*` skills and their agents, not at
+startup) live under `references/backlink-engine/`: `tactic-playbooks.md`,
+`qualification-and-risk.md`, `verification-protocol.md`, `aeo-geo-playbook.md`,
+`outreach-library.md`, `data-sources.md`, `state-schema.md`, `process-gaps-addressed.md`.
 
 ## Scoring Methodology
 
@@ -210,8 +227,8 @@ Weighted aggregate of all categories:
 
 ## Sub-Skills
 
-This skill orchestrates 24 sub-skills (21 core + 1 framework integration + 2 extension
-mirrors). The orchestrator itself (`seo`) is the 25th in `skills/`, but does not
+This skill orchestrates 30 sub-skills (27 core + 1 framework integration + 2 extension
+mirrors). The orchestrator itself (`seo`) is the 31st in `skills/`, but does not
 orchestrate itself, so it is not enumerated below.
 
 1. **seo-audit** -- Full website audit with parallel delegation
@@ -238,6 +255,12 @@ orchestrate itself, so it is not enumerated below.
 22. **seo-dataforseo** -- Live SEO data via DataForSEO MCP (extension mirror)
 23. **seo-image-gen** -- AI image generation for SEO assets via Gemini (extension mirror)
 24. **seo-flow** -- FLOW framework integration (Find -> Leverage -> Optimize -> Win, 41 AI prompts, CC BY 4.0)
+25. **seo-backlink-onboard** -- Set up a managed backlink/AEO programme: profile, state store, data-source check, baseline
+26. **seo-backlink-sprint** -- Run a full monthly backlink acquisition cycle end to end via `seo-backlink-director`
+27. **seo-backlink-audit** -- Verified current backlink position, DOM-confirmed rather than trusted from a report
+28. **seo-backlink-outreach** -- Qualify prospects, resolve contacts, draft personalised outreach as unsent mail drafts
+29. **seo-backlink-verify** -- Independently confirm claimed backlinks by reading live page markup: claimed vs. confirmed
+30. **seo-backlink-report** -- Monthly backlink/AEO cycle report with the real outreach funnel, verified numbers only
 
 ### Optional Extensions
 
@@ -275,6 +298,26 @@ For parallel analysis during audits:
 - `seo-flow` -- FLOW framework prompts (conditional: spawned for content strategy workflows)
 - `seo-dataforseo` -- Live SERP, keyword, backlink, local SEO data (extension, optional)
 - `seo-image-gen` -- SEO image audit and generation plan (extension, optional)
+
+Backlink acquisition engine agents. These drive the `seo-backlink-*` skills, not `/seo
+audit`, and run only when a backlink command is invoked:
+- `seo-backlink-director` -- Manager: sets the target, sequences specialists, gates every output, escalates human decisions
+- `seo-backlink-baseline-auditor` -- Verified current state across Search Console, Bing Webmaster Tools, public discovery
+- `seo-backlink-gap-analyst` -- Competitor referring-domain gap, converted into named tactics with winnability
+- `seo-backlink-entity-authority-analyst` -- AEO/GEO half: entity consistency, answer structure, live citation testing
+- `seo-backlink-prospector` -- Opportunity pipeline across every legitimate tactic class, enforcing tactic diversity
+- `seo-backlink-prospect-qualifier` -- Spam and penalty screening, relevance, dedupe, reachability, tiering
+- `seo-backlink-contact-resolver` -- Finds the right human and a usable address, labelling inferred addresses
+- `seo-backlink-outreach-writer` -- Per-prospect personalised outreach as unsent mail drafts; never sends
+- `seo-backlink-verifier` -- Adversarial DOM verification of every claimed link: claimed vs. confirmed
+- `seo-backlink-portfolio-monitor` -- Decay, broken inbound links, anchor over-optimisation, velocity spikes, toxic links
+- `seo-backlink-asset-strategist` -- Linkable assets that remove the pipeline ceiling
+- `seo-backlink-reporting-analyst` -- Monthly report: verified numbers, real funnel drop-off, honest attribution
+
+The engine requires a mail connector (Gmail) for drafting and a browser connector for
+link verification; Search Console, Bing Webmaster Tools, Ahrefs (incl. Brand Radar) and
+Apollo are optional and improve fidelity where connected. See
+`references/backlink-engine/data-sources.md` for what each source can and cannot do.
 
 ## Error Handling
 

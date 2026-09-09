@@ -5,13 +5,13 @@
     "name": "AgriciDaniel"
   },
   "metadata": {
-    "description": "Comprehensive SEO analysis plugin for Claude Code. 25 sub-skills and 18 sub-agents, plus 8 optional MCP extensions (DataForSEO, Firecrawl, Banana, Ahrefs, SE Ranking, Profound, Bing Webmaster, Unlighthouse). v2.2.4 adds a managed cross-platform runtime and safe sitemap discovery, and repairs GSC pagination, Bing endpoints, extension paths, Windows portability, SPA rendering, and JSON-LD extraction."
+    "description": "Comprehensive SEO analysis plugin for Claude Code. 31 sub-skills and 30 sub-agents, plus 8 optional MCP extensions (DataForSEO, Firecrawl, Banana, Ahrefs, SE Ranking, Profound, Bing Webmaster, Unlighthouse). Adds a managed multi-agent backlink acquisition engine (verified baseline audit, competitor gap, prospecting, outreach drafting, independent DOM link verification, and AEO/GEO citation work) alongside the managed cross-platform runtime and safe sitemap discovery."
   },
   "plugins": [
     {
       "name": "claude-seo",
       "source": "./",
-      "description": "Comprehensive SEO analysis plugin for Claude Code. 25 sub-skills and 18 sub-agents, plus 8 optional MCP extensions. v2.2.4 adds a managed cross-platform runtime and safe sitemap discovery, and repairs GSC pagination, Bing endpoints, extension paths, Windows portability, SPA rendering, JSON-LD extraction, and DataForSEO permissions.",
+      "description": "Comprehensive SEO analysis plugin for Claude Code. 31 sub-skills and 30 sub-agents, plus 8 optional MCP extensions. Adds a managed multi-agent backlink acquisition engine (verified baseline audit, competitor gap, prospecting, outreach drafting, independent DOM link verification, and AEO/GEO citation work) alongside the managed cross-platform runtime and safe sitemap discovery.",
       "author": {
         "name": "AgriciDaniel",
         "url": "https://github.com/AgriciDaniel"
@@ -55,7 +55,11 @@
         "headless-rendering",
         "ssrf-safe-fetchers",
         "ai-citation-optimization",
-        "synthesis-framework"
+        "synthesis-framework",
+        "link-building",
+        "digital-pr",
+        "backlink-outreach",
+        "aeo"
       ]
     }
   ]

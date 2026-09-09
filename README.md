@@ -2,7 +2,7 @@
 
 # Claude SEO: SEO Skill for Claude Code
 
-**Claude SEO is an open-source SEO analysis plugin for [Claude Code](https://claude.ai/claude-code).** It runs 25 sub-skills and 18 specialist agents in parallel across technical SEO, content quality (E-E-A-T), Schema.org markup, AI search optimization (GEO), local SEO, e-commerce, and international SEO. Every audit produces a prioritized action plan with testable recommendations grounded in primary-source guidance from Google.
+**Claude SEO is an open-source SEO analysis plugin for [Claude Code](https://claude.ai/claude-code).** It runs 31 sub-skills and 30 specialist agents in parallel across technical SEO, content quality (E-E-A-T), Schema.org markup, AI search optimization (GEO), local SEO, e-commerce, international SEO, and a managed multi-agent backlink acquisition engine. Every audit produces a prioritized action plan with testable recommendations grounded in primary-source guidance from Google.
 
 [![CI](https://github.com/AgriciDaniel/claude-seo/actions/workflows/ci.yml/badge.svg)](https://github.com/AgriciDaniel/claude-seo/actions/workflows/ci.yml)
 [![Claude Code Skill](https://img.shields.io/badge/Claude%20Code-Skill-blue)](https://claude.ai/claude-code)
@@ -143,7 +143,7 @@ claude
 
 ![Claude SEO sub-skill ecosystem: 25 modules grouped into 8 categories (audit, content, schema, technical, AI search, local + maps, commerce + intl, extensions) around the central orchestrator](assets/sub-skills.svg)
 
-32 user-invocable `/seo` commands across the orchestrator, its sub-skills, and 8 MCP extensions. Full reference in [docs/COMMANDS.md](docs/COMMANDS.md).
+38 user-invocable `/seo` commands across the orchestrator, its sub-skills, and 8 MCP extensions. Full reference in [docs/COMMANDS.md](docs/COMMANDS.md).
 
 | Command | Description |
 |---------|-------------|
@@ -166,6 +166,12 @@ claude
 | `/seo hreflang <url>` | Hreflang / i18n SEO audit and generation |
 | `/seo google [command]` | Google SEO APIs (GSC, PageSpeed, CrUX, Indexing, GA4, PDF reports) |
 | `/seo backlinks <url>` | Backlink profile analysis (Moz, Bing, Common Crawl) |
+| `/seo backlink-onboard <domain>` | Set up the managed backlink acquisition engine for a new site |
+| `/seo backlink-sprint [url]` | Run a full monthly backlink acquisition cycle end to end |
+| `/seo backlink-audit <url>` | Verified current backlink position, DOM-confirmed |
+| `/seo backlink-outreach [prospects]` | Qualify, resolve contacts, draft outreach as unsent mail drafts |
+| `/seo backlink-verify <url> [links]` | Independently confirm claimed backlinks: claimed vs. confirmed |
+| `/seo backlink-report [cycle]` | Monthly backlink/AEO cycle report, verified numbers only |
 | `/seo cluster <keyword>` | SERP-based semantic clustering |
 | `/seo sxo <url>` | Search Experience Optimization (page-type, user stories, personas) |
 | `/seo drift baseline \| compare \| history <url>` | SEO drift monitoring with SQLite snapshots |
@@ -454,7 +460,7 @@ Claude SEO is part of a family of Claude Code skills that interoperate cleanly:
 
 ### What is Claude SEO?
 
-Claude SEO is an open-source SEO analysis plugin for Claude Code. It runs 25 sub-skills and 18 specialist agents in parallel across technical SEO, content quality, Schema.org markup, AI search optimization, local SEO, e-commerce, and international SEO. Audits produce a prioritized action plan where each recommendation carries the first-principle observation it rests on, its dependency relationship to other recommendations, a "how would we know this failed?" check, and a leading indicator. The plugin is MIT-licensed, ships zero proprietary tracking, and works without third-party API enrichment; audits still contact the target URLs you analyze. Aligned with [Google's AI Optimization Guide](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide) and the September 2025 Quality Rater Guidelines.
+Claude SEO is an open-source SEO analysis plugin for Claude Code. It runs 31 sub-skills and 30 specialist agents in parallel across technical SEO, content quality, Schema.org markup, AI search optimization, local SEO, e-commerce, international SEO, and a managed multi-agent backlink acquisition engine. Audits produce a prioritized action plan where each recommendation carries the first-principle observation it rests on, its dependency relationship to other recommendations, a "how would we know this failed?" check, and a leading indicator. The plugin is MIT-licensed, ships zero proprietary tracking, and works without third-party API enrichment; audits still contact the target URLs you analyze. Aligned with [Google's AI Optimization Guide](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide) and the September 2025 Quality Rater Guidelines.
 
 ### How is Claude SEO different from Screaming Frog or Ahrefs Site Audit?
 
@@ -470,7 +476,7 @@ None are required. Claude SEO is fully functional with zero API keys. A 4-tier c
 
 ### Is Claude SEO free?
 
-Yes. MIT licensed, fully open source, no per-domain pricing, no telemetry, no API quotas imposed by the plugin itself. The core plugin and all 25 sub-skills work without any paid service. Some optional MCP extensions wrap paid services (DataForSEO, Ahrefs, Profound, SE Ranking) where you bring your own account credentials; their use is opt-in and the plugin works fully without them. Google APIs (PageSpeed Insights, Search Console, Indexing, GA4) are free from Google with normal account quota limits and require your own credentials. If you want commercial support or enterprise features beyond the open-source plugin, that is not part of this project.
+Yes. MIT licensed, fully open source, no per-domain pricing, no telemetry, no API quotas imposed by the plugin itself. The core plugin and its sub-skills work without any paid service. Some optional MCP extensions wrap paid services (DataForSEO, Ahrefs, Profound, SE Ranking) where you bring your own account credentials; their use is opt-in and the plugin works fully without them. Google APIs (PageSpeed Insights, Search Console, Indexing, GA4) are free from Google with normal account quota limits and require your own credentials. The `seo-backlink-*` engine additionally needs a mail connector (Gmail) to draft outreach and a browser connector to verify links; it runs at zero cost with just those two, and improves with optional connectors (Search Console, Bing Webmaster Tools, Ahrefs, Apollo) you already control. If you want commercial support or enterprise features beyond the open-source plugin, that is not part of this project.
 
 ### How is Claude SEO different from regular SEO tools when it comes to AI search?
 

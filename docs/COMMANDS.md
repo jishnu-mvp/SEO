@@ -358,6 +358,44 @@ Backlink profile analysis with a 3-tier data cascade: free (Common Crawl + verif
 
 ---
 
+### `/seo backlink-onboard <domain>`
+
+Sets up the managed backlink acquisition engine for a site that has no programme yet: builds the client profile, verifies the site's own press/certification claims, provisions the ledger-based state store, checks which data sources are actually connected (rather than assumed), and commissions the verified baseline audit.
+
+---
+
+### `/seo backlink-sprint [url]`
+
+Main entry point for the backlink acquisition engine. Runs a full monthly cycle end to end through `seo-backlink-director`: baseline delta, competitor gap refresh, entity/citation check, prospecting, qualification, contact resolution, outreach drafting and follow-ups, independent link verification, portfolio health, and the cycle report. Three human touchpoints only: approvals early, sending drafts mid-cycle, and the final report. Writes `cycles/<YYYY-MM>.md` every cycle, even a failed one.
+
+---
+
+### `/seo backlink-audit <url>`
+
+Verified current backlink position — or a check on whether someone else's link claims are true. Runs discovery across Search Console, Bing Webmaster Tools, and public discovery sources, then DOM-verifies every link found rather than trusting a report.
+
+---
+
+### `/seo backlink-outreach [prospects]`
+
+Qualifies prospects, resolves a real contact and address, and drafts personalised per-prospect outreach into the user's mail client as an unsent draft, in the client's voice, with the follow-up sequence. Nothing sends itself — a human always sends.
+
+---
+
+### `/seo backlink-verify <url> [links]`
+
+Independently confirms claimed backlinks by reading the live page markup: existence, the literal `rel` value, direct vs. redirect-routed, whether the target resolves, anchor text, indexability, and placement on the page. Reports claimed against confirmed — if six were claimed and three confirmed, the number is three.
+
+---
+
+### `/seo backlink-report [cycle]`
+
+Builds the monthly backlink/AEO cycle report as a published artifact: verified numbers only, the real outreach funnel with drop-off, and honest attribution.
+
+**Requires:** a mail connector (Gmail) for `backlink-outreach`/`backlink-sprint`, and a browser connector for `backlink-verify`/`backlink-audit`/`backlink-sprint`. Search Console, Bing Webmaster Tools, Ahrefs (including Brand Radar), and Apollo are optional and improve fidelity where connected; the engine runs at zero cost without them. See `skills/seo/references/backlink-engine/data-sources.md`.
+
+---
+
 ### `/seo cluster [command] <seed-keyword>`
 
 SERP-based semantic topic clustering for content architecture planning. Built on the Pro Hub Challenge Semantic Cluster Engine. Subcommands: `plan <seed>` (full planning workflow; also `plan --from strategy` to import a `/seo plan` output), `execute` (create content via claude-blog or output briefs), `map` (regenerate the interactive visualization). Bare `/seo cluster <seed>` is shorthand for `plan`.
