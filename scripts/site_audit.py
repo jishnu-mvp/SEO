@@ -260,14 +260,15 @@ def load_from_url(base_url, max_pages, timeout):
 
     origin = "{0}://{1}".format(*urlparse(base_url)[:2])
     pages, assets, extras = {}, set(), {}
+    errors = []
 
     for special in ("sitemap.xml", "robots.txt", "llms.txt"):
         try:
             resp = safe_requests_get(urljoin(origin + "/", special), timeout=timeout)
             if resp.status_code == 200:
                 extras[special] = resp.text
-        except Exception:
-            pass
+        except Exception as exc:
+            errors.append("%s: %s: %s" % (special, type(exc).__name__, exc))
 
     seeds = [_norm_path(urlparse(u).path) for u in sitemap_urls(extras.get("sitemap.xml", ""))]
     queue = ["/"] + [s for s in seeds if s != "/"]
@@ -284,7 +285,8 @@ def load_from_url(base_url, max_pages, timeout):
         seen.add(path)
         try:
             resp = safe_requests_get(origin + path, timeout=timeout)
-        except Exception:
+        except Exception as exc:
+            errors.append("%s: %s: %s" % (path, type(exc).__name__, exc))
             continue
         if resp.status_code != 200 or "html" not in resp.headers.get("content-type", ""):
             if resp.status_code != 200:
@@ -298,6 +300,7 @@ def load_from_url(base_url, max_pages, timeout):
 
     extras["__truncated__"] = truncated
     extras["__queued__"] = len(queue)
+    extras["__errors__"] = errors
     return pages, assets, extras
 
 
@@ -825,7 +828,16 @@ def main():
         root = None
 
     if not pages:
-        print("no pages found", file=sys.stderr)
+        # Never fail quietly. A run that fetched nothing must say why -- a
+        # silent zero is indistinguishable from a clean site, which is the
+        # exact confusion this whole module exists to prevent.
+        print("FETCHED NOTHING -- this is a failed run, not a clean site.",
+              file=sys.stderr)
+        for reason in (extras.get("__errors__") or [])[:5]:
+            print("  %s" % reason, file=sys.stderr)
+        if not extras.get("__errors__"):
+            print("  no errors recorded; check the base URL and robots.txt",
+                  file=sys.stderr)
         return 2
 
     result = audit(pages, assets, extras, base, root=root)
