@@ -106,7 +106,7 @@ claude-seo/
     seo-backlink-reporting-analyst.md # Backlink engine: monthly report, verified numbers, real funnel drop-off
   hooks/                           # Quality gate hooks
     hooks.json                   # PostToolUse schema validation
-  scripts/                         # 53 Python execution scripts
+  scripts/                         # 56 Python execution scripts
     google_auth.py               # Credential management (OAuth, SA, API key, 4-tier detection)
     backlinks_auth.py            # Backlink API credential management (Moz, Bing)
     moz_api.py                   # Moz Link Explorer API (DA/PA, spam, domains, anchors)
@@ -153,6 +153,9 @@ claude-seo/
     indexnow_submit.py           # IndexNow submitter
     ucp_check.py                 # UCP (Universal Commerce Protocol) profile auditor
     unlighthouse_run.py          # Unlighthouse CLI wrapper (site-wide Lighthouse)
+    site_audit.py                # Deterministic site-wide SEO/AEO/GEO checks (stdlib-only)
+    site_autofix.py              # Applies mechanical fixes, queues content ones for approval
+    audit_coverage.py            # Check registry, coverage manifest, and the reporting gate
     validate_backlink_report.py  # Backlink report validation
     portability_check.py         # Cross-platform portability lint for SKILL.md files
     consistency_check.py         # Reference-graph gate: dead refs, routing, lock, orphans
@@ -284,6 +287,49 @@ audit that required user correction before the report could be trusted.
   the live deploy via that host's redirect/rewrite config (see
   `mvp1-website`'s `_redirects` / `vercel.json` for the pattern) — and diff
   against the most recent prior snapshot there for week-over-week reporting.
+
+## Audit Coverage Rules
+
+These exist because of a measured failure, not a hypothetical one. Between 1
+and 14 Sep 2026 this repo's weekly audit of mvp1.com.au reported "clean week,
+zero High or Critical issues" three times while six real defects sat live:
+21 orphaned pages, a noindexed URL submitted in the sitemap, a homepage image
+returning 404, 32 legacy-format images, four brand-suffix-only titles, and
+eight navigation labels ahead of every content heading.
+
+Every one was covered by a rule already written in a SKILL.md. None of those
+rules were code. **Prose does not execute.** The audit's real coverage was
+bounded by what the scripts emitted, and the report format had no field in
+which to say "not checked", so a skipped check and a passing check were
+identical in the data.
+
+- **A check that matters must be a script, not a bullet in a SKILL.md.** If you
+  find yourself writing a new rule as prose, add it to `CHECKS` in
+  `scripts/audit_coverage.py` and implement it. A registry entry with
+  `implemented_by=None` is reported as `unimplemented` on every single run, so
+  a gap stays loud instead of going quiet.
+- **Every full audit runs `scripts/site_audit.py`** and merges its `coverage`
+  block into `audit-data.json`. No exceptions, including when subagents have
+  already covered a category -- the manifest is what proves they did.
+- **Every audit is gated before the report is written:**
+  `claude-seo run audit_coverage.py --validate audit-data.json`. It fails on a
+  category scored with no check behind it, on evidence older than the report
+  claims, and on any registered check missing from the manifest. A failing gate
+  means the report does not go out.
+- **Never present carried-forward evidence as this week's measurement.** Mark it
+  `carried_forward` with its original `checked_at`. The 14 Sep report cited a
+  1 Sep crawl under a "clean week" headline; the gate now catches that.
+- **Week-over-week is computed, not narrated:**
+  `site_audit.py --compare <last-week.json>`. A finding that disappears because
+  its check stopped running is reported as a coverage regression, never as a fix.
+- **Fix classification is not a judgement call at report time.** `fix_class` in
+  the registry decides it: `technical` ships automatically, `content` always
+  waits for a human, `external` lives outside the repo. `scripts/site_autofix.py`
+  enforces the split and writes the approval queue.
+- **A decision not to act is recorded, not repeated.** Write it to
+  `.seo-exemptions.json` in the target site's repo with a reason and a date.
+  Anything correctly left alone but re-reported weekly teaches everyone to
+  ignore the report, which is how the six defects survived three runs.
 
 ## Ecosystem
 

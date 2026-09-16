@@ -17,7 +17,8 @@ metadata:
 1. **Render homepage**: use `claude-seo run render_page.py <url> --mode auto --json` to capture raw HTML, rendered HTML, extracted text, SPA status, and accessibility data when needed
 2. **Detect business type**: analyze homepage signals per seo orchestrator
 3. **Crawl site**: follow internal links up to 500 pages, respect robots.txt
-4. **Delegate to subagents** (if available, otherwise run inline sequentially):
+4. **Run the deterministic checks first** -- `claude-seo run site_audit.py --root <dir> --base-url <url> --output {domain}-audit/site-audit.json` (or `--url <url>` when there is no local checkout). This is mandatory on every full audit. It covers the link graph, sitemap reconciliation, symmetric on-page bounds, image formats, heading outline and AEO/GEO signals, and it emits the coverage manifest the report is gated on. Add `--compare <previous-run.json>` to get a computed week-over-week diff instead of a narrated one.
+5. **Delegate to subagents** (if available, otherwise run inline sequentially):
    - `seo-technical` -- robots.txt, sitemaps, canonicals, Core Web Vitals, security headers
    - `seo-content` -- E-E-A-T, readability, thin content, AI citation readiness
    - `seo-schema` -- detection, validation, generation recommendations
@@ -33,9 +34,11 @@ metadata:
    - `seo-sxo` -- Search experience analysis: page-type mismatch, user stories, persona scoring (always include in full audits)
    - `seo-drift` -- Drift analysis: compare against stored baseline (spawn when drift baseline exists for the URL via `claude-seo run drift_history.py <url>`)
    - `seo-ecommerce` -- Product schema, marketplace intelligence (spawn when E-commerce industry detected)
-5. **Score** -- aggregate into SEO Health Score (0-100)
-6. **Persist audit artifacts** -- write all outputs under `{domain}-audit/`
-7. **Report** -- generate prioritized action plan and optional PDF/HTML report
+6. **Apply the safe fixes** -- `claude-seo run site_autofix.py --audit {domain}-audit/site-audit.json --root <dir> --queue {domain}-audit/approvals.json`. Findings classed `technical` are applied and shipped; `content` findings are never touched and land in the approval queue; titles and meta descriptions land in a drafting queue for you to author. Re-run `site_audit.py` afterwards to confirm the fixes took.
+7. **Score** -- aggregate into SEO Health Score (0-100)
+8. **Merge coverage and gate the report** -- `claude-seo run audit_coverage.py --merge {domain}-audit/audit-data.json --coverage {domain}-audit/site-audit.json`, then `claude-seo run audit_coverage.py --validate {domain}-audit/audit-data.json`. **A failing gate means the report does not go out.** It fails when a category carries a score with no check behind it, when evidence is older than the report claims, or when a registered check is missing from the manifest.
+9. **Persist audit artifacts** -- write all outputs under `{domain}-audit/`
+10. **Report** -- generate prioritized action plan and optional PDF/HTML report. State the coverage explicitly: pages read of pages declared, and every check that did not run with its reason.
 
 ## Crawl Configuration
 
@@ -84,6 +87,15 @@ Write `{domain}-audit/audit-data.json` with this shape so `claude-seo run google
       ]
     }
   ],
+  "coverage": {
+    "generated_at": "ISO-8601",
+    "checks": [
+      {"check": "sitemap.noindex_in_sitemap", "category": "Technical SEO",
+       "status": "ran|skipped|unimplemented|carried_forward", "reason": null,
+       "pages_checked": 0, "findings": 0, "checked_at": "ISO-8601",
+       "implemented_by": "site_audit.py"}
+    ]
+  },
   "action_plan": {
     "phases": [
       {"name": "Phase 1: Critical Fixes", "timeframe": "Week 1", "items": []},
