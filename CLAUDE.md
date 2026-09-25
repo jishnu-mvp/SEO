@@ -148,6 +148,7 @@ claude-seo/
     iptc_ai_label.py             # IPTC DigitalSourceType audit/injection for AI imagery
     parasite_risk.py             # Parasite-SEO risk scanner
     gbp_deprecation_lint.py      # GBP feature-deprecation linter
+    gbp_freshness.py             # GBP data-settling guard (unpublished days != zero)
     domain_history.py            # Expired-domain heritage check
     seo_updates.py               # Primary-source Google updates query tool
     indexnow_submit.py           # IndexNow submitter
