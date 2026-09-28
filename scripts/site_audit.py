@@ -842,10 +842,9 @@ def main():
 
     result = audit(pages, assets, extras, base, root=root)
 
-    if args.output:
-        with open(args.output, "w", encoding="utf-8") as handle:
-            json.dump(result, handle, indent=2)
-
+    # Compare before writing: the saved snapshot is what next week reads and
+    # what the report cites, so a diff computed after the write never reaches
+    # either -- every archived run carried changed_since=null until 28 Sep 2026.
     if args.compare:
         try:
             previous = json.load(open(args.compare, encoding="utf-8"))
@@ -853,6 +852,10 @@ def main():
             print("cannot read %s: %s" % (args.compare, exc), file=sys.stderr)
             return 2
         result["changed_since"] = compare(previous, result)
+
+    if args.output:
+        with open(args.output, "w", encoding="utf-8") as handle:
+            json.dump(result, handle, indent=2)
 
     if args.json:
         print(json.dumps(result, indent=2))
