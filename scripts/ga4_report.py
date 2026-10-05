@@ -240,6 +240,105 @@ def organic_traffic_report(
     return result
 
 
+# Hostnames GA4 may report as a session source for traffic that came from an AI
+# assistant. GA4 groups many of these into an "AI Assistant" default channel
+# itself; matching on the source name as well catches the ones it misses and
+# keeps the report working if Google renames the channel.
+AI_SOURCE_HINTS = (
+    "chatgpt", "openai", "claude", "anthropic", "perplexity", "gemini",
+    "copilot", "bard", "deepseek", "grok", "meta.ai", "you.com", "phind",
+    "poe.com", "kagi", "mistral", "duckduckgo.com/chat", "brave.com/ai",
+)
+
+
+def _is_ai_row(source: str, channel: str) -> bool:
+    if channel == "AI Assistant":
+        return True
+    src = (source or "").lower()
+    return any(hint in src for hint in AI_SOURCE_HINTS)
+
+
+def ai_referrals_report(property_id: str, days: int = 28, limit: int = 100) -> dict:
+    """Sessions that arrived from AI assistants (ChatGPT, Claude, Perplexity...).
+
+    Reported in EVERY audit, including when the answer is zero, because a zero
+    that is not stated is indistinguishable from a check that never ran. The
+    report also returns the size of the Direct bucket: AI apps that send no
+    referrer land there and cannot be separated, so a low AI count is a floor,
+    not a measurement of true AI-driven visits.
+    """
+    client = _build_ga4_client()
+    if not client:
+        return {"error": "Failed to build GA4 client. Check credentials."}
+    prop = _resolve_property(property_id)
+
+    def pull(start: str, end: str, dims):
+        req = RunReportRequest(
+            property=prop,
+            date_ranges=[DateRange(start_date=start, end_date=end)],
+            dimensions=[Dimension(name=d) for d in dims],
+            metrics=[Metric(name="sessions"), Metric(name="engagedSessions"),
+                     Metric(name="activeUsers")],
+            limit=limit * 10,
+        )
+        resp = client.run_report(req)
+        out = []
+        for row in resp.rows:
+            d = [v.value for v in row.dimension_values]
+            m = [int(float(v.value)) for v in row.metric_values]
+            out.append((d, m))
+        return out
+
+    def window(start: str, end: str) -> dict:
+        rows = pull(start, end, ["sessionSource", "sessionMedium", "sessionDefaultChannelGroup", "landingPage"])
+        by_source, landing, total, direct = {}, {}, 0, 0
+        ai_total = ai_engaged = ai_users = 0
+        for (src, med, chan, page), (sessions, engaged, users) in rows:
+            total += sessions
+            if chan == "Direct":
+                direct += sessions
+            if _is_ai_row(src, chan):
+                ai_total += sessions
+                ai_engaged += engaged
+                ai_users += users
+                key = f"{src} / {med}"
+                by_source[key] = by_source.get(key, 0) + sessions
+                landing[page] = landing.get(page, 0) + sessions
+        return {
+            "ai_sessions": ai_total,
+            "ai_engaged_sessions": ai_engaged,
+            "ai_users": ai_users,
+            "by_source": dict(sorted(by_source.items(), key=lambda kv: -kv[1])),
+            "landing_pages": dict(sorted(landing.items(), key=lambda kv: -kv[1])[:limit]),
+            "all_sessions": total,
+            "direct_sessions": direct,
+        }
+
+    end = datetime.now() - timedelta(days=1)
+    start = end - timedelta(days=days - 1)
+    prev_end = start - timedelta(days=1)
+    prev_start = prev_end - timedelta(days=days - 1)
+    fmt = "%Y-%m-%d"
+    try:
+        cur = window(start.strftime(fmt), end.strftime(fmt))
+        prev = window(prev_start.strftime(fmt), prev_end.strftime(fmt))
+    except Exception as e:  # noqa: BLE001 - surface the API error to the caller
+        return {"error": f"GA4 API error: {e}"}
+
+    return {
+        "property": property_id,
+        "date_range": {"start": start.strftime(fmt), "end": end.strftime(fmt)},
+        "previous_range": {"start": prev_start.strftime(fmt), "end": prev_end.strftime(fmt)},
+        "current": cur,
+        "previous": prev,
+        "change_sessions": cur["ai_sessions"] - prev["ai_sessions"],
+        "caveat": ("AI apps that send no referrer land in Direct and cannot be "
+                   "separated. Treat ai_sessions as a floor. direct_sessions shows "
+                   "the size of the bucket they would be hiding in."),
+    }
+
+
+
 def top_pages_report(
     property_id: str,
     days: int = 28,
@@ -405,7 +504,7 @@ def main():
     parser.add_argument("--days", "-d", type=int, default=28, help="Number of days (default: 28)")
     parser.add_argument(
         "--report", "-r",
-        choices=["organic", "top-pages", "device", "country"],
+        choices=["organic", "top-pages", "device", "country", "ai-referrals"],
         default="organic",
         help="Report type (default: organic)",
     )
@@ -435,6 +534,8 @@ def main():
         result = device_breakdown(prop, args.days)
     elif args.report == "country":
         result = country_breakdown(prop, args.days, args.limit)
+    elif args.report == "ai-referrals":
+        result = ai_referrals_report(prop, args.days, args.limit)
     else:
         result = organic_traffic_report(prop, args.days, args.limit)
 
@@ -445,6 +546,19 @@ def main():
 
     if args.json:
         print(json.dumps(result, indent=2, default=str))
+    elif args.report == "ai-referrals" and not result.get("error"):
+        cur, prev = result["current"], result["previous"]
+        print("=== AI Assistant Referrals ===")
+        print(f"Period: {result['date_range']['start']} to {result['date_range']['end']}"
+              f" (previous {result['previous_range']['start']} to {result['previous_range']['end']})")
+        print(f"AI sessions: {cur['ai_sessions']} (previous {prev['ai_sessions']}, "
+              f"change {result['change_sessions']:+d}) | engaged {cur['ai_engaged_sessions']}")
+        for src, n in cur["by_source"].items():
+            print(f"  {src}: {n}")
+        for page, n in cur["landing_pages"].items():
+            print(f"  lands on {page}: {n}")
+        print(f"Direct sessions (where referrer-less AI visits hide): {cur['direct_sessions']} of {cur['all_sessions']}")
+        print(result["caveat"])
     else:
         if args.report == "top-pages":
             print(f"=== Top Organic Landing Pages ===")

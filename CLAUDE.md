@@ -332,6 +332,26 @@ identical in the data.
   Anything correctly left alone but re-reported weekly teaches everyone to
   ignore the report, which is how the six defects survived three runs.
 
+## AI Traffic Reporting Rule
+
+Set by Jishnu on 5 Oct 2026: **AI traffic is always reported when it happens,
+in every report, every time.**
+
+- Every audit runs `ga4_report.py --report ai-referrals --json` and stores the
+  result in the snapshot as `ai_referrals`. The registry entry
+  `ai_traffic.referrals` means a run that skipped it shows as not checked.
+- The PDF states the count every week, **including when it is zero**, with the
+  previous period, the source (ChatGPT, Claude, Perplexity, Gemini, Copilot),
+  and the landing pages. A zero that goes unstated looks like a check that did
+  not run.
+- Any AI-referred session is a win and goes in the opening summary lines of the
+  Slack message, with its week-over-week change.
+- Always state the caveat: AI apps that send no referrer land in Direct, so the
+  count is a floor, not the true number of AI-driven visits. Report the size of
+  the Direct bucket alongside it.
+- GA4 groups most of this under its own "AI Assistant" channel; the script also
+  matches known AI source names so a renamed channel does not hide it.
+
 ## Ecosystem
 
 Part of the Claude Code skill family:

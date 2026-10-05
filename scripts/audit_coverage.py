@@ -346,6 +346,17 @@ CHECKS = {
                 "when one is attached; otherwise this reports as skipped with a "
                 "reason rather than silently carrying last week's numbers.",
     },
+    "ai_traffic.referrals": {
+        "category": "AI Search Readiness (GEO / AEO)",
+        "title": "Visits arriving from AI assistants measured and reported",
+        "severity": "info",
+        "implemented_by": "ga4_report.py",
+        "fix_class": None,
+        "autofix": None,
+        "note": "Run `ga4_report.py --report ai-referrals --json`. Reported in "
+                "every audit, including when the count is zero. A low count is "
+                "a floor: referrer-less AI visits land in Direct.",
+    },
     "authority.referring_domains": {
         "category": "Authority / Backlinks",
         "title": "Referring domains measured",
