@@ -120,6 +120,7 @@ claude-seo/
     indexing_notify.py           # Indexing API v3 (URL_UPDATED/URL_DELETED)
     ga4_report.py                # GA4 organic traffic reports
     google_report.py             # PDF/HTML report generator (WeasyPrint + matplotlib)
+    monthly_report.py            # Monthly narrative PDF (built on google_report.py helpers, same review gate)
     youtube_search.py            # YouTube Data API v3
     nlp_analyze.py               # Cloud Natural Language API
     keyword_planner.py           # Google Ads Keyword Planner
