@@ -101,7 +101,9 @@ class PageParser(HTMLParser):
         self._stack.append(tag)
 
         if tag == "title":
-            self._in_title = True
+            # Only the document <title>: an SVG <title> (accessible diagram
+            # names) must not be appended to it.
+            self._in_title = self.title is None and "svg" not in self._stack
         elif tag == "meta":
             name = (attrs.get("name") or attrs.get("property") or "").lower()
             if name:
